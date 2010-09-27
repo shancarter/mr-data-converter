@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Mr. Data Converter</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="Shan Carter">
+	<!-- Date: 2010-08-26 -->
+	
+	<link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<link rel="stylesheet" href="css/converter.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/converter.js" type="text/javascript" charset="utf-8"></script>
+	
+
+	
+	</head>
+<body>
+	
+	
+	<div id='header'>
+		<h1>Mr. Data Converter</h1>
+		
+		<p>Convert your excel data into one of several web-friendly formats, include JSON and XML.</p>
+		<p>Comments or problems? Email me at <a href="mailto:mr.dataconverter@gmail.com?Subject=Suggestions">mr.dataconverter@gmail.com</a>. For updates, follow me on Twitter: <a href="https://twitter.com/mrdataconverter">@mrdataconverter</a>.</p>
+	</div>
+	
+	<div id='input-prefs' style='display:none'>
+		
+	</div>
+	
+	<div id='output-prefs' style='display:none'>
+		
+		<p><input type="radio" name="indentType" value="tabs" /> Tabs</p>
+		<p><input type="radio" name="indentType" value="spaces" /> Spaces</p>
+		
+		<p><input type="radio" name="newLineType" value="cr" /> cr</p>
+		<p><input type="radio" name="newLineType" value="lf" /> lf</p>
+		<p><input type="radio" name="newLineType" value="crlf" /> crlf</p>
+		
+		<p><input type="checkbox" name="some_name" value="" id="some_name"> Include white space</p>
+		<p><input type="checkbox" name="some_name" value="" id="some_name"> Headers provided</p>
+		<p><input type="checkbox" name="some_name" value="" id="some_name"> Downcase headers</p>
+		
+	</div>
+	
+	<div id='converter'>
+
+	</div>
+	
+	
+	
+	
+	
+	
+	<script type="text/javascript" charset="utf-8">
+		
+		var d = new DataConverter('converter');
+		d.create();
+		
+	</script>
+	
+	<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+	</script>
+	<script type="text/javascript">
+		_uacct = "UA-1923845-1";
+		urchinTracker();
+	</script>
+	
+	
+</body>
+</html>
