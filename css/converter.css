@@ -78,6 +78,8 @@ p {
 	position: absolute;
 	top: 15px;
 	left: 320px;
+	
+	border: solid 2px #B94BA1;
 }
 
 
@@ -109,22 +111,20 @@ p.dataHeaders{
 	font-size: 12px;
 	font-family: monospace;
 	background-color: #C9B7C7;
-	border: solid 2px #B94BA1;
+	border: none;
 }
 
-#inputGroup {
 
-}
-
-#inputGroup a {
-	
-}
-
-#dividerGroup {
+.groupHeader{
   width: 100%;
   color: #FFF;
-  height: 50px;
+  height: 45px;
   background-color:#5F255C;
+}
+
+
+p.groupHeadline {
+  padding: 10px;
 }
 
 

@@ -29,9 +29,8 @@ function DataConverter(nodeId) {
   this.inputTextArea          = {};
   this.outputTextArea         = {};
   
-  this.inputGroup           = {};
-  this.dividerGroup         = {};
-  this.outputGroup          = {};
+  this.inputHeader           = {};
+  this.outputHeader         = {};
   this.dataSelect           = {};
   
   this.inputText            = "";
@@ -47,8 +46,6 @@ function DataConverter(nodeId) {
   this.includeWhiteSpace      = true;
   this.useTabsForIndent       = false;
   
-  
-  
 }
 
 //---------------------------------------
@@ -57,27 +54,26 @@ function DataConverter(nodeId) {
 
 DataConverter.prototype.create = function(w,h) {
   var self = this;
-  this.inputGroup =   $('<div id="inputGroup">' +
-            '<textarea class="textInputs" id="dataInput">' +
-            '</textarea></div>');
-            
-  var divText =    '<div id="dividerGroup"><p class="dataHeaders"><label>Output as </label><select name="Data Types" id="dataSelector" >';
-  for (var i=0; i < this.outputDataTypes.length; i++) {
-    divText += '<option value="'+this.outputDataTypes[i]["id"]+'">'+this.outputDataTypes[i]["text"]+'</option>';
-    
-  };
-  divText +=       '</select></p></div>'
-            
-  this.dividerGroup = $(divText);
-  this.outputGroup = $('<div id="outputGroup"><textarea class="textInputs" id="dataOutput"></textarea></div>')
-  this.node.append(this.inputGroup);
-  this.node.append(this.dividerGroup);
-  this.node.append(this.outputGroup);
   
-  this.dataSelect = this.outputGroup.find("#dataSelector");
+  this.inputHeader = $('<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Paste below</p></div>');
+  this.inputTextArea = $('<textarea class="textInputs" id="dataInput"></textarea>');
+  var outputHeaderText = '<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Output as <select name="Data Types" id="dataSelector" >';
+    for (var i=0; i < this.outputDataTypes.length; i++) {
+      outputHeaderText += '<option value="'+this.outputDataTypes[i]["id"]+'">'+this.outputDataTypes[i]["text"]+'</option>';
+    };
+    outputHeaderText += '</select></p></div>';
+  this.outputHeader = $(outputHeaderText);
+  this.outputTextArea = $('<textarea class="textInputs" id="dataOutput"></textarea>');
   
-  this.inputTextArea = this.inputGroup.find("#dataInput");
-  this.outputTextArea = this.outputGroup.find("#dataOutput");
+  
+  
+  
+  this.node.append(this.inputHeader);
+  this.node.append(this.inputTextArea);
+  this.node.append(this.outputHeader);
+  this.node.append(this.outputTextArea);
+  
+  this.dataSelect = this.outputHeader.find("#dataSelector");
   
   
   //add event listeners
@@ -95,19 +91,24 @@ DataConverter.prototype.create = function(w,h) {
     evt.preventDefault();
     self.convert();
   });
+  
+  $("#dataInput").change(this.convert)
+  
   this.resize(w,h);
 }
 
 DataConverter.prototype.resize = function(w,h) {
   
   var paneWidth = w;
-  var paneHeight = (h-50)/2;
+  var paneHeight = (h-90)/2;
   
-  this.inputGroup.css({width:paneWidth});
-  this.outputGroup.css({width:paneWidth, left:paneWidth+15});
+  this.node.css({width:paneWidth});
   
+  // this.inputHeader.css({width:paneWidth});
   this.inputTextArea.css({height:paneHeight});
-  this.outputTextArea.css({height:paneHeight});
+
+  // this.outputHeader.css({width:paneWidth});
+  this.outputTextArea.css({height:paneHeight});  
   
 }
 

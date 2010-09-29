@@ -39,10 +39,11 @@
             <p>Change case: <br><label><input class="settingsElement" type="radio" name="headerModifications" value="downcase" /> downcase</label>
             <label><input class="settingsElement" type="radio" name="headerModifications" value="upcase" /> upcase</label>
             <label><input class="settingsElement" type="radio" name="headerModifications" value="none" /> no change</label></p>
-            
+            <!--
             <p>Convert spaces to: <br><label><input class="settingsElement" type="radio" name="spaceType" value="underscore" /> underscores</label>
               <label><input class="settingsElement" type="radio" name="spaceType" value="hyphen" /> hyphens</label>
               <label><input class="settingsElement" type="radio" name="spaceType" value="none" /> no change</label></p>
+                -->
           </div>
           
           <p><label><input class="settingsElement" type="checkbox" name="some_name" value="" id="includeWhiteSpaceCB"> Include white space in output</label></p>
@@ -83,6 +84,7 @@
     var h = win.height() - heightOffset;
     
     d.create(w,h);
+    
     $('#insertSample').bind('click', function(){d.insertSampleData();})
     
     $(".settingsElement").change(function(){updateSettings()});
@@ -95,6 +97,7 @@
         sidebar.height(h);
       
       });
+    
     
     
     var updateSettings = function () {
@@ -121,7 +124,6 @@
         var hm = $('input[name=headerModifications]:checked').val();
         
         if (hm === "downcase") {
-          console.log(hm);
           d.downcaseHeaders = true;
           d.upcaseHeaders = false;
         } else if (hm === "upcase") {
@@ -139,7 +141,9 @@
       
       
       d.convert();
-    }
+    };
+    
+    updateSettings();
     
   </script>
   
