@@ -1,13 +1,25 @@
-body {
+html {
 	font-family: Helvetica, Arial;
+	background: #000;
+	
 }
+
+#base {
+  padding: 15px;
+  position: relative;
+  background-color: #000;
+}
+
+
+
 
 /*header*/
 
 #header {
-	background-color: #000;
-	padding: 15px;
+	
 	color: #FFF;
+	width: 300px;
+	overflow: auto;
 }
 #header a {
 	color: #CCEEEE;
@@ -17,10 +29,20 @@ body {
 	color: #CCC;
 }
 
+#header h3 {
+  font-size: 12px;
+  margin: 15px 0 10px 0;
+  padding: 15px 0 0 0;
+  border-top: solid 1px #CCC;
+  text-transform: uppercase;
+}
+
 h1 {
-	font-size: 24px;
-	line-height: 30px;
+  font-family: Georgia;
+	font-size: 40px;
+	line-height: 40px;
 	font-weight: bold;
+	margin-bottom: 8px;
 }
 
 p {
@@ -28,12 +50,34 @@ p {
 	line-height: 22px;
 }
 
+/*settings*/
+#settings {
+
+  
+}
+
+
+#settings h5 {
+  font-size: 13px;
+  line-height: 24px;
+}
+
+#settings p {
+  font-size: 13px;
+  line-height: 24px;
+}
+
+
+#settings .settingsGroup p {
+  padding-left: 20px;
+}
 
 /*converter*/
 
 #converter {
-	padding: 15px;
-	position:relative;
+	position: absolute;
+	top: 15px;
+	left: 320px;
 }
 
 
@@ -56,7 +100,7 @@ p {
 
 p.dataHeaders{
 	height: 30px;
-	padding: 0px 0px 10px;
+	padding: 15px 15px 10px;
 }
 
 .textInputs {
@@ -64,26 +108,28 @@ p.dataHeaders{
 	height: 300px;
 	font-size: 12px;
 	font-family: monospace;
+	background-color: #C9B7C7;
+	border: solid 2px #B94BA1;
 }
 
 #inputGroup {
-	position:absolute;
-	top:15px;
-	left:15px;
+
 }
 
 #inputGroup a {
 	
 }
 
+#dividerGroup {
+  width: 100%;
+  color: #FFF;
+  height: 50px;
+  background-color:#5F255C;
+}
+
 
 #outputGroup {
-	margin-left: 15px;
-	padding-left: 15px;
-	border-left: 1px solid #999;
-	position:absolute;
-	top:15px;
-	left:0px;
+
 }
 
 #dataInput {

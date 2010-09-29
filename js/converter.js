@@ -30,6 +30,7 @@ function DataConverter(nodeId) {
   this.outputTextArea         = {};
   
   this.inputGroup           = {};
+  this.dividerGroup         = {};
   this.outputGroup          = {};
   this.dataSelect           = {};
   
@@ -39,10 +40,14 @@ function DataConverter(nodeId) {
   this.newLine            = "\n";
   this.indent             = "  ";
   
+  this.useUnderscores         = true;
   this.headersProvided        = true;
-  this.lowerCaseHeaders       = true;
-  this.includeWhiteSpace        = true;
+  this.downcaseHeaders        = true;
+  this.upcaseHeaders          = false;
+  this.includeWhiteSpace      = true;
   this.useTabsForIndent       = false;
+  
+  
   
 }
 
@@ -50,21 +55,23 @@ function DataConverter(nodeId) {
 // PUBLIC METHODS
 //---------------------------------------
 
-DataConverter.prototype.create = function() {
+DataConverter.prototype.create = function(w,h) {
   var self = this;
-  this.inputGroup =   $('<div id="inputGroup"><p class="dataHeaders">Copy/Paste Data from Excel (<a href="#" id="sampleData" >Insert Sample Data</a>)</p>' +
+  this.inputGroup =   $('<div id="inputGroup">' +
             '<textarea class="textInputs" id="dataInput">' +
             '</textarea></div>');
-  var ogtext =    '<div id="outputGroup"><p class="dataHeaders"><label>Output: </label><select name="Data Types" id="dataSelector" >';
+            
+  var divText =    '<div id="dividerGroup"><p class="dataHeaders"><label>Output as </label><select name="Data Types" id="dataSelector" >';
   for (var i=0; i < this.outputDataTypes.length; i++) {
-    ogtext += '<option value="'+this.outputDataTypes[i]["id"]+'">'+this.outputDataTypes[i]["text"]+'</option>';
+    divText += '<option value="'+this.outputDataTypes[i]["id"]+'">'+this.outputDataTypes[i]["text"]+'</option>';
     
   };
-  ogtext +=       '</select><a id="convertButton" href="#">Convert</a><br>'+
-            '</p><textarea class="textInputs" id="dataOutput"></textarea></div>'
+  divText +=       '</select></p></div>'
             
-  this.outputGroup =  $(ogtext);
+  this.dividerGroup = $(divText);
+  this.outputGroup = $('<div id="outputGroup"><textarea class="textInputs" id="dataOutput"></textarea></div>')
   this.node.append(this.inputGroup);
+  this.node.append(this.dividerGroup);
   this.node.append(this.outputGroup);
   
   this.dataSelect = this.outputGroup.find("#dataSelector");
@@ -72,12 +79,14 @@ DataConverter.prototype.create = function() {
   this.inputTextArea = this.inputGroup.find("#dataInput");
   this.outputTextArea = this.outputGroup.find("#dataOutput");
   
+  
+  //add event listeners
   $("#sampleData").bind('click', function(evt){
     evt.preventDefault();
     self.insertSampleData();
     self.convert();
   })
-  $(window).bind('resize',function() {self.resize();});
+  
   $("#dataSelector").bind('change',function(evt){
     self.outputDataType = $(this).val();
     self.convert();
@@ -86,16 +95,13 @@ DataConverter.prototype.create = function() {
     evt.preventDefault();
     self.convert();
   });
-  this.resize();
+  this.resize(w,h);
 }
 
-DataConverter.prototype.resize = function() {
-  var win = $(window);
-  var w = win.width();
-  var h = win.height();
+DataConverter.prototype.resize = function(w,h) {
   
-  var paneWidth = (w - 62) / 2;
-  var paneHeight = h - $("#header").height() - 100;
+  var paneWidth = w;
+  var paneHeight = (h-50)/2;
   
   this.inputGroup.css({width:paneWidth});
   this.outputGroup.css({width:paneWidth, left:paneWidth+15});
@@ -117,11 +123,6 @@ DataConverter.prototype.convert = function() {
     
     
     if (this.includeWhiteSpace === true) {
-      if (this.useTabsForIndent === true) {
-        this.indent = "\t";
-      } else {
-        this.indent = "  ";
-      }
       this.newLine = "\n";
     } else {
       this.indent = "";
@@ -154,12 +155,18 @@ DataConverter.prototype.convert = function() {
       headers = dataArray.splice(0,1)[0];
       for (var i=0; i < headers.length; i++) {
         t = headers[i].split(":")
-        if (this.lowerCaseHeaders) {
-          headers[i] = t[0].toLowerCase()
-        } else {
-          headers[i] = t[0]
+        headers[i] = t[0]
+        if (this.downcaseHeaders) {
+          headers[i] = headers[i].toLowerCase();
+        } 
+        if (this.upcaseHeaders) {
+          headers[i] = headers[i].toUpperCase();
         }
-        headers[i] = headers[i].split(' ').join('_');
+        
+        if (this.useUnderscores) {
+          headers[i] = headers[i].split(' ').join('_');
+        };
+        
         headers[i] = headers[i].split('-').join('_');
       
         headerTypes[i] = t[1];
@@ -280,5 +287,5 @@ DataConverter.prototype.convert = function() {
 
 DataConverter.prototype.insertSampleData = function() {
   this.inputTextArea.val("NAME\tVALUE\tCOLOR\nAlan\t12\tblue\nShan\t13\tgreen\nJoe\t45\torange");
-    
+  this.convert();
 }
