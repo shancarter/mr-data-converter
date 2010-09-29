@@ -77,28 +77,11 @@ p {
 #converter {
 	position: absolute;
 	top: 15px;
-	left: 320px;
+	left: 330px;
 	
 	border: solid 2px #B94BA1;
 }
 
-
-#convertButton {
-	color: #FFF;
-	border: 2px solid #333;
-	background-color:#666;
-	padding: 4px 8px;
-	margin-left: 10px;
-	text-transform: uppercase;
-	font-size: 11px;
-	font-family: Arial;
-	text-decoration: none;
-}
-
-#convertButton:hover {
-	border:2px solid #000;
-	background-color:#555;
-}
 
 p.dataHeaders{
 	height: 30px;
@@ -125,6 +108,15 @@ p.dataHeaders{
 
 p.groupHeadline {
   padding: 10px;
+}
+.groupHeader span.subhead {
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+.groupHeader a {
+  color: #FF00FF;
+  float: right;
 }
 
 

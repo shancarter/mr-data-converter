@@ -55,13 +55,13 @@ function DataConverter(nodeId) {
 DataConverter.prototype.create = function(w,h) {
   var self = this;
   
-  this.inputHeader = $('<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Paste below</p></div>');
+  this.inputHeader = $('<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Paste your CSV or tab delimited data below. <span class="subhead"> Using Excel? Simply highlight your cells, copy, then paste.<a href="#" id="insertSample">Insert sample data</a></span></p></div>');
   this.inputTextArea = $('<textarea class="textInputs" id="dataInput"></textarea>');
   var outputHeaderText = '<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Output as <select name="Data Types" id="dataSelector" >';
     for (var i=0; i < this.outputDataTypes.length; i++) {
       outputHeaderText += '<option value="'+this.outputDataTypes[i]["id"]+'">'+this.outputDataTypes[i]["text"]+'</option>';
     };
-    outputHeaderText += '</select></p></div>';
+    outputHeaderText += '</select><span class="subhead"><a href="#" id="convertButton">Convert</a></span></p></div>';
   this.outputHeader = $(outputHeaderText);
   this.outputTextArea = $('<textarea class="textInputs" id="dataOutput"></textarea>');
   
@@ -83,16 +83,19 @@ DataConverter.prototype.create = function(w,h) {
     self.convert();
   })
   
-  $("#dataSelector").bind('change',function(evt){
-    self.outputDataType = $(this).val();
-    self.convert();
-  })
   $("#convertButton").bind('click',function(evt){
     evt.preventDefault();
     self.convert();
   });
   
-  $("#dataInput").change(this.convert)
+  $("#insertSample").bind('click',function(evt){
+    evt.preventDefault();
+    self.insertSampleData();
+    self.convert();
+  });
+  
+  $("#dataInput").keyup(function() {self.convert()});
+  $("#dataInput").change(function() {self.convert()});
   
   this.resize(w,h);
 }
@@ -288,5 +291,4 @@ DataConverter.prototype.convert = function() {
 
 DataConverter.prototype.insertSampleData = function() {
   this.inputTextArea.val("NAME\tVALUE\tCOLOR\nAlan\t12\tblue\nShan\t13\tgreen\nJoe\t45\torange");
-  this.convert();
 }
