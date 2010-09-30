@@ -22,7 +22,8 @@ html {
 	overflow: auto;
 }
 #header a {
-	color: #CCEEEE;
+	color: #99FFFF;
+/*  opacity: 0.7;*/
 }
 
 #header p {
@@ -103,6 +104,7 @@ p.dataHeaders{
   color: #FFF;
   height: 45px;
   background-color:#5F255C;
+  background-image: url('../images/header_gradient.png');
 }
 
 
@@ -115,7 +117,7 @@ p.groupHeadline {
 }
 
 .groupHeader a {
-  color: #FF00FF;
+  color: #FF66FF;
   float: right;
 }
 

@@ -24,7 +24,7 @@
   <div id='base'>
     <div id='header'>
       <h1>Mr. Data Converter</h1>
-      <p>Convert your excel data into one of several web-friendly formats, include JSON and XML. Comments or problems? Email me at <a href="mailto:mr.dataconverter@gmail.com?Subject=Suggestions">mr.dataconverter@gmail.com</a>. For updates, follow me on Twitter: <a href="https://twitter.com/mrdataconverter">@mrdataconverter</a>.</p>
+      <p>I will convert your Excel data for you into one of several web-friendly formats, include JSON and XML. Comments or problems? Email me at <a href="mailto:mr.dataconverter@gmail.com?Subject=Suggestions">mr.dataconverter@gmail.com</a>. For updates, follow me on Twitter: <a href="https://twitter.com/mrdataconverter">@mrdataconverter</a>.</p>
       <div id='input-prefs'>
       
       </div>
@@ -33,9 +33,9 @@
         <h3>Settings</h3>
         <form id='settingsForm'>
           
-          <p><label><input class="settingsElement" type="checkbox" name="" value="" id="headersProvidedCB"> First row is header</label></p>
+          <p><label><input class="settingsElement" type="checkbox" name="" value="" id="headersProvidedCB" checked /> First row is the header</label></p>
           <div class="settingsGroup">
-            <p>Transform: <label><input class="settingsElement" type="radio" name="headerModifications" value="downcase" /> downcase</label>
+            <p>Transform: <label><input class="settingsElement" type="radio" name="headerModifications" value="downcase" checked /> downcase</label>
             <label><input class="settingsElement" type="radio" name="headerModifications" value="upcase" /> upcase</label>
             <label><input class="settingsElement" type="radio" name="headerModifications" value="none" /> none</label></p>
             <!--
@@ -45,9 +45,9 @@
                 -->
           </div>
           
-          <p><label><input class="settingsElement" type="checkbox" name="some_name" value="" id="includeWhiteSpaceCB"> Include white space in output</label></p>
+          <p><label><input class="settingsElement" type="checkbox" name="some_name" value="" id="includeWhiteSpaceCB" checked /> Include white space in output</label></p>
           <div class="settingsGroup">
-            <p>Indent with: <label><input class="settingsElement" type="radio" name="indentType" value="tabs" /> tabs</label> <label><input class="settingsElement" type="radio" name="indentType" value="spaces" /> spaces</label></p>
+            <p>Indent with: <label><input class="settingsElement" type="radio" name="indentType" value="tabs" /> tabs</label> <label><input class="settingsElement" type="radio" name="indentType" value="spaces" checked/> spaces</label></p>
           </div>
 
             
@@ -72,7 +72,7 @@
   
   <script type="text/javascript" charset="utf-8">
     var widthOffset = 345;
-    var heightOffset = 50
+    var heightOffset = 35
     
     var d = new DataConverter('converter');
     

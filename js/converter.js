@@ -55,7 +55,7 @@ function DataConverter(nodeId) {
 DataConverter.prototype.create = function(w,h) {
   var self = this;
   
-  this.inputHeader = $('<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Paste your CSV or tab delimited data below. <span class="subhead"> Using Excel? Simply highlight your cells, copy, then paste.<a href="#" id="insertSample">Insert sample data</a></span></p></div>');
+  this.inputHeader = $('<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Input CSV or tab-delimited data. <span class="subhead"> Using Excel? Simply copy and paste.<a href="#" id="insertSample">Use sample data</a></span></p></div>');
   this.inputTextArea = $('<textarea class="textInputs" id="dataInput"></textarea>');
   var outputHeaderText = '<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Output as <select name="Data Types" id="dataSelector" >';
     for (var i=0; i < this.outputDataTypes.length; i++) {
@@ -77,11 +77,6 @@ DataConverter.prototype.create = function(w,h) {
   
   
   //add event listeners
-  $("#sampleData").bind('click', function(evt){
-    evt.preventDefault();
-    self.insertSampleData();
-    self.convert();
-  })
   
   $("#convertButton").bind('click',function(evt){
     evt.preventDefault();
@@ -96,6 +91,11 @@ DataConverter.prototype.create = function(w,h) {
   
   $("#dataInput").keyup(function() {self.convert()});
   $("#dataInput").change(function() {self.convert()});
+  
+  $("#dataSelector").bind('change',function(evt){
+       self.outputDataType = $(this).val();
+       self.convert();
+     });
   
   this.resize(w,h);
 }
