@@ -17,10 +17,13 @@ function DataConverter(nodeId) {
   this.outputDataTypes        = [ 
                                 {"text":"Actionscript","id":"as"},
                                 {"text":"ASP/VBScript","id":"asp"},
-                                {"text":"JSON","id":"json"},
+                                {"text":"HTML", "id":"html"},
+                                {"text":"JSON - Properties","id":"json"},
+                                {"text":"JSON - Array","id":"jsonArray"},
                                 {"text":"PHP","id":"php"},
                                 {"text":"Ruby","id":"ruby"},
-                                {"text":"XML","id":"xml"}];
+                                {"text":"XML - Properties","id":"xmlProperties"},
+                                {"text":"XML - Nodes","id":"xmlNodes"}];
   this.outputDataType         = this.outputDataTypes[0]["id"];
   
   this.columnDelimiter        = "\t";
@@ -213,7 +216,32 @@ DataConverter.prototype.convert = function() {
       };
       this.outputText = 'Dim myArray('+(j-1)+','+(i-1)+')'+this.newLine+this.outputText;
     
-    
+    //HTML
+    } else if (this.outputDataType === "html"){
+      this.outputText += "<table>"+this.newLine;
+      this.outputText += this.indent+"<thead>"+this.newLine;
+      this.outputText += this.indent+this.indent+"<tr>"+this.newLine;
+      for (var j=0; j < numColumns; j++) {
+        this.outputText += this.indent+this.indent+this.indent+'<th>';          
+        this.outputText += headers[j]
+        this.outputText += '</th>'+this.newLine
+      };
+      this.outputText += this.indent+this.indent+"</tr>"+this.newLine;
+      this.outputText += this.indent+"</thead>"+this.newLine;
+      this.outputText += this.indent+"<tbody>"+this.newLine;
+      for (var i=0; i < numRows; i++) {
+        var row = dataArray[i];
+        this.outputText += this.indent+this.indent+"<tr>"+this.newLine;
+        for (var j=0; j < numColumns; j++) {
+          this.outputText += this.indent+this.indent+this.indent+'<td>';          
+          this.outputText += row[j]
+          this.outputText += '</td>'+this.newLine
+        };
+        this.outputText += this.indent+this.indent+"</tr>"+this.newLine;
+      };
+      this.outputText += this.indent+"</tbody>"+this.newLine;
+      this.outputText += "</table>";
+  
     
     //RUBY
     } else if (this.outputDataType === "ruby") {
@@ -247,7 +275,7 @@ DataConverter.prototype.convert = function() {
       };
       this.outputText += this.newLine + ");";
     
-      //JSON
+      //JSON - properties
     } else if (this.outputDataType === "json") {
       this.outputText += "[";
       for (var i=0; i < numRows; i++) {
@@ -263,8 +291,25 @@ DataConverter.prototype.convert = function() {
       };
       this.outputText += "];";
     
-      //XML
-    } else if (this.outputDataType === "xml"){
+    
+        //JSON - array
+      } else if (this.outputDataType === "jsonArray") {
+        this.outputText += "[";
+        for (var i=0; i < numRows; i++) {
+          var row = dataArray[i];
+          this.outputText += "[";
+          for (var j=0; j < numColumns; j++) {
+            this.outputText += '"'+row[j]+'"' ;
+            if (j < (numColumns-1)) {this.outputText+=","};
+          };
+          this.outputText += "]";
+          if (i < (numRows-1)) {this.outputText += ","+this.newLine};
+        };
+        this.outputText += "];";
+
+    
+      //XML - nodes
+    } else if (this.outputDataType === "xmlNodes"){
       this.outputText = '<?xml version="1.0" encoding="UTF-8"?>' + this.newLine;
       this.outputText += "<rows>"+this.newLine;
       for (var i=0; i < numRows; i++) {
@@ -278,8 +323,24 @@ DataConverter.prototype.convert = function() {
         this.outputText += this.indent+"</row>"+this.newLine;
       };
       this.outputText += "</rows>";
-    }
     
+    
+    
+      //XML properties
+    } else if (this.outputDataType === "xmlProperties"){
+      this.outputText = '<?xml version="1.0" encoding="UTF-8"?>' + this.newLine;
+      this.outputText += "<rows>"+this.newLine;
+      for (var i=0; i < numRows; i++) {
+        var row = dataArray[i];
+        this.outputText += this.indent+"<row ";
+        for (var j=0; j < numColumns; j++) {
+          this.outputText += headers[j]+'=';          
+          this.outputText += '"' + row[j] + '" ';
+        };
+        this.outputText += "></row>"+this.newLine;
+      };
+      this.outputText += "</rows>";
+    }
     
     
     
