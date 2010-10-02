@@ -19,7 +19,7 @@ function DataConverter(nodeId) {
                                 {"text":"ASP/VBScript","id":"asp"},
                                 {"text":"HTML", "id":"html"},
                                 {"text":"JSON - Properties","id":"json"},
-                                {"text":"JSON - Array","id":"jsonArray"},
+                                {"text":"JSON - Arrays","id":"jsonArray"},
                                 {"text":"PHP","id":"php"},
                                 {"text":"Ruby","id":"ruby"},
                                 {"text":"XML - Properties","id":"xmlProperties"},
@@ -329,14 +329,13 @@ DataConverter.prototype.convert = function() {
         //JSON - array
       } else if (this.outputDataType === "jsonArray") {
         this.outputText += "[";
-        for (var i=0; i < numRows; i++) {
-          var row = dataArray[i];
+        for (var i=0; i < numColumns; i++) {
           this.outputText += "[";
-          for (var j=0; j < numColumns; j++) {
-            if (headerTypes[j] == "number") {
-              this.outputText += row[j];
+          for (var j=0; j < numRows; j++) {
+            if (headerTypes[i] == "number") {
+              this.outputText += dataArray[j][i];
             } else {
-              this.outputText += '"'+row[j]+'"' ;
+              this.outputText += '"'+dataArray[j][i]+'"' ;
             }
             
             
