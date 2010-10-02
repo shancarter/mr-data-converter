@@ -29,6 +29,10 @@ html {
 	color: #CCC;
 }
 
+#description p {
+	margin-bottom: 18px;
+}
+
 #header h3 {
   font-size: 12px;
   margin: 15px 0 10px 0;

@@ -175,8 +175,12 @@ DataConverter.prototype.convert = function() {
         };
         
         headers[i] = headers[i].split('-').join('_');
-      
-        headerTypes[i] = t[1];
+        if (t[1]) {
+          headerTypes[i] = t[1].toLowerCase();
+        } else {
+          headerTypes[i] = "";
+        }
+        
       };
       numColumns = headers.length;
       numRows = dataArray.length;
@@ -185,6 +189,7 @@ DataConverter.prototype.convert = function() {
       numRows = dataArray.length;
       for (var i=0; i < numColumns; i++) {
         headers.push("val"+String(i+1));
+        headerTypes.push("");
       };
     
     }
@@ -197,7 +202,11 @@ DataConverter.prototype.convert = function() {
         var row = dataArray[i];
         this.outputText += "{";
         for (var j=0; j < numColumns; j++) {
-          var rowOutput = '"'+row[j]+'"' ;          
+          if (headerTypes[j] === "number") {
+            var rowOutput = row[j];
+          } else {
+            var rowOutput = '"'+row[j]+'"';
+          };      
           this.outputText += (headers[j] + ":" + rowOutput)
           if (j < (numColumns-1)) {this.outputText+=","};
         };
@@ -211,7 +220,12 @@ DataConverter.prototype.convert = function() {
       for (var i=0; i < numRows; i++) {
         var row = dataArray[i];
         for (var j=0; j < numColumns; j++) {
-          this.outputText += 'myArray('+j+','+i+') = "'+row[j]+'"'+this.newLine;        
+          if (headerTypes[j] === "number") {
+            var rowOutput = row[j];
+          } else {
+            var rowOutput = '"'+row[j]+'"';
+          };
+          this.outputText += 'myArray('+j+','+i+') = '+rowOutput+this.newLine;        
         };
       };
       this.outputText = 'Dim myArray('+(j-1)+','+(i-1)+')'+this.newLine+this.outputText;
@@ -222,7 +236,7 @@ DataConverter.prototype.convert = function() {
       this.outputText += this.indent+"<thead>"+this.newLine;
       this.outputText += this.indent+this.indent+"<tr>"+this.newLine;
       for (var j=0; j < numColumns; j++) {
-        this.outputText += this.indent+this.indent+this.indent+'<th>';          
+        this.outputText += this.indent+this.indent+this.indent+'<th class="'+headers[j]+'-cell">';          
         this.outputText += headers[j]
         this.outputText += '</th>'+this.newLine
       };
@@ -231,9 +245,15 @@ DataConverter.prototype.convert = function() {
       this.outputText += this.indent+"<tbody>"+this.newLine;
       for (var i=0; i < numRows; i++) {
         var row = dataArray[i];
-        this.outputText += this.indent+this.indent+"<tr>"+this.newLine;
+        var rowClassName = ""
+        if (i === numRows-1) {
+          rowClassName = ' class="lastRow"';
+        } else if (i === 0){
+          rowClassName = ' class="firstRow"';
+        }
+        this.outputText += this.indent+this.indent+"<tr"+rowClassName+">"+this.newLine;
         for (var j=0; j < numColumns; j++) {
-          this.outputText += this.indent+this.indent+this.indent+'<td>';          
+          this.outputText += this.indent+this.indent+this.indent+'<td class="'+headers[j]+'-cell">';          
           this.outputText += row[j]
           this.outputText += '</td>'+this.newLine
         };
@@ -250,7 +270,11 @@ DataConverter.prototype.convert = function() {
         var row = dataArray[i];
         this.outputText += "{";
         for (var j=0; j < numColumns; j++) {
-          var rowOutput = '"'+row[j]+'"' ;          
+          if (headerTypes[j] === "number") {
+            var rowOutput = row[j];
+          } else {
+            var rowOutput = '"'+row[j]+'"';
+          };         
           this.outputText += ('"'+headers[j]+'"' + "=>" + rowOutput)
           if (j < (numColumns-1)) {this.outputText+=","};
         };
@@ -266,7 +290,11 @@ DataConverter.prototype.convert = function() {
         var row = dataArray[i];
         this.outputText += this.indent + "array(";
         for (var j=0; j < numColumns; j++) {
-          var rowOutput = '"'+row[j]+'"' ;          
+          if (headerTypes[j] === "number") {
+            var rowOutput = row[j];
+          } else {
+            var rowOutput = '"'+row[j]+'"';
+          };          
           this.outputText += ('"'+headers[j]+'"' + "=>" + rowOutput)
           if (j < (numColumns-1)) {this.outputText+=","};
         };
@@ -282,8 +310,14 @@ DataConverter.prototype.convert = function() {
         var row = dataArray[i];
         this.outputText += "{";
         for (var j=0; j < numColumns; j++) {
-          var rowOutput = '"'+row[j]+'"' ;          
-          this.outputText += ('"'+headers[j]+'"' + ":" + rowOutput)
+          if (headerTypes[j] === "number") {
+            var rowOutput = row[j];
+          } else {
+            var rowOutput = '"'+row[j]+'"';
+          };
+          
+        this.outputText += ('"'+headers[j] +'"' + ":" + rowOutput );
+          
           if (j < (numColumns-1)) {this.outputText+=","};
         };
         this.outputText += "}";
@@ -299,7 +333,13 @@ DataConverter.prototype.convert = function() {
           var row = dataArray[i];
           this.outputText += "[";
           for (var j=0; j < numColumns; j++) {
-            this.outputText += '"'+row[j]+'"' ;
+            if (headerTypes[j] == "number") {
+              this.outputText += row[j];
+            } else {
+              this.outputText += '"'+row[j]+'"' ;
+            }
+            
+            
             if (j < (numColumns-1)) {this.outputText+=","};
           };
           this.outputText += "]";
@@ -351,5 +391,5 @@ DataConverter.prototype.convert = function() {
 
 
 DataConverter.prototype.insertSampleData = function() {
-  this.inputTextArea.val("NAME\tVALUE\tCOLOR\nAlan\t12\tblue\nShan\t13\tgreen\nJoe\t45\torange");
+  this.inputTextArea.val("NAME\tVALUE:number\tCOLOR\nAlan\t12\tblue\nShan\t13\tgreen\nJoe\t45\torange");
 }
