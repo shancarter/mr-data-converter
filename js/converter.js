@@ -216,13 +216,28 @@ DataConverter.prototype.convert = function() {
     };
     
     //test columns for number data type
-    var numRowsToTest = Math.min(4,numColumns);
+    var numRowsToTest = numColumns;
     for (var i=0; i < headers.length; i++) {
       var n = true;
+      var f = false;
       for (var r=0; r < numRowsToTest; r++) {
-        if (!this.isNumber(dataArray[r][i])) { n = false };
+        if (!this.isNumber(dataArray[r][i])) { 
+          n = false;
+        };
+        if (String(dataArray[r][i]).indexOf(".") > 0) {
+          f = true
+        };
       };
-      if (n) {headerTypes[i] = "float"};
+      if (n) {
+        if (f) {
+          headerTypes[i] = "float"
+        } else {
+          headerTypes[i] = "int"
+        }
+        
+      } else {
+        headerTypes[i] = "string"
+      }
     }
     
     
@@ -358,7 +373,7 @@ DataConverter.prototype.convert = function() {
       for (var j=0; j < numColumns; j++) {
         var dataType = "VARCHAR(256)";
         if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
-          dataType = "FLOAT";
+          dataType = headerTypes[j].toUpperCase();
         };
         this.outputText += this.indent+""+headers[j]+" "+dataType;
         if (j < numColumns - 1) {this.outputText += ","};
