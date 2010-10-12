@@ -371,7 +371,7 @@ DataConverter.prototype.convert = function() {
       this.outputText += 'CREATE TABLE '+this.tableName+' (' + this.newLine;
       this.outputText += this.indent+"id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"+this.newLine;
       for (var j=0; j < numColumns; j++) {
-        var dataType = "VARCHAR(256)";
+        var dataType = "VARCHAR(255)";
         if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
           dataType = headerTypes[j].toUpperCase();
         };
@@ -445,45 +445,6 @@ DataConverter.prototype.convert = function() {
         if (i < (numRows-1)) {this.outputText += ","+this.newLine};
       };
       this.outputText += "];";
-      
-      
-    //SQL
-    } else if (this.outputDataType === "sql"){
-      this.commentLine = "/*";
-      this.commentLineEnd = "*/";
-      this.outputText += 'CREATE TABLE '+this.tableName+' (' + this.newLine;
-      this.outputText += this.indent+"id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"+this.newLine;
-      for (var j=0; j < numColumns; j++) {
-        var dataType = "VARCHAR(256)";
-        if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
-          dataType = "FLOAT";
-        };
-        this.outputText += this.indent+"'"+headers[j]+"' "+dataType;
-        if (j < numColumns - 1) {this.outputText += ","};
-        this.outputText += this.newLine;
-      };
-      this.outputText += ');' + this.newLine;
-      this.outputText += "INSERT INTO '"+this.tableName+"' "+this.newLine+this.indent+"(";
-      for (var j=0; j < numColumns; j++) {
-        this.outputText += "'"+headers[j]+"'";
-        if (j < numColumns - 1) {this.outputText += ","};
-      };
-      this.outputText += ") "+this.newLine+"VALUES "+this.newLine;
-      for (var i=0; i < numRows; i++) {
-        this.outputText += this.indent+"(";
-        for (var j=0; j < numColumns; j++) {
-          if ((headerTypes[j] == "int")||(headerTypes[j] == "float"))  {
-            this.outputText += dataArray[i][j];
-          } else {
-            this.outputText += "'"+dataArray[i][j]+"'";
-          };
-          
-          if (j < numColumns - 1) {this.outputText += ","};
-        };
-        this.outputText += ")";
-        if (i < numRows - 1) {this.outputText += ","+this.newLine;};
-      };
-      this.outputText += ";";
       
     
     //XML - nodes
