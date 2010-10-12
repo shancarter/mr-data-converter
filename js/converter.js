@@ -111,11 +111,11 @@ DataConverter.prototype.create = function(w,h) {
 DataConverter.prototype.resize = function(w,h) {
   
   var paneWidth = w;
-  var paneHeight = (h-90)/2;
+  var paneHeight = (h-90)/2-20;
   
   this.node.css({width:paneWidth});
-  this.inputTextArea.css({height:paneHeight});
-  this.outputTextArea.css({height:paneHeight});  
+  this.inputTextArea.css({width:paneWidth-20,height:paneHeight});
+  this.outputTextArea.css({width: paneWidth-20, height:paneHeight});
   
 }
 
