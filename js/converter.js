@@ -20,8 +20,10 @@ function DataConverter(nodeId) {
                                 {"text":"HTML",               "id":"html",            "notes":""},
                                 {"text":"JSON - Properties",  "id":"json",            "notes":""},
                                 {"text":"JSON - Arrays",      "id":"jsonArray",       "notes":""},
+                                {"text":"MySQL",              "id":"mysql",           "notes":""},
                                 {"text":"PHP",                "id":"php",             "notes":""},
                                 {"text":"Ruby",               "id":"ruby",            "notes":""},
+                                // {"text":"SQL",                "id":"sql",             "notes":""},
                                 {"text":"XML - Properties",   "id":"xmlProperties",   "notes":""},
                                 {"text":"XML - Nodes",        "id":"xmlNodes",        "notes":""}];
   this.outputDataType         = this.outputDataTypes[0]["id"];
@@ -45,6 +47,7 @@ function DataConverter(nodeId) {
   this.errorLog           = "";
   this.commentLine        = "//";
   this.commentLineEnd        = "";
+  this.tableName          = "MrDataConverter"
   
   this.useUnderscores         = true;
   this.headersProvided        = true;
@@ -219,7 +222,7 @@ DataConverter.prototype.convert = function() {
       for (var r=0; r < numRowsToTest; r++) {
         if (!this.isNumber(dataArray[r][i])) { n = false };
       };
-      if (n) {headerTypes[i] = "number"};
+      if (n) {headerTypes[i] = "float"};
     }
     
     
@@ -233,7 +236,7 @@ DataConverter.prototype.convert = function() {
         var row = dataArray[i];
         this.outputText += "{";
         for (var j=0; j < numColumns; j++) {
-          if (headerTypes[j] === "number") {
+          if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
             var rowOutput = row[j];
           } else {
             var rowOutput = '"'+row[j]+'"';
@@ -245,7 +248,8 @@ DataConverter.prototype.convert = function() {
         if (i < (numRows-1)) {this.outputText += ","+this.newLine};
       };
       this.outputText += "];";
-    
+
+
     //ASP
     } else if (this.outputDataType === "asp") {
       this.commentLine = "'";
@@ -253,7 +257,7 @@ DataConverter.prototype.convert = function() {
       for (var i=0; i < numRows; i++) {
         var row = dataArray[i];
         for (var j=0; j < numColumns; j++) {
-          if (headerTypes[j] === "number") {
+          if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
             var rowOutput = row[j];
           } else {
             var rowOutput = '"'+row[j]+'"';
@@ -262,7 +266,8 @@ DataConverter.prototype.convert = function() {
         };
       };
       this.outputText = 'Dim myArray('+(j-1)+','+(i-1)+')'+this.newLine+this.outputText;
-    
+
+
     //HTML
     } else if (this.outputDataType === "html"){
       this.commentLine = "<!--";
@@ -296,31 +301,93 @@ DataConverter.prototype.convert = function() {
       };
       this.outputText += this.indent+"</tbody>"+this.newLine;
       this.outputText += "</table>";
-  
-    
-    //RUBY
-    } else if (this.outputDataType === "ruby") {
-      this.commentLine = "#";
+
+
+    //JSON - properties
+    } else if (this.outputDataType === "json") {
+      this.commentLine = "//";
       this.commentLineEnd = "";
       this.outputText += "[";
       for (var i=0; i < numRows; i++) {
         var row = dataArray[i];
         this.outputText += "{";
         for (var j=0; j < numColumns; j++) {
-          if (headerTypes[j] === "number") {
+          if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
             var rowOutput = row[j];
           } else {
             var rowOutput = '"'+row[j]+'"';
-          };         
-          this.outputText += ('"'+headers[j]+'"' + "=>" + rowOutput)
+          };
+
+        this.outputText += ('"'+headers[j] +'"' + ":" + rowOutput );
+
           if (j < (numColumns-1)) {this.outputText+=","};
         };
         this.outputText += "}";
         if (i < (numRows-1)) {this.outputText += ","+this.newLine};
       };
       this.outputText += "];";
+
+
+    //JSON - array
+    } else if (this.outputDataType === "jsonArray") {
+      this.commentLine = "//";
+      this.commentLineEnd = "";
+      this.outputText += "["+this.newLine;
+      for (var i=0; i < numColumns; i++) {
+        this.outputText += this.indent+"[";
+        for (var j=0; j < numRows; j++) {
+          if ((headerTypes[i] == "int")||(headerTypes[i] == "float")) {
+            this.outputText += dataArray[j][i];
+          } else {
+            this.outputText += '"'+dataArray[j][i]+'"' ;
+          }
+          if (j < (numColumns-1)) {this.outputText+=","};
+        };
+        this.outputText += "]";
+        if (i < (numRows-1)) {this.outputText += ","+this.newLine};
+      };
+      this.outputText += this.newLine+"];";
+
+
+    //MYSQL
+    } else if (this.outputDataType === "mysql"){
+      this.commentLine = "/*";
+      this.commentLineEnd = "*/";
+      this.outputText += 'CREATE TABLE '+this.tableName+' (' + this.newLine;
+      this.outputText += this.indent+"id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"+this.newLine;
+      for (var j=0; j < numColumns; j++) {
+        var dataType = "VARCHAR(256)";
+        if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
+          dataType = "FLOAT";
+        };
+        this.outputText += this.indent+""+headers[j]+" "+dataType;
+        if (j < numColumns - 1) {this.outputText += ","};
+        this.outputText += this.newLine;
+      };
+      this.outputText += ');' + this.newLine;
+      this.outputText += "INSERT INTO "+this.tableName+" "+this.newLine+this.indent+"(";
+      for (var j=0; j < numColumns; j++) {
+        this.outputText += headers[j];
+        if (j < numColumns - 1) {this.outputText += ","};
+      };
+      this.outputText += ") "+this.newLine+"VALUES "+this.newLine;
+      for (var i=0; i < numRows; i++) {
+        this.outputText += this.indent+"(";
+        for (var j=0; j < numColumns; j++) {
+          if ((headerTypes[j] == "int")||(headerTypes[j] == "float"))  {
+            this.outputText += dataArray[i][j];
+          } else {
+            this.outputText += "'"+dataArray[i][j]+"'";
+          };
+          
+          if (j < numColumns - 1) {this.outputText += ","};
+        };
+        this.outputText += ")";
+        if (i < numRows - 1) {this.outputText += ","+this.newLine;};
+      };
+      this.outputText += ";";
     
-      //PHP
+    //PHP
     } else if (this.outputDataType === "php") {
       this.commentLine = "//";
       this.commentLineEnd = "";
@@ -329,7 +396,7 @@ DataConverter.prototype.convert = function() {
         var row = dataArray[i];
         this.outputText += this.indent + "array(";
         for (var j=0; j < numColumns; j++) {
-          if (headerTypes[j] === "number") {
+          if ((headerTypes[j] == "int")||(headerTypes[j] == "float"))  {
             var rowOutput = row[j];
           } else {
             var rowOutput = '"'+row[j]+'"';
@@ -342,55 +409,69 @@ DataConverter.prototype.convert = function() {
       };
       this.outputText += this.newLine + ");";
     
-      //JSON - properties
-    } else if (this.outputDataType === "json") {
-      this.commentLine = "//";
+    //RUBY
+    } else if (this.outputDataType === "ruby") {
+      this.commentLine = "#";
       this.commentLineEnd = "";
       this.outputText += "[";
       for (var i=0; i < numRows; i++) {
         var row = dataArray[i];
         this.outputText += "{";
         for (var j=0; j < numColumns; j++) {
-          if (headerTypes[j] === "number") {
+          if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
             var rowOutput = row[j];
           } else {
             var rowOutput = '"'+row[j]+'"';
-          };
-          
-        this.outputText += ('"'+headers[j] +'"' + ":" + rowOutput );
-          
+          };         
+          this.outputText += ('"'+headers[j]+'"' + "=>" + rowOutput)
           if (j < (numColumns-1)) {this.outputText+=","};
         };
         this.outputText += "}";
         if (i < (numRows-1)) {this.outputText += ","+this.newLine};
       };
       this.outputText += "];";
-    
-    
-        //JSON - array
-      } else if (this.outputDataType === "jsonArray") {
-        this.commentLine = "//";
-        this.commentLineEnd = "";
-        this.outputText += "[";
-        for (var i=0; i < numColumns; i++) {
-          this.outputText += "[";
-          for (var j=0; j < numRows; j++) {
-            if (headerTypes[i] == "number") {
-              this.outputText += dataArray[j][i];
-            } else {
-              this.outputText += '"'+dataArray[j][i]+'"' ;
-            }
-            
-            
-            if (j < (numColumns-1)) {this.outputText+=","};
-          };
-          this.outputText += "]";
-          if (i < (numRows-1)) {this.outputText += ","+this.newLine};
+      
+      
+    //SQL
+    } else if (this.outputDataType === "sql"){
+      this.commentLine = "/*";
+      this.commentLineEnd = "*/";
+      this.outputText += 'CREATE TABLE '+this.tableName+' (' + this.newLine;
+      this.outputText += this.indent+"id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"+this.newLine;
+      for (var j=0; j < numColumns; j++) {
+        var dataType = "VARCHAR(256)";
+        if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
+          dataType = "FLOAT";
         };
-        this.outputText += "];";
-
+        this.outputText += this.indent+"'"+headers[j]+"' "+dataType;
+        if (j < numColumns - 1) {this.outputText += ","};
+        this.outputText += this.newLine;
+      };
+      this.outputText += ');' + this.newLine;
+      this.outputText += "INSERT INTO '"+this.tableName+"' "+this.newLine+this.indent+"(";
+      for (var j=0; j < numColumns; j++) {
+        this.outputText += "'"+headers[j]+"'";
+        if (j < numColumns - 1) {this.outputText += ","};
+      };
+      this.outputText += ") "+this.newLine+"VALUES "+this.newLine;
+      for (var i=0; i < numRows; i++) {
+        this.outputText += this.indent+"(";
+        for (var j=0; j < numColumns; j++) {
+          if ((headerTypes[j] == "int")||(headerTypes[j] == "float"))  {
+            this.outputText += dataArray[i][j];
+          } else {
+            this.outputText += "'"+dataArray[i][j]+"'";
+          };
+          
+          if (j < numColumns - 1) {this.outputText += ","};
+        };
+        this.outputText += ")";
+        if (i < numRows - 1) {this.outputText += ","+this.newLine;};
+      };
+      this.outputText += ";";
+      
     
-      //XML - nodes
+    //XML - nodes
     } else if (this.outputDataType === "xmlNodes"){
       
       
@@ -411,8 +492,7 @@ DataConverter.prototype.convert = function() {
       this.outputText += "</rows>";
     
     
-    
-      //XML properties
+    //XML properties
     } else if (this.outputDataType === "xmlProperties"){
       
       this.commentLine = "<!--";
