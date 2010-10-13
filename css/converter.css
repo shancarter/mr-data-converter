@@ -103,6 +103,8 @@ p.dataHeaders{
 	font-family: monospace;
 	background-color: #C9B7C7;
 	border: none;
+	-webkit-box-shadow: #333 1px 1px 10px inset;
+	-moz-box-shadow: #333 1px 1px 10px inset;
 }
 
 
