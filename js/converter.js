@@ -22,6 +22,7 @@ function DataConverter(nodeId) {
                                 {"text":"JSON - Arrays",      "id":"jsonArray",       "notes":""},
                                 {"text":"MySQL",              "id":"mysql",           "notes":""},
                                 {"text":"PHP",                "id":"php",             "notes":""},
+                                {"text":"Python - Dict",      "id":"python",          "notes":""},
                                 {"text":"Ruby",               "id":"ruby",            "notes":""},
                                 // {"text":"SQL",                "id":"sql",             "notes":""},
                                 {"text":"XML - Properties",   "id":"xmlProperties",   "notes":""},
@@ -70,7 +71,10 @@ DataConverter.prototype.create = function(w,h) {
   this.inputTextArea = $('<textarea class="textInputs" id="dataInput"></textarea>');
   var outputHeaderText = '<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Output as <select name="Data Types" id="dataSelector" >';
     for (var i=0; i < this.outputDataTypes.length; i++) {
-      outputHeaderText += '<option value="'+this.outputDataTypes[i]["id"]+'">'+this.outputDataTypes[i]["text"]+'</option>';
+      outputHeaderText += '<option value="'+this.outputDataTypes[i]["id"]+'" '
+        + (this.outputDataTypes[i]["id"] == this.outputDataType ? 'selected="selected"' : '')
+        +'>'
+        +this.outputDataTypes[i]["text"]+'</option>';
     };
     outputHeaderText += '</select><span class="subhead" id="outputNotes"></span></p></div>';
   this.outputHeader = $(outputHeaderText);
@@ -145,13 +149,18 @@ DataConverter.prototype.convert = function() {
     var numCommas = this.inputText.replace(RE, "").length;
     
     //count the number of tabs
-    var RE = new RegExp("[^\t]", "gi");
+    RE = new RegExp("[^\t]", "gi");
     var numTabs = this.inputText.replace(RE, "").length;
     
     //set delimiter
     if (numTabs > numCommas) {this.columnDelimiter = "\t"}
     else {this.columnDelimiter = ","}
     
+    // kill extra empty lines
+    RE = new RegExp("^" + this.rowDelimiter + "+", "gi");
+    this.inputText = this.inputText.replace(RE, "");
+    RE = new RegExp(this.rowDelimiter + "+$", "gi");
+    this.inputText = this.inputText.replace(RE, "");
     
     var arr = this.inputText.split(this.rowDelimiter);
     
@@ -252,7 +261,7 @@ DataConverter.prototype.convert = function() {
         this.outputText += "{";
         for (var j=0; j < numColumns; j++) {
           if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
-            var rowOutput = row[j];
+            var rowOutput = row[j] || "null";
           } else {
             var rowOutput = '"'+row[j]+'"';
           };      
@@ -319,7 +328,7 @@ DataConverter.prototype.convert = function() {
 
 
     //JSON - properties
-    } else if (this.outputDataType === "json") {
+    } else if (this.outputDataType === "json" || this.outputDataType === "python") {
       this.commentLine = "//";
       this.commentLineEnd = "";
       this.outputText += "[";
@@ -328,7 +337,7 @@ DataConverter.prototype.convert = function() {
         this.outputText += "{";
         for (var j=0; j < numColumns; j++) {
           if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
-            var rowOutput = row[j];
+            var rowOutput = row[j] || (this.outputDataType === "json" ? "null" : "None");
           } else {
             var rowOutput = '"'+row[j]+'"';
           };
@@ -352,14 +361,14 @@ DataConverter.prototype.convert = function() {
         this.outputText += this.indent+"[";
         for (var j=0; j < numRows; j++) {
           if ((headerTypes[i] == "int")||(headerTypes[i] == "float")) {
-            this.outputText += dataArray[j][i];
+            this.outputText += dataArray[j][i] || 0;
           } else {
             this.outputText += '"'+dataArray[j][i]+'"' ;
           }
-          if (j < (numColumns-1)) {this.outputText+=","};
+          if (j < (numRows-1)) {this.outputText+=","};
         };
         this.outputText += "]";
-        if (i < (numRows-1)) {this.outputText += ","+this.newLine};
+        if (i < (numColumns-1)) {this.outputText += ","+this.newLine};
       };
       this.outputText += this.newLine+"];";
 
@@ -390,7 +399,7 @@ DataConverter.prototype.convert = function() {
         this.outputText += this.indent+"(";
         for (var j=0; j < numColumns; j++) {
           if ((headerTypes[j] == "int")||(headerTypes[j] == "float"))  {
-            this.outputText += dataArray[i][j];
+            this.outputText += dataArray[i][j] || "null";
           } else {
             this.outputText += "'"+dataArray[i][j]+"'";
           };
@@ -412,7 +421,7 @@ DataConverter.prototype.convert = function() {
         this.outputText += this.indent + "array(";
         for (var j=0; j < numColumns; j++) {
           if ((headerTypes[j] == "int")||(headerTypes[j] == "float"))  {
-            var rowOutput = row[j];
+            var rowOutput = row[j] || 'null';
           } else {
             var rowOutput = '"'+row[j]+'"';
           };          
