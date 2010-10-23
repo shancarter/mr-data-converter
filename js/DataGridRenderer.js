@@ -28,7 +28,7 @@ var DataGridRenderer = {
         if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
           var rowOutput = row[j] || "null";
         } else {
-          var rowOutput = '"'+row[j]+'"';
+          var rowOutput = '"'+( row[j] || "" )+'"';
         };      
         outputText += (headerNames[j] + ":" + rowOutput)
         if (j < (numColumns-1)) {outputText+=","};
@@ -60,9 +60,9 @@ var DataGridRenderer = {
       var row = dataGrid[i];
       for (var j=0; j < numColumns; j++) {
         if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
-          var rowOutput = row[j];
+          var rowOutput = row[j] || "null";
         } else {
-          var rowOutput = '"'+row[j]+'"';
+          var rowOutput = '"'+( row[j] || "" )+'"';
         };
       outputText += 'myArray('+j+','+i+') = '+rowOutput+newLine;        
       };
@@ -175,7 +175,7 @@ var DataGridRenderer = {
         if ((headerTypes[i] == "int")||(headerTypes[i] == "float")) {
           outputText += dataGrid[j][i] || 0;
         } else {
-          outputText += '"'+dataGrid[j][i]+'"' ;
+          outputText += '"'+(dataGrid[j][i] || "")+'"' ;
         }
         if (j < (numRows-1)) {outputText+=","};
       };
@@ -227,7 +227,7 @@ var DataGridRenderer = {
         if ((headerTypes[j] == "int")||(headerTypes[j] == "float"))  {
           outputText += dataGrid[i][j] || "null";
         } else {
-          outputText += "'"+dataGrid[i][j]+"'";
+          outputText += "'"+( dataGrid[i][j] || "" )+"'";
         };
         
         if (j < numColumns - 1) {outputText += ","};
@@ -262,7 +262,7 @@ var DataGridRenderer = {
         if ((headerTypes[j] == "int")||(headerTypes[j] == "float"))  {
           var rowOutput = row[j] || "null";
         } else {
-          var rowOutput = '"'+row[j]+'"';
+          var rowOutput = '"'+(row[j] || "")+'"';
         };          
         outputText += ('"'+headerNames[j]+'"' + "=>" + rowOutput)
         if (j < (numColumns-1)) {outputText+=","};
@@ -295,7 +295,7 @@ var DataGridRenderer = {
         if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
           var rowOutput = row[j] || "None";
         } else {
-          var rowOutput = '"'+row[j]+'"';
+          var rowOutput = '"'+(row[j] || "")+'"';
         };
   
       outputText += ('"'+headerNames[j] +'"' + ":" + rowOutput );
@@ -332,7 +332,7 @@ var DataGridRenderer = {
         if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
           var rowOutput = row[j] || "nil"
         } else {
-          var rowOutput = '"'+row[j]+'"';
+          var rowOutput = '"'+(row[j] || "")+'"';
         };         
         outputText += ('"'+headerNames[j]+'"' + "=>" + rowOutput)
         if (j < (numColumns-1)) {outputText+=","};
