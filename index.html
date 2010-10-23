@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="css/converter.css" type="text/css" media="screen" title="no title" charset="utf-8">
   
   <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/CSVParser.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/DataGridRenderer.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/converter.js" type="text/javascript" charset="utf-8"></script>
   
   <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript" charset="utf-8"></script> -->
@@ -49,9 +51,9 @@
           
           <p><label><input class="settingsElement" type="checkbox" name="" value="" id="headersProvidedCB" checked /> First row is the header</label></p>
           <div class="settingsGroup">
-            <p>Transform: <label><input class="settingsElement" type="radio" name="headerModifications" value="downcase" id='headersDowncase' checked /> downcase</label>
+            <p>Transform: <label><input class="settingsElement" type="radio" name="headerModifications" value="downcase" id='headersDowncase' /> downcase</label>
             <label><input class="settingsElement" type="radio" name="headerModifications" id='headersUpcase' value="upcase" /> upcase</label>
-            <label><input class="settingsElement" type="radio" name="headerModifications" id='headersNoTransform' value="none" /> none</label></p>
+            <label><input class="settingsElement" type="radio" name="headerModifications" id='headersNoTransform' value="none" checked /> none</label></p>
             <!--
             <p>Convert spaces to: <br><label><input class="settingsElement" type="radio" name="spaceType" value="underscore" /> underscores</label>
               <label><input class="settingsElement" type="radio" name="spaceType" value="hyphen" /> hyphens</label>
@@ -81,11 +83,6 @@
   
   </div>
   
-  <script type="text/javascript">
-  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-  </script>
-  
   
   <script type="text/javascript" charset="utf-8">
     var widthOffset = 345;
@@ -113,13 +110,13 @@
       });
     
     //tracking...
-    var pageTracker = _gat._getTracker("UA-1923845-1");
+    // var pageTracker = _gat._getTracker("UA-1923845-1");
     
     
     function updateSettings (evt) {
       
       if (evt) {
-        pageTracker._trackPageview("/settingsChange/"+evt.currentTarget.id);
+        _gaq.push(['_trackEvent', 'Settings',evt.currentTarget.id ]);
       };
       
       d.includeWhiteSpace = $('#includeWhiteSpaceCB').attr('checked');

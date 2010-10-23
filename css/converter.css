@@ -1,7 +1,10 @@
 html {
 	font-family: Helvetica, Arial;
 	background: #141414 url('../images/background.png') no-repeat;
-	
+}
+
+body {
+  overflow: hidden;
 }
 
 #base {
@@ -96,15 +99,18 @@ p.dataHeaders{
 }
 
 .textInputs {
-/*  width: 100%;*/
-	height: 300px;
-	padding: 10px;
-	font-size: 12px;
-	font-family: monospace;
-	background-color: #C9B7C7;
-	border: none;
-	-webkit-box-shadow: #333 1px 1px 10px inset;
-	-moz-box-shadow: #333 1px 1px 10px inset;
+  
+  background-color: #C9B7C7;
+  border: none;
+  color: #664D63;
+  font-family: monospace;
+  font-size: 12px;
+  height: 300px;
+  line-height: 18px;
+  padding: 10px;
+  text-shadow: #DED4DD 0px 1px 0px;
+  -webkit-box-shadow: #333 1px 1px 10px inset;
+  -moz-box-shadow: #333 1px 1px 10px inset;
 }
 
 

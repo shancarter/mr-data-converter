@@ -1,8 +1,10 @@
-//
-//  Mr. Data Converter
-//
+// 
+//  converter.js
+//  Mr-Data-Converter
+//  
 //  Created by Shan Carter on 2010-09-01.
-//
+// 
+
 
 
 function DataConverter(nodeId) {
@@ -22,11 +24,11 @@ function DataConverter(nodeId) {
                                 {"text":"JSON - Arrays",      "id":"jsonArray",       "notes":""},
                                 {"text":"MySQL",              "id":"mysql",           "notes":""},
                                 {"text":"PHP",                "id":"php",             "notes":""},
+                                {"text":"Python - Dict",      "id":"python",          "notes":""},
                                 {"text":"Ruby",               "id":"ruby",            "notes":""},
-                                // {"text":"SQL",                "id":"sql",             "notes":""},
                                 {"text":"XML - Properties",   "id":"xmlProperties",   "notes":""},
-                                {"text":"XML - Nodes",        "id":"xmlNodes",        "notes":""}];
-  this.outputDataType         = this.outputDataTypes[0]["id"];
+                                {"text":"XML - Nodes",        "id":"xml",             "notes":""}];
+  this.outputDataType         = "xml";
   
   this.columnDelimiter        = "\t";
   this.rowDelimiter            = "\n";
@@ -44,7 +46,6 @@ function DataConverter(nodeId) {
   this.newLine            = "\n";
   this.indent             = "  ";
   
-  this.errorLog           = "";
   this.commentLine        = "//";
   this.commentLineEnd        = "";
   this.tableName          = "MrDataConverter"
@@ -70,7 +71,11 @@ DataConverter.prototype.create = function(w,h) {
   this.inputTextArea = $('<textarea class="textInputs" id="dataInput"></textarea>');
   var outputHeaderText = '<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Output as <select name="Data Types" id="dataSelector" >';
     for (var i=0; i < this.outputDataTypes.length; i++) {
-      outputHeaderText += '<option value="'+this.outputDataTypes[i]["id"]+'">'+this.outputDataTypes[i]["text"]+'</option>';
+      
+      outputHeaderText += '<option value="'+this.outputDataTypes[i]["id"]+'" '
+              + (this.outputDataTypes[i]["id"] == this.outputDataType ? 'selected="selected"' : '')
+              + '>'
+              + this.outputDataTypes[i]["text"]+'</option>';
     };
     outputHeaderText += '</select><span class="subhead" id="outputNotes"></span></p></div>';
   this.outputHeader = $(outputHeaderText);
@@ -95,10 +100,14 @@ DataConverter.prototype.create = function(w,h) {
     evt.preventDefault();
     self.insertSampleData();
     self.convert();
+    _gaq.push(['_trackEvent', 'SampleData','InsertGeneric']);
   });
   
   $("#dataInput").keyup(function() {self.convert()});
-  $("#dataInput").change(function() {self.convert()});
+  $("#dataInput").change(function() {
+    self.convert();
+    _gaq.push(['_trackEvent', 'DataType',self.outputDataType]);
+  });
   
   $("#dataSelector").bind('change',function(evt){
        self.outputDataType = $(this).val();
@@ -121,8 +130,6 @@ DataConverter.prototype.resize = function(w,h) {
 
 DataConverter.prototype.convert = function() {
   
-  this.resetLog();
-
   this.inputText = this.inputTextArea.val();
   this.outputText = "";
   
@@ -137,392 +144,26 @@ DataConverter.prototype.convert = function() {
       this.newLine = "";
     }
     
-    var dataArray = [];
+    CSVParser.resetLog();
+    var parseOutput = CSVParser.parse(this.inputText, this.headersProvided);
     
-    //test for delimiter
-    //count the number of commas
-    var RE = new RegExp("[^,]", "gi");
-    var numCommas = this.inputText.replace(RE, "").length;
-    
-    //count the number of tabs
-    var RE = new RegExp("[^\t]", "gi");
-    var numTabs = this.inputText.replace(RE, "").length;
-    
-    //set delimiter
-    if (numTabs > numCommas) {this.columnDelimiter = "\t"}
-    else {this.columnDelimiter = ","}
-    
-    
-    var arr = this.inputText.split(this.rowDelimiter);
-    
-    for (var i=0; i < arr.length; i++) {
-      dataArray.push(arr[i].split(this.columnDelimiter));
-    };
-    
-    
-    
-    var headers = [];
-    var headerTypes = [];
-    var headerNotes = [];
-    var numColumns = dataArray[0].length;
-    var numRows = dataArray.length;
-    if (this.headersProvided) {
+    var dataGrid = parseOutput.dataGrid;
+    var headerNames = parseOutput.headerNames;
+    var headerTypes = parseOutput.headerTypes;
+    var errors = parseOutput.errors;
       
-      //remove header row
-      headers = dataArray.splice(0,1)[0];
-      numRows = dataArray.length;
-      
-      for (var i=0; i < headers.length; i++) {
-        
-        //remove and record header notes
-        t = headers[i].split(":");
-        headers[i] = t[0];
-        if (t[1]) {
-          headerNotes[i] = t[1].toLowerCase();
-        } else {
-          headerNotes[i] = "";
-        }
-        
-        //apply header transforms
-        if (this.downcaseHeaders) {
-          headers[i] = headers[i].toLowerCase();
-        } 
-        if (this.upcaseHeaders) {
-          headers[i] = headers[i].toUpperCase();
-        }
-        if (this.useUnderscores) {
-          headers[i] = headers[i].split(' ').join('_');
-        };
-        
-        //remove unwanted characters from headers
-        headers[i] = headers[i].split('-').join('_');
-      };
-      
-    } else { //if no headers provided
-      
-      //create generic property names
-      for (var i=0; i < numColumns; i++) {
-        headers.push("val"+String(i));
-        headerTypes.push("");
-        headerNotes.push("");
-      };
-    
-    }
-    
-    //test all the rows for proper number of columns.
-    for (var i=0; i < dataArray.length; i++) {
-      var numValues = dataArray[i].length;
-      if (numValues != numColumns) {this.log("Error parsing row "+String(i)+". Wrong number of columns.")};
-    };
-    
-    //test columns for number data type
-    var numRowsToTest = numColumns;
-    for (var i=0; i < headers.length; i++) {
-      var n = true;
-      var f = false;
-      for (var r=0; r < numRowsToTest; r++) {
-        if (!this.isNumber(dataArray[r][i])) { 
-          n = false;
-        };
-        if (String(dataArray[r][i]).indexOf(".") > 0) {
-          f = true
-        };
-      };
-      if (n) {
-        if (f) {
-          headerTypes[i] = "float"
-        } else {
-          headerTypes[i] = "int"
-        }
-        
-      } else {
-        headerTypes[i] = "string"
-      }
-    }
+    this.outputText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
     
     
-    //Begin Rendering
-    //ACTIONSCRIPT
-    if (this.outputDataType === "as") {
-      this.commentLine = "//";
-      this.commentLineEnd = "";
-      this.outputText += "[";
-      for (var i=0; i < numRows; i++) {
-        var row = dataArray[i];
-        this.outputText += "{";
-        for (var j=0; j < numColumns; j++) {
-          if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
-            var rowOutput = row[j];
-          } else {
-            var rowOutput = '"'+row[j]+'"';
-          };      
-          this.outputText += (headers[j] + ":" + rowOutput)
-          if (j < (numColumns-1)) {this.outputText+=","};
-        };
-        this.outputText += "}";
-        if (i < (numRows-1)) {this.outputText += ","+this.newLine};
-      };
-      this.outputText += "];";
-
-
-    //ASP
-    } else if (this.outputDataType === "asp") {
-      this.commentLine = "'";
-      this.commentLineEnd = "";
-      for (var i=0; i < numRows; i++) {
-        var row = dataArray[i];
-        for (var j=0; j < numColumns; j++) {
-          if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
-            var rowOutput = row[j];
-          } else {
-            var rowOutput = '"'+row[j]+'"';
-          };
-          this.outputText += 'myArray('+j+','+i+') = '+rowOutput+this.newLine;        
-        };
-      };
-      this.outputText = 'Dim myArray('+(j-1)+','+(i-1)+')'+this.newLine+this.outputText;
-
-
-    //HTML
-    } else if (this.outputDataType === "html"){
-      this.commentLine = "<!--";
-      this.commentLineEnd = "-->";
-      this.outputText += "<table>"+this.newLine;
-      this.outputText += this.indent+"<thead>"+this.newLine;
-      this.outputText += this.indent+this.indent+"<tr>"+this.newLine;
-      for (var j=0; j < numColumns; j++) {
-        this.outputText += this.indent+this.indent+this.indent+'<th class="'+headers[j]+'-cell">';          
-        this.outputText += headers[j]
-        this.outputText += '</th>'+this.newLine
-      };
-      this.outputText += this.indent+this.indent+"</tr>"+this.newLine;
-      this.outputText += this.indent+"</thead>"+this.newLine;
-      this.outputText += this.indent+"<tbody>"+this.newLine;
-      for (var i=0; i < numRows; i++) {
-        var row = dataArray[i];
-        var rowClassName = ""
-        if (i === numRows-1) {
-          rowClassName = ' class="lastRow"';
-        } else if (i === 0){
-          rowClassName = ' class="firstRow"';
-        }
-        this.outputText += this.indent+this.indent+"<tr"+rowClassName+">"+this.newLine;
-        for (var j=0; j < numColumns; j++) {
-          this.outputText += this.indent+this.indent+this.indent+'<td class="'+headers[j]+'-cell">';          
-          this.outputText += row[j]
-          this.outputText += '</td>'+this.newLine
-        };
-        this.outputText += this.indent+this.indent+"</tr>"+this.newLine;
-      };
-      this.outputText += this.indent+"</tbody>"+this.newLine;
-      this.outputText += "</table>";
-
-
-    //JSON - properties
-    } else if (this.outputDataType === "json") {
-      this.commentLine = "//";
-      this.commentLineEnd = "";
-      this.outputText += "[";
-      for (var i=0; i < numRows; i++) {
-        var row = dataArray[i];
-        this.outputText += "{";
-        for (var j=0; j < numColumns; j++) {
-          if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
-            var rowOutput = row[j];
-          } else {
-            var rowOutput = '"'+row[j]+'"';
-          };
-
-        this.outputText += ('"'+headers[j] +'"' + ":" + rowOutput );
-
-          if (j < (numColumns-1)) {this.outputText+=","};
-        };
-        this.outputText += "}";
-        if (i < (numRows-1)) {this.outputText += ","+this.newLine};
-      };
-      this.outputText += "];";
-
-
-    //JSON - array
-    } else if (this.outputDataType === "jsonArray") {
-      this.commentLine = "//";
-      this.commentLineEnd = "";
-      this.outputText += "["+this.newLine;
-      for (var i=0; i < numColumns; i++) {
-        this.outputText += this.indent+"[";
-        for (var j=0; j < numRows; j++) {
-          if ((headerTypes[i] == "int")||(headerTypes[i] == "float")) {
-            this.outputText += dataArray[j][i];
-          } else {
-            this.outputText += '"'+dataArray[j][i]+'"' ;
-          }
-          if (j < (numColumns-1)) {this.outputText+=","};
-        };
-        this.outputText += "]";
-        if (i < (numRows-1)) {this.outputText += ","+this.newLine};
-      };
-      this.outputText += this.newLine+"];";
-
-
-    //MYSQL
-    } else if (this.outputDataType === "mysql"){
-      this.commentLine = "/*";
-      this.commentLineEnd = "*/";
-      this.outputText += 'CREATE TABLE '+this.tableName+' (' + this.newLine;
-      this.outputText += this.indent+"id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"+this.newLine;
-      for (var j=0; j < numColumns; j++) {
-        var dataType = "VARCHAR(255)";
-        if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
-          dataType = headerTypes[j].toUpperCase();
-        };
-        this.outputText += this.indent+""+headers[j]+" "+dataType;
-        if (j < numColumns - 1) {this.outputText += ","};
-        this.outputText += this.newLine;
-      };
-      this.outputText += ');' + this.newLine;
-      this.outputText += "INSERT INTO "+this.tableName+" "+this.newLine+this.indent+"(";
-      for (var j=0; j < numColumns; j++) {
-        this.outputText += headers[j];
-        if (j < numColumns - 1) {this.outputText += ","};
-      };
-      this.outputText += ") "+this.newLine+"VALUES "+this.newLine;
-      for (var i=0; i < numRows; i++) {
-        this.outputText += this.indent+"(";
-        for (var j=0; j < numColumns; j++) {
-          if ((headerTypes[j] == "int")||(headerTypes[j] == "float"))  {
-            this.outputText += dataArray[i][j];
-          } else {
-            this.outputText += "'"+dataArray[i][j]+"'";
-          };
-          
-          if (j < numColumns - 1) {this.outputText += ","};
-        };
-        this.outputText += ")";
-        if (i < numRows - 1) {this.outputText += ","+this.newLine;};
-      };
-      this.outputText += ";";
     
-    //PHP
-    } else if (this.outputDataType === "php") {
-      this.commentLine = "//";
-      this.commentLineEnd = "";
-      this.outputText += "array(" + this.newLine;
-      for (var i=0; i < numRows; i++) {
-        var row = dataArray[i];
-        this.outputText += this.indent + "array(";
-        for (var j=0; j < numColumns; j++) {
-          if ((headerTypes[j] == "int")||(headerTypes[j] == "float"))  {
-            var rowOutput = row[j];
-          } else {
-            var rowOutput = '"'+row[j]+'"';
-          };          
-          this.outputText += ('"'+headers[j]+'"' + "=>" + rowOutput)
-          if (j < (numColumns-1)) {this.outputText+=","};
-        };
-        this.outputText += ")";
-        if (i < (numRows-1)) {this.outputText += ","+this.newLine};
-      };
-      this.outputText += this.newLine + ");";
-    
-    //RUBY
-    } else if (this.outputDataType === "ruby") {
-      this.commentLine = "#";
-      this.commentLineEnd = "";
-      this.outputText += "[";
-      for (var i=0; i < numRows; i++) {
-        var row = dataArray[i];
-        this.outputText += "{";
-        for (var j=0; j < numColumns; j++) {
-          if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
-            var rowOutput = row[j];
-          } else {
-            var rowOutput = '"'+row[j]+'"';
-          };         
-          this.outputText += ('"'+headers[j]+'"' + "=>" + rowOutput)
-          if (j < (numColumns-1)) {this.outputText+=","};
-        };
-        this.outputText += "}";
-        if (i < (numRows-1)) {this.outputText += ","+this.newLine};
-      };
-      this.outputText += "];";
-      
-    
-    //XML - nodes
-    } else if (this.outputDataType === "xmlNodes"){
-      
-      
-      this.commentLine = "<!--";
-      this.commentLineEnd = "-->";
-      this.outputText = '<?xml version="1.0" encoding="UTF-8"?>' + this.newLine;
-      this.outputText += "<rows>"+this.newLine;
-      for (var i=0; i < numRows; i++) {
-        var row = dataArray[i];
-        this.outputText += this.indent+"<row>"+this.newLine;
-        for (var j=0; j < numColumns; j++) {
-          this.outputText += this.indent+this.indent+'<'+headers[j]+'>';          
-          this.outputText += row[j]
-          this.outputText += '</'+headers[j]+'>'+this.newLine
-        };
-        this.outputText += this.indent+"</row>"+this.newLine;
-      };
-      this.outputText += "</rows>";
-    
-    
-    //XML properties
-    } else if (this.outputDataType === "xmlProperties"){
-      
-      this.commentLine = "<!--";
-      this.commentLineEnd = "-->";
-      this.outputText = '<?xml version="1.0" encoding="UTF-8"?>' + this.newLine;
-      this.outputText += "<rows>"+this.newLine;
-      for (var i=0; i < numRows; i++) {
-        var row = dataArray[i];
-        this.outputText += this.indent+"<row ";
-        for (var j=0; j < numColumns; j++) {
-          this.outputText += headers[j]+'=';          
-          this.outputText += '"' + row[j] + '" ';
-        };
-        this.outputText += "></row>"+this.newLine;
-      };
-      this.outputText += "</rows>";
-    }
-    
-    this.outputTextArea.val(this.getLog()+this.outputText);
+    this.outputTextArea.val(errors + this.outputText);
     
   }; //end test for existence of input text
 }
 
 
 DataConverter.prototype.insertSampleData = function() {
-  this.inputTextArea.val("NAME\tVALUE\tCOLOR\nAlan\t12\tblue\nShan\t13\tgreen\nJoe\t45\torange");
-}
-
-DataConverter.prototype.resetLog = function() {
-  this.errorLog = "";
-}
-
-DataConverter.prototype.log = function(l) {
-  this.errorLog += (String(l) + "<EOL>" );
-}
-
-DataConverter.prototype.getLog = function(l) {
-  if (this.errorLog.length > 0) {
-    var arr = this.errorLog.split("<EOL>");
-    var out = "";
-    for (var i=0; i < arr.length-1; i++) {
-      out += (this.commentLine + arr[i] + this.commentLineEnd+"\n");
-    };
-    return (this.commentLine + "ERRORS"+this.commentLineEnd+"\n" + out + "\n")
-  } else {
-    return ""
-  }
-  this.errorLog += ( this.commentLine+String(l) + "\n" );
+  this.inputTextArea.val("NAME\tVALUE\tCOLOR\tDATE\nAlan\t12\tblue\tSep. 25, 2009\nShan\t13\tgreen\tSep. 27, 2009\nJohn\t45\torange\tSep. 29, 2009\nMinna\t27\tteal\tSep. 30, 2009");
 }
 
 
-DataConverter.prototype.isNumber = function(string) {
-  if( (string == null) || isNaN( new Number(string) ) ) {
-    return false;
-  }
-  return true;
-}
