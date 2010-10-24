@@ -109,12 +109,15 @@ var CSVParser = {
       var numFloats = 0;
       var numInts = 0;
       for (var r=0; r < numRowsToTest; r++) {
-        if (CSVParser.isNumber(dataArray[r][i])) {
-          numInts++
-          if (String(dataArray[r][i]).indexOf(".") > 0) {
-            numFloats++
-          }
+        if (dataArray[r]) {
+          if (CSVParser.isNumber(dataArray[r][i])) {
+            numInts++
+            if (String(dataArray[r][i]).indexOf(".") > 0) {
+              numFloats++
+            }
+          };
         };
+        
       };
       
       if ((numInts / numRowsToTest) > threshold){
