@@ -1,35 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!doctype html>
+<html lang="en" manifest="cache.manifest">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta charset="utf-8">
+  <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+       Remove this if you use the .htaccess -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Mr. Data Converter</title>
-  <meta name="generator" content="TextMate http://macromates.com/">
+  <link type="text/plain" rel="author" href="humans.txt" />
   <meta name="author" content="Shan Carter">
-  <!-- Date: 2010-08-26 -->
-  
-  <link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" title="no title" charset="utf-8">
-  <link rel="stylesheet" href="css/converter.css" type="text/css" media="screen" title="no title" charset="utf-8">
-  
-  <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/CSVParser.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/DataGridRenderer.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/converter.js" type="text/javascript" charset="utf-8"></script>
-  
-  <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript" charset="utf-8"></script> -->
-  
-  <script type="text/javascript">
-    
-
-
-  </script>
-  
-  
+  <link rel="stylesheet" href="css/reset.css" type="text/css">
+  <link rel="stylesheet" href="css/converter.css" type="text/css">
 </head>
 <body>
   <div id='base'>
-    <div id='header'>
+    <header>
       <div id="description">
         <h1>Mr. Data Converter</h1>
         <p>I will convert your Excel data into one of several web-friendly formats, including HTML, JSON and XML.</p>
@@ -46,116 +30,32 @@
             <p>Transform: <label><input class="settingsElement" type="radio" name="headerModifications" value="downcase" id='headersDowncase' /> downcase</label>
             <label><input class="settingsElement" type="radio" name="headerModifications" id='headersUpcase' value="upcase" /> upcase</label>
             <label><input class="settingsElement" type="radio" name="headerModifications" id='headersNoTransform' value="none" checked /> none</label></p>
-            <!--
-            <p>Convert spaces to: <br><label><input class="settingsElement" type="radio" name="spaceType" value="underscore" /> underscores</label>
-              <label><input class="settingsElement" type="radio" name="spaceType" value="hyphen" /> hyphens</label>
-              <label><input class="settingsElement" type="radio" name="spaceType" value="none" /> no change</label></p>
-                -->
           </div>
           
           <p><label><input class="settingsElement" type="checkbox" name="some_name" value="" id="includeWhiteSpaceCB" checked /> Include white space in output</label></p>
           <div class="settingsGroup">
             <p>Indent with: <label><input class="settingsElement" type="radio" name="indentType" value="tabs" id='includeWhiteSpaceTabs'/> tabs</label> <label><input class="settingsElement" type="radio" name="indentType" value="spaces" id='includeWhiteSpaceSpaces' checked/> spaces</label></p>
           </div>
-
-            
-            
-
         </form>
-        
-      
       </div>
-    </div>
-  
-  
-  
+    </header>
     <div id='converter' class=''>
-
     </div>
-  
   </div>
-  
-  
-  <script type="text/javascript" charset="utf-8">
-    var widthOffset = 345;
-    var heightOffset = 35
-    
-    var d = new DataConverter('converter');
-    
-    var sidebar = $('#header');
-    
-    var win = $(window);
-    var w = win.width() - widthOffset;
-    var h = win.height() - heightOffset;
-    
-    d.create(w,h);
-      
-    $(".settingsElement").change(updateSettings);
-    
-    $(window).bind('resize',function() {  
-      
-        w = win.width() - widthOffset;
-        h = win.height() - heightOffset;
-        d.resize(w,h);
-        sidebar.height(h);
-      
-      });
-    
-    //tracking...
-    // var pageTracker = _gat._getTracker("UA-1923845-1");
-    
-    
-    function updateSettings (evt) {
-      var _gaq = _gaq || [];
-      if (evt) {
-        _gaq.push(['_trackEvent', 'Settings',evt.currentTarget.id ]);
-      };
-      
-      d.includeWhiteSpace = $('#includeWhiteSpaceCB').attr('checked');
-      
-      if (d.includeWhiteSpace) {
-        $("input[name=indentType]").removeAttr("disabled");
-        var indentType = $('input[name=indentType]:checked').val();
-        if (indentType === "tabs") {
-          d.indent = "\t";
-        } else if (indentType === "spaces") {
-          d.indent = "  "
-        }
-      } else {
-        $("input[name=indentType]").attr("disabled", "disabled");
-      }
-      
-      d.headersProvided = $('#headersProvidedCB').attr('checked');
-      
-      if (d.headersProvided) {
-        $("input[name=headerModifications]").removeAttr("disabled");
-        
-        var hm = $('input[name=headerModifications]:checked').val();
-        
-        if (hm === "downcase") {
-          d.downcaseHeaders = true;
-          d.upcaseHeaders = false;
-        } else if (hm === "upcase") {
-          d.downcaseHeaders = false;
-          d.upcaseHeaders = true;
-        } else if (hm === "none") {
-          d.downcaseHeaders = false;
-          d.upcaseHeaders = false;
-        }
-      } else {
-        $("input[name=headerModifications]").attr("disabled", "disabled");
-      }
-      
-      d.useUnderscores = true;
-      
-      
-      d.convert();
-    };
-    
-    updateSettings();
-    
-  </script>
 
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script> 
+  <script>window.jQuery || document.write(unescape('%3Cscript src="js/jquery-1.4.2.min.js"%3E%3C/script%3E'))</script>
+  <script src="js/CSVParser.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/DataGridRenderer.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/converter.js" type="text/javascript" charset="utf-8"></script>
+  
+  <!-- mathiasbynens.be/notes/async-analytics-snippet Change UA-XXXXX-X to be your site's ID -->
+  <script>
+    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+  </script>
   
 </body>
 </html>

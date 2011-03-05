@@ -1,0 +1,57 @@
+# handle Application Cache Manifest
+AddType text/cache-manifest .manifest
+<Files "cache.manifest">
+ExpiresActive On
+ExpiresDefault "access"
+</Files>
+
+# force deflate for mangled headers developer.yahoo.com/blogs/ydn/posts/2010/12/pushing-beyond-gzipping/
+<IfModule mod_setenvif.c>
+  <IfModule mod_headers.c>
+    SetEnvIfNoCase ^(Accept-EncodXng|X-cept-Encoding|X{15}|~{15}|-{15})$ ^((gzip|deflate)\s,?\s(gzip|deflate)?|X{4,13}|~{4,13}|-{4,13})$ HAVE_Accept-Encoding
+    RequestHeader append Accept-Encoding "gzip,deflate" env=HAVE_Accept-Encoding
+  </IfModule>
+</IfModule>
+<IfModule filter_module>
+  FilterDeclare   COMPRESS
+  FilterProvider  COMPRESS  DEFLATE resp=Content-Type /text/(html|css|javascript|plain|x(ml|-component))/
+  FilterProvider  COMPRESS  DEFLATE resp=Content-Type /application/(javascript|json|xml|x-javascript)/
+  FilterChain     COMPRESS
+  FilterProtocol  COMPRESS  change=yes;byteranges=no
+</IfModule>
+
+<IfModule !mod_filter.c>
+  # Legacy versions of Apache
+  AddOutputFilterByType DEFLATE text/html text/plain text/css application/json
+  AddOutputFilterByType DEFLATE text/javascript application/javascript application/x-javascript 
+  AddOutputFilterByType DEFLATE text/xml application/xml text/x-component
+</IfModule>
+
+
+<IfModule mod_expires.c>
+  ExpiresActive on
+# Perhaps better to whitelist expires rules? Perhaps.
+  ExpiresDefault                          "access plus 1 month"
+  ExpiresByType text/html                 "access plus 0 seconds"
+  ExpiresByType image/png                 "access plus 1 month"
+  ExpiresByType text/css                  "access plus 2 months"
+  ExpiresByType application/javascript    "access plus 2 months"
+  ExpiresByType text/javascript           "access plus 2 months"
+  <IfModule mod_headers.c>
+    Header append Cache-Control "public"
+  </IfModule>
+</IfModule>
+
+FileETag None
+
+# use utf-8 encoding for anything served text/plain or text/html
+AddDefaultCharset utf-8
+
+# force utf-8 for a number of file formats
+AddCharset utf-8 .html .css .js .xml .json .rss
+
+# Block access to "hidden" directories whose names begin with a period. This
+# includes directories used by version control systems such as Subversion or Git.
+<IfModule mod_rewrite.c>
+  RewriteRule "(^|/)\." - [F]
+</IfModule>
