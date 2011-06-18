@@ -17,18 +17,18 @@ body {
 
 /*header*/
 
-#header {
+header {
 	
 	color: #FFF;
 	width: 300px;
 	overflow: auto;
 }
-#header a {
+header a {
 	color: #99FFFF;
 /*  opacity: 0.7;*/
 }
 
-#header p {
+header p {
 	color: #CCC;
 }
 
