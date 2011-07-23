@@ -13,8 +13,8 @@ function DataConverter(nodeId) {
   // PUBLIC PROPERTIES
   //---------------------------------------
   
-  this.nodeId             = nodeId;
-  this.node               = $("#"+nodeId);
+  this.nodeId                 = nodeId;
+  this.node                   = $("#"+nodeId);
   
   this.outputDataTypes        = [ 
                                 {"text":"Actionscript",           "id":"as",               "notes":""},
@@ -32,24 +32,24 @@ function DataConverter(nodeId) {
   this.outputDataType         = "xml";
   
   this.columnDelimiter        = "\t";
-  this.rowDelimiter            = "\n";
+  this.rowDelimiter           = "\n";
   
   this.inputTextArea          = {};
   this.outputTextArea         = {};
   
-  this.inputHeader           = {};
-  this.outputHeader         = {};
-  this.dataSelect           = {};
+  this.inputHeader            = {};
+  this.outputHeader           = {};
+  this.dataSelect             = {};
   
-  this.inputText            = "";
-  this.outputText           = "";
+  this.inputText              = "";
+  this.outputText             = "";
   
-  this.newLine            = "\n";
-  this.indent             = "  ";
+  this.newLine                = "\n";
+  this.indent                 = "  ";
   
-  this.commentLine        = "//";
-  this.commentLineEnd        = "";
-  this.tableName          = "MrDataConverter"
+  this.commentLine            = "//";
+  this.commentLineEnd         = "";
+  this.tableName              = "MrDataConverter"
   
   this.useUnderscores         = true;
   this.headersProvided        = true;
@@ -97,7 +97,7 @@ DataConverter.prototype.create = function(w,h) {
   //   self.convert();
   // });
   
-  this.outputTextArea.click(function(evt){this.select();console.log("click")});
+  this.outputTextArea.click(function(evt){this.select();});
   
   
   $("#insertSample").bind('click',function(evt){
@@ -141,15 +141,17 @@ DataConverter.prototype.convert = function() {
   //make sure there is input data before converting...
   if (this.inputText.length > 0) {
     
-    if (this.includeWhiteSpace === true) {
+    if (this.includeWhiteSpace) {
       this.newLine = "\n";
+      console.log("yes")
     } else {
       this.indent = "";
       this.newLine = "";
+      console.log("no")
     }
     
     CSVParser.resetLog();
-    var parseOutput = CSVParser.parse(this.inputText, this.headersProvided);
+    var parseOutput = CSVParser.parse(this.inputText, this.headersProvided, this.delimiter, this.downcaseHeaders, this.upcaseHeaders);
     
     var dataGrid = parseOutput.dataGrid;
     var headerNames = parseOutput.headerNames;
@@ -157,7 +159,6 @@ DataConverter.prototype.convert = function() {
     var errors = parseOutput.errors;
       
     this.outputText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
-    
     
     
     this.outputTextArea.val(errors + this.outputText);

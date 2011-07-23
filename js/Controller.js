@@ -33,7 +33,7 @@ $(document).ready(function(){
     };
 
     d.includeWhiteSpace = $('#includeWhiteSpaceCB').attr('checked');
-
+    
     if (d.includeWhiteSpace) {
       $("input[name=indentType]").removeAttr("disabled");
       var indentType = $('input[name=indentType]:checked').val();
@@ -52,7 +52,6 @@ $(document).ready(function(){
       $("input[name=headerModifications]").removeAttr("disabled");
 
       var hm = $('input[name=headerModifications]:checked').val();
-
       if (hm === "downcase") {
         d.downcaseHeaders = true;
         d.upcaseHeaders = false;
@@ -66,10 +65,11 @@ $(document).ready(function(){
     } else {
       $("input[name=headerModifications]").attr("disabled", "disabled");
     }
-
+    
+    d.delimiter = $('input[name=delimiter]:checked').val();
+    
     d.useUnderscores = true;
-
-
+    
     d.convert();
   };
 
