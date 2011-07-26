@@ -143,11 +143,11 @@ DataConverter.prototype.convert = function() {
     
     if (this.includeWhiteSpace) {
       this.newLine = "\n";
-      console.log("yes")
+      // console.log("yes")
     } else {
       this.indent = "";
       this.newLine = "";
-      console.log("no")
+      // console.log("no")
     }
     
     CSVParser.resetLog();
