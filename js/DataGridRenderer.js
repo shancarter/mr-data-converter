@@ -151,7 +151,7 @@ var DataGridRenderer = {
       outputText += "}";
       if (i < (numRows-1)) {outputText += ","+newLine};
     };
-    outputText += "];";
+    outputText += "]";
     
     return outputText;
   },
@@ -182,7 +182,7 @@ var DataGridRenderer = {
       outputText += "]";
       if (i < (numColumns-1)) {outputText += ","+newLine};
     };
-    outputText += newLine+"};";
+    outputText += newLine+"}";
     
     
     return outputText;
@@ -215,7 +215,7 @@ var DataGridRenderer = {
       outputText += "]";
       if (i < (numRows-1)) {outputText += ","+newLine};
     };
-    outputText += newLine+"];";
+    outputText += newLine+"]";
     
     
     return outputText;
