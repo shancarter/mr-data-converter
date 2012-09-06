@@ -141,7 +141,7 @@ var DataGridRenderer = {
         if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
           var rowOutput = row[j] || "null";
         } else {
-          var rowOutput = '"' + ( row[j] || "" ) + '"';
+          var rowOutput = '"' + ( row[j].replace(/\"/g,"\\\"") || "" ) + '"';
         };
   
       outputText += ('"'+headerNames[j] +'"' + ":" + rowOutput );
