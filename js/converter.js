@@ -28,7 +28,8 @@ function DataConverter(nodeId) {
                                 {"text":"Python - Dict",          "id":"python",           "notes":""},
                                 {"text":"Ruby",                   "id":"ruby",             "notes":""},
                                 {"text":"XML - Properties",       "id":"xmlProperties",    "notes":""},
-                                {"text":"XML - Nodes",            "id":"xml",              "notes":""}];
+                                {"text":"XML - Nodes",            "id":"xml",              "notes":""},
+                                {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":""}];
   this.outputDataType         = "xml";
   
   this.columnDelimiter        = "\t";
