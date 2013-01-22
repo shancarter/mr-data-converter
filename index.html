@@ -1,35 +1,54 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Mr. Data Converter</title>
+    <meta name="author" content="Shan Carter">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/converter.css">
+    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    <!-- typekit -->
+    <script type="text/javascript">
+      (function() {
+        var config = {
+          kitId: 'jfd1lwe',
+          scriptTimeout: 3000
+        };
+        var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Hello, I’m Mr. Data Converter</h1>
+      <p class="description">I will convert your tabular data into one of several web-friendly formats, including HTML, JSON and XML.</p>
+
+    </div>
 
 
-<html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Mr. Data Converter</title>
-  <meta name="author" content="Shan Carter">
-  <!-- Date: 2010-08-26 -->
-
-  <link rel="stylesheet" href="css/converter.css" type="text/css" media="screen" title="no title" charset="utf-8">
-
-  <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/CSVParser.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/DataGridRenderer.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/converter.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/Controller.js" type="text/javascript" charset="utf-8"></script>
-
-
-
-</head>
-<body>
-  <div id='base'>
-    <div id='header'>
-      <div id="description">
-        <h1>Mr. Data Converter</h1>
-        <p>I will convert your Excel data into one of several web-friendly formats, including HTML, JSON and XML.</p>
-        <p>Email me at <a href="mailto:mr.dataconverter@gmail.com?Subject=Suggestions">mr.dataconverter@gmail.com</a>.<br>
-        News and updates available via <a href="https://twitter.com/mrdataconverter">Twitter</a>.<br>
-        Source available on <a href="http://github.com/shancarter/Mr-Data-Converter">github</a>.</p>
+    <div id="converter">
+      <div class="input">
+        <div class="controls">
+          <h3>Input CSV or tab-delimited data.</h3>
+        </div>
+        <textarea></textarea>
       </div>
+      <div class="output">
+        <div class="controls">
+          <h3>Output as <select></select></h3>
+
+        </div>
+        <textarea></textarea>
+      </div>
+    </div>
+
+    <div class="details">
+      <p>News and updates available via <a href="https://twitter.com/mrdataconverter">Twitter</a>.
+      Source available on <a href="http://github.com/shancarter/Mr-Data-Converter">github</a>.</p>
       <div id='settings'>
         <h3>Settings</h3>
         <form id='settingsForm'>
@@ -44,30 +63,33 @@
             <label><input class="settingsElement" type="radio" name="headerModifications" id='headersUpcase' value="upcase" /> upcase</label>
             <label><input class="settingsElement" type="radio" name="headerModifications" id='headersNoTransform' value="none" checked /> none</label></p>
           </div>
-
           <p><label><input class="settingsElement" type="checkbox" name="some_name" value="" id="includeWhiteSpaceCB" checked /> Include white space in output</label></p>
           <div class="settingsGroup">
             <p>Indent with: <label><input class="settingsElement" type="radio" name="indentType" value="tabs" id='includeWhiteSpaceTabs'/> tabs</label> <label><input class="settingsElement" type="radio" name="indentType" value="spaces" id='includeWhiteSpaceSpaces' checked/> spaces</label></p>
           </div>
-
-
-
-
         </form>
-
-
       </div>
     </div>
 
 
 
-    <div id='converter' class=''>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+      <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
+      <script src="js/plugins.js"></script>
+      <script src="js/main.js"></script>
 
-    </div>
+      <script src="js/vendor/d3.min.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/CSVParser.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/DataGridRenderer.js" type="text/javascript" charset="utf-8"></script>
+      <!--<script src="js/converter.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/Controller.js" type="text/javascript" charset="utf-8"></script>-->
 
-  </div>
-
-
-
-</body>
+      <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+      <script>
+          var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+          (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+          g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+          s.parentNode.insertBefore(g,s)}(document,'script'));
+      </script>
+  </body>
 </html>
