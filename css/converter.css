@@ -1,0 +1,174 @@
+/*
+Copyright (c) 2010, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 3.1.2
+build: 56
+*/
+html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}
+
+
+/*
+Mr. Data Converter styles
+*/
+
+
+html {
+	font-family: Helvetica, Arial;
+	background: #141414 url('../images/background.png') no-repeat;
+}
+
+body {
+  overflow: hidden;
+}
+
+#base {
+  padding: 15px;
+  position: relative;
+}
+
+
+
+
+/*header*/
+
+#header {
+	
+	color: #FFF;
+	width: 300px;
+	overflow: auto;
+}
+#header a {
+	color: #99FFFF;
+/*  opacity: 0.7;*/
+}
+
+#header p {
+	color: #CCC;
+}
+
+#description p {
+	margin-bottom: 18px;
+}
+
+#header h3 {
+  font-size: 12px;
+  margin: 15px 0 10px 0;
+  padding: 15px 0 0 0;
+  border-top: solid 1px #CCC;
+  text-transform: uppercase;
+}
+
+h1 {
+  color: #DEDEDE;
+  font-family: palatino, Georgia;
+	font-size: 40px;
+	line-height: 40px;
+	font-weight: bold;
+	margin-bottom: 8px;
+	text-shadow: 1px 1px 3px #000;
+}
+
+p {
+	font-size: 15px;
+	line-height: 22px;
+}
+
+/*settings*/
+#settings {
+
+}
+
+
+#settings h5 {
+  font-size: 13px;
+  line-height: 24px;
+}
+
+#settings p {
+  font-size: 13px;
+  line-height: 24px;
+}
+
+
+#settings .settingsGroup p {
+  padding-left: 20px;
+}
+
+/*converter*/
+
+#converter {
+	position: absolute;
+	top: 15px;
+	left: 330px;
+	border-color:#000000 #666666 #666666 #000000;
+  border-style:solid;
+  border-width:2px;
+}
+
+
+p.dataHeaders{
+	height: 30px;
+	padding: 15px 15px 10px;
+}
+
+.textInputs {
+  
+  background-color: #C9B7C7;
+  border: none;
+  color: #664D63;
+  font-family: monospace;
+  font-size: 12px;
+  height: 300px;
+  line-height: 18px;
+  padding: 10px;
+  text-shadow: #DED4DD 0px 1px 0px;
+  -webkit-box-shadow: #333 1px 1px 10px inset;
+  -moz-box-shadow: #333 1px 1px 10px inset;
+}
+
+
+.groupHeader{
+  width: 100%;
+  color: #FFF;
+  height: 45px;
+  background-color:#5F255C;
+  background-image: url('../images/header_gradient.png');
+}
+
+
+p.groupHeadline {
+  padding: 10px;
+}
+.groupHeader span.subhead {
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+.groupHeader a {
+  color: #FF66FF;
+}
+
+
+#outputGroup {
+
+}
+
+#dataInput {
+	
+}
+
+#dataOutput {
+
+	
+}
+#dataSelector {
+	width: 200px;
+	line-height: 22px;
+	font-size: 16px;
+	padding: 2px 0px;
+}
+
+#dataSelector option {
+
+}
