@@ -30,7 +30,7 @@ function DataConverter(nodeId) {
                                 {"text":"XML - Properties",       "id":"xmlProperties",    "notes":""},
                                 {"text":"XML - Nodes",            "id":"xml",              "notes":""},
                                 {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":""}];
-  this.outputDataType         = "xml";
+  this.outputDataType         = "json";
 
   this.columnDelimiter        = "\t";
   this.rowDelimiter           = "\n";
@@ -50,7 +50,7 @@ function DataConverter(nodeId) {
 
   this.commentLine            = "//";
   this.commentLineEnd         = "";
-  this.tableName              = "MrDataConverter"
+  this.tableName              = "MrDataConverter";
 
   this.useUnderscores         = true;
   this.headersProvided        = true;
@@ -90,14 +90,6 @@ DataConverter.prototype.create = function(w,h) {
 
   this.dataSelect = this.outputHeader.find("#dataSelector");
 
-
-  //add event listeners
-
-  // $("#convertButton").bind('click',function(evt){
-  //   evt.preventDefault();
-  //   self.convert();
-  // });
-
   this.outputTextArea.click(function(evt){this.select();});
 
 
@@ -122,11 +114,6 @@ DataConverter.prototype.create = function(w,h) {
   this.resize(w,h);
 }
 
-DataConverter.prototype.resize = function(w,h) {
-
-
-}
-
 DataConverter.prototype.convert = function() {
 
   this.inputText = this.inputTextArea.val();
@@ -138,11 +125,9 @@ DataConverter.prototype.convert = function() {
 
     if (this.includeWhiteSpace) {
       this.newLine = "\n";
-      // console.log("yes")
     } else {
       this.indent = "";
       this.newLine = "";
-      // console.log("no")
     }
 
     CSVParser.resetLog();
@@ -154,7 +139,6 @@ DataConverter.prototype.convert = function() {
     var errors = parseOutput.errors;
 
     this.outputText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
-
 
     this.outputTextArea.val(errors + this.outputText);
 
