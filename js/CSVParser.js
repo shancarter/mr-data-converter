@@ -7,6 +7,8 @@
 //  CSV Parsing Function from Ben Nadel, http://www.bennadel.com/blog/1504-Ask-Ben-Parsing-CSV-Strings-With-Javascript-Exec-Regular-Expression-Command.htm
 
 
+var isDecimal_re     = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/;
+
 var CSVParser = {
 
   //---------------------------------------
@@ -26,7 +28,7 @@ var CSVParser = {
   //---------------------------------------
   //var parseOutput = CSVParser.parse(this.inputText, this.headersProvided, this.delimiter, this.downcaseHeaders, this.upcaseHeaders);
 
-  parse: function (input, headersIncluded, delimiterType, downcaseHeaders, upcaseHeaders) {
+  parse: function (input, headersIncluded, delimiterType, downcaseHeaders, upcaseHeaders, decimalSign) {
 
     var dataArray = [];
 
@@ -127,6 +129,10 @@ var CSVParser = {
       var numInts = 0;
       for (var r=0; r < numRowsToTest; r++) {
         if (dataArray[r]) {
+          //replace comma with dot if comma is decimal separator
+          if(decimalSign='comma' && isDecimal_re.test(dataArray[r][i])){
+            dataArray[r][i] = dataArray[r][i].replace(",", ".");
+          }
           if (CSVParser.isNumber(dataArray[r][i])) {
             numInts++
             if (String(dataArray[r][i]).indexOf(".") > 0) {

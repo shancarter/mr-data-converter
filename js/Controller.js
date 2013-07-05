@@ -67,6 +67,7 @@ $(document).ready(function(){
     }
     
     d.delimiter = $('input[name=delimiter]:checked').val();
+    d.decimal = $('input[name=decimal]:checked').val();
     
     d.useUnderscores = true;
     
