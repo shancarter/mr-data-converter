@@ -341,7 +341,42 @@ var DataGridRenderer = {
     
     return outputText;
   },
-  
+
+    //---------------------------------------
+    // Gherkin
+    //---------------------------------------
+    gherkin: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+        //inits...
+        var commentLine = "#";
+        var commentLineEnd = "";
+        var outputText = "";
+        var numRows = dataGrid.length;
+        var numColumns = headerNames.length;
+        var tableName = "MrDataConverter"
+
+        //begin render loop
+        outputText += "|";
+        for (var j=0; j < numColumns; j++) {
+            outputText += headerNames[j]
+            outputText += "\t|"
+        }
+        outputText += "\n"
+        for (var i=0; i < numRows; i++) {
+            var row = dataGrid[i];
+            outputText += "|";
+            for (var j=0; j < numColumns; j++) {
+                if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
+                    var rowOutput = row[j] || "nil"
+                } else {
+                    var rowOutput = '"'+(row[j] || "")+'"';
+                };
+                outputText += ( rowOutput +"\t|")
+            };
+            if (i < (numRows-1)) {outputText += "\n"};
+        };
+        return outputText;
+    },
+
   
   //---------------------------------------
   // Ruby

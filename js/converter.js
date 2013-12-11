@@ -26,6 +26,7 @@ function DataConverter(nodeId) {
                                 {"text":"MySQL",                  "id":"mysql",            "notes":""},
                                 {"text":"PHP",                    "id":"php",              "notes":""},
                                 {"text":"Python - Dict",          "id":"python",           "notes":""},
+                                {"text":"Gherkin",                "id":"gherkin",          "notes":""},
                                 {"text":"Ruby",                   "id":"ruby",             "notes":""},
                                 {"text":"XML - Properties",       "id":"xmlProperties",    "notes":""},
                                 {"text":"XML - Nodes",            "id":"xml",              "notes":""},
