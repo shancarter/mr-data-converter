@@ -266,7 +266,7 @@ var CSVParser = {
         } else {
 
           // We found a non-quoted value.
-          var strMatchedValue = arrMatches[ 3 ];
+          var strMatchedValue = '"' + arrMatches[ 3 ] + '"';
 
         }
 
