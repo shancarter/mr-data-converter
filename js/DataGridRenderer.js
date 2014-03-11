@@ -434,6 +434,7 @@ var DataGridRenderer = {
         value = value.replace(/"/g, '&quot;');
         value = value.replace(/</g, '&lt;');
         value = value.replace(/>/g, '&gt;');
+        value = value.replace(/\\n/g, '&#10;');
         outputText += '"' + value + '" ';
       };
       outputText += "></row>"+newLine;
