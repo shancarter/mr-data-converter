@@ -429,7 +429,12 @@ var DataGridRenderer = {
       outputText += indent+"<row ";
       for (var j=0; j < numColumns; j++) {
         outputText += headerNames[j]+'=';          
-        outputText += '"' + row[j] + '" ';
+        value = row[j];
+        value = value.replace(/&/g, '&amp;');
+        value = value.replace(/"/g, '&quot;');
+        value = value.replace(/</g, '&lt;');
+        value = value.replace(/>/g, '&gt;');
+        outputText += '"' + value + '" ';
       };
       outputText += "></row>"+newLine;
     };
