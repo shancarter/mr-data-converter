@@ -429,6 +429,7 @@ var DataGridRenderer = {
       outputText += indent+"<row ";
       for (var j=0; j < numColumns; j++) {
         outputText += headerNames[j]+'=';          
+        // TODO: consider extracting method for re-use in other XML converters
         value = row[j];
         value = value.replace(/&/g, '&amp;');
         value = value.replace(/"/g, '&quot;');
