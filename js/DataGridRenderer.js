@@ -155,6 +155,89 @@ var DataGridRenderer = {
     
     return outputText;
   },
+
+  //---------------------------------------
+  // GEOJSON properties
+  //---------------------------------------
+  
+  geojson: function (dataGrid, headerNames, headerTypes, indentStr, newLineStr) {
+
+    // utils
+    var repeat = function(s,n) {
+      return new Array(n + 1).join(s);
+    }
+
+    //inits...
+    var commentLine = '//';
+    var commentLineEnd = '';
+    var numRows = dataGrid.length;
+    var numColumns = headerNames.length;
+    var outputText = '{' + newLineStr +
+              indentStr + '"type": "FeatureCollection",' + newLineStr +
+              indentStr + '"features": [';
+    
+    //begin render loop
+    for (var i=0; i < numRows; i++) {
+      var row = dataGrid[i];
+      var coordinates = [];
+
+      outputText += ((i > 0) ? ", " : "") +
+       '{' + newLineStr +
+       repeat(indentStr,2) + '"type": "Feature",' + newLineStr +
+       repeat(indentStr,2) + '"properties": {';
+
+      for (var j=0; j < numColumns; j++) {
+
+        if ((headerNames[j] == "lat")||(headerNames[j] == "latitude")) {
+
+          coordinates[1] = row[j] || null;
+
+        } else if ((headerNames[j] == "long")||(headerNames[j] == "longitude")) {
+
+          coordinates[0] = row[j] || null;
+
+        } else {
+
+          if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
+
+            var rowOutput = row[j] || "null";
+
+          } else {
+
+            var rowOutput = '"' + ( row[j] || "" ) + '"';
+
+          };
+
+          outputText += ((j > 0) ? "," : "") + newLineStr +
+            repeat(indentStr,3) + ('"'+ headerNames[j] +'"' + ":" + rowOutput );
+
+        };
+
+        if (j >= (numColumns-1)) {
+
+          outputText += newLineStr + repeat(indentStr,2) +"}";
+
+        };
+
+        if (coordinates[0] && coordinates[1]) {
+
+           outputText += "," + newLineStr +
+            repeat(indentStr,2) + '"geometry": {' + newLineStr +
+              repeat(indentStr,3) + '"type": "Point",' + newLineStr +
+              repeat(indentStr,3) + '"coordinates": [' + coordinates[0] + ',' + coordinates[1] + ']' + newLineStr +
+            repeat(indentStr,2) + '}';
+
+        };
+
+      };
+
+      outputText += newLineStr + indentStr + "}";
+    };
+
+    outputText += "]" + newLineStr + "}";
+    
+    return outputText;
+  },
   
   //---------------------------------------
   // JSON Array of Columns
