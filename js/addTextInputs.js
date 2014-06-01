@@ -4,8 +4,9 @@ function addTextInputs(targets){
   //var MaxInputs       = 8; //maximum input boxes allowed
   var InputsWrapper   = $("#InputsWrapper"); //Input boxes wrapper ID
   
+  $(InputsWrapper).html("");
   for (i = 0; i < targets.length; i++) {
-    $(InputsWrapper).html('<input type="text" id="target_' + i.toString() + '" value="' + targets[i] + '" /><input type="select" id="mapping_' + i.toString() + '" />');
+    $(InputsWrapper).append('<input type="text" id="target_' + i.toString() + '" value="' + targets[i] + '" /><input type="select" id="mapping_' + i.toString() + '" />');
   };
   return false;
   
