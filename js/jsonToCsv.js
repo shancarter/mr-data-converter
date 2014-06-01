@@ -6,7 +6,7 @@ function GetHeaders(jsonArray) {
         var obj = jsonArray[i];
         for (var j in obj) {
             if (line != '') line += ','
-            line += j;
+            line += j.toString();
         }
     }
     return line;
@@ -25,7 +25,7 @@ function ConvertToCSV(objArray) {
         var line = '';
         for (var index in array[i]) {
             if (line != '') line += ','
-            line += array[i][index];
+            line += array[i][index].toString();
         }
 
         str += line + '\r\n';
