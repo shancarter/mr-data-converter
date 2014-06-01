@@ -166,7 +166,7 @@ DataConverter.prototype.convert = function() {
     var mapping = [];
     var targets = decodeURIComponent(getUrlVars()["targets"]);
     var transformedText = applyMap(targets,mapping,intermediateText);
-    this.outputText = targets; //transformedText;
+    this.outputText = intermediateText; //transformedText;
 
     this.outputTextArea.val(errors + this.outputText);
     this.headerNames = headerNames;
