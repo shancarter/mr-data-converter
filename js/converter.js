@@ -45,6 +45,7 @@ function DataConverter(nodeId) {
 
   this.inputText              = "";
   this.outputText             = "";
+  this.headerNames            = "";
 
   this.newLine                = "\n";
   this.indent                 = "  ";
@@ -164,7 +165,7 @@ DataConverter.prototype.convert = function() {
 
 
     this.outputTextArea.val(errors + this.outputText);
-    return headerNames;
+    this.headerNames = headerNames;
   }; //end test for existence of input text
 }
 
