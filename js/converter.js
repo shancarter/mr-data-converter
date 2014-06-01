@@ -167,6 +167,7 @@ DataConverter.prototype.convert = function() {
     
     var mapping = [];
     var targets = decodeURIComponent(getUrlVars()["targets"]).split(',');
+    addTextInputs(targets);
     var transformedText = JSON.stringify(applyMap(targets,mapping,JSON.parse(intermediateText)));
     
     if (this.outputDataType == "json") {
