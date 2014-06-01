@@ -1,28 +1,19 @@
 describe('applyMap',function(){
-    it('reverses columns correctly',function(){
-        var targets = ['A','B','C'];
-        var mapping = [{'A':'C'}, {'C':'A'}];
+    it('swaps',function(){
+        var targets = ['X','Y','Z'];
+        var mapping = [{'A':'Z'}];
         var input = [{'A':1,'B':2,'C':3}];
         var output = applyMap(targets, mapping,input);
-        var expected = [{'A':3,'B':2,'C':1}];
+        var expected = [{'Z':1}];
         expect(output).toEqual(expected);
     });
 
-    it('ignores non mapped fields',function(){
-        var targets = ['A','C'];
-        var mapping = [{'A':'C'}, {'C':'A'}];
-        var input = [{'A':1,'B':2,'C':3}];
+    it('swaps full and in order, leaving out non-targets',function(){
+        var targets = ['X','Y','Z'];
+        var mapping = [{'A':'Z'}, {'C':'Y'}, {'B':'X'}];
+        var input = [{'A':1,'B':2,'C':3,'D':4}];
         var output = applyMap(targets, mapping,input);
-        var expected = [{'A':3,'C':1}];
-        expect(output).toEqual(expected);
-    });
-
-    it('not bi-directional mapping',function(){
-        var targets = ['A','B','C'];
-        var mapping = [{'A':'C'}];
-        var input = [{'A':1,'B':2,'C':3}];
-        var output = applyMap(targets, mapping,input);
-        var expected = [{'A':3,'B':2,'C':3}];
+        var expected = [{'X':2, 'Y':3, 'Z':1}];
         expect(output).toEqual(expected);
     });
 
@@ -31,7 +22,7 @@ describe('applyMap',function(){
         var mapping = [{'A':'C'}];
         var input = [{'A':1,'B':2,'C':3}];
         var output = applyMap(targets, mapping,input);
-        var expected = [];
+        var expected = [{}];
         expect(output).toEqual(expected);
     });
 });
