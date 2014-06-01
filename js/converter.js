@@ -4,7 +4,8 @@
 //
 //  Created by Shan Carter on 2010-09-01.
 //
-
+// Modified by David Young on 2014-05-31.
+//
 
 
 function DataConverter(nodeId) {
@@ -44,6 +45,7 @@ function DataConverter(nodeId) {
 
   this.inputText              = "";
   this.outputText             = "";
+  this.headerNames            = "";
 
   this.newLine                = "\n";
   this.indent                 = "  ";
@@ -163,7 +165,7 @@ DataConverter.prototype.convert = function() {
 
 
     this.outputTextArea.val(errors + this.outputText);
-
+    this.headerNames = headerNames;
   }; //end test for existence of input text
 }
 
