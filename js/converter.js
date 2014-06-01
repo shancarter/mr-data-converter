@@ -4,7 +4,8 @@
 //
 //  Created by Shan Carter on 2010-09-01.
 //
-
+// Modified by David Young on 2014-05-31.
+//
 
 
 function DataConverter(nodeId) {
@@ -163,7 +164,7 @@ DataConverter.prototype.convert = function() {
 
 
     this.outputTextArea.val(errors + this.outputText);
-
+    return headerNames;
   }; //end test for existence of input text
 }
 
