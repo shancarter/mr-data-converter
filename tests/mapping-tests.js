@@ -30,7 +30,7 @@ describe('applyMap',function(){
         var targets = [];
         var mapping = [{'A':'C'}];
         var input = [{'A':1,'B':2,'C':3}];
-        var output = applymap(targets, mapping,input);
+        var output = applyMap(targets, mapping,input);
         var expected = [];
         expect(output).toEqual(expected);
     });
