@@ -20,10 +20,11 @@ function applymap(targets,mapping,input){
             if (targets.indexOf(inputColumn) >=0){
                 mappedColumn = (hash[inputColumn] !== undefined) ? hash[inputColumn] : inputColumn;
                 mappedLine[inputColumn] = line[mappedColumn];
+                rtn[l] = mappedLine;
             }
         }
 
-        rtn[l] = mappedLine;
+
     }
     return rtn;
 }
