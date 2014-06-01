@@ -174,7 +174,7 @@ DataConverter.prototype.convert = function() {
     } 
     else 
     {
-      transformedText = jsonToCsv(transformedText);
+      transformedText = ConvertToCSV(transformedText);
       if (this.outputDataType != "csv") {
         CSVParser.resetLog();
         parseOutput = CSVParser.parse(transformedText, this.headersProvided, this.delimiter, this.downcaseHeaders, this.upcaseHeaders);
