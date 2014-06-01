@@ -8,17 +8,11 @@ function addTextInputs(targets,headerNames){
         headerOptions += "  <option>" + headerNames[j].toString() + "</option>\r\n";
     }
     for (i = 0; i < targets.length; i++) {
-      var strInputs = 'Target ' + (i+1).toString() + ':<input style="width: 50%" type="text" id="target_' + i.toString() + '" value="' + targets[i] + '" readonly /><br />' 
-        + 'Mapping ' + (i+1).toString() + ':<select style="width: 50%" id="mapping_' + i.toString() + '">'
+      var strInputs = '<p><label>Target ' + (i+1).toString() + ':</label><input style="width: 50%" type="text" id="target_' + i.toString() + '" value="' + targets[i] + '" readonly /></p>' 
+        + '<p><label>Mapping ' + (i+1).toString() + ':</label><select style="width: 50%" id="mapping_' + i.toString() + '">'
         + headerOptions
-        + '</select><br /><br />';
+        + '</select></p><br />';
       $(InputsWrapper).append(strInputs);
-      /*
-      $(InputsWrapper).append('Target ' + (i+1).toString() + ':<input style="width: 50%" type="text" id="target_' + i.toString() + '" value="' + targets[i] + '" readonly /><br />');
-      $(InputsWrapper).append('Mapping ' + (i+1).toString() + ':<select style="width: 50%" id="mapping_' + i.toString() + '">');
-      $(InputsWrapper).append(headerOptions);
-      $(InputsWrapper).append('</select><br /><br />');
-      */
     };
     return false;
   });
