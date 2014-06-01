@@ -1,11 +1,20 @@
-// adapted from http://stackoverflow.com/questions/1876485/get-property-names-in-json-objects
+// adapted from http://stackoverflow.com/questions/8430336/get-keys-of-json-object-in-javascript
 function GetHeaders(obj) {
-    var cols = new Array();
-    for (var key in obj[0]) {
-        //alert(' name=' + key + ' value=' + p[key]);
-        cols.push(key);
+    if (typeof Object.keys !== "function") {
+        (function() {
+            Object.keys = Object_keys;
+            function Object_keys(obj) {
+                var keys = [], name;
+                for (name in obj) {
+                    if (obj.hasOwnProperty(name)) {
+                        keys.push(name);
+                    }
+                }
+                return keys;
+            }
+        })();
     }
-    return cols;
+    return Object.keys(obj);
 }
 
 // JSON to CSV Converter
