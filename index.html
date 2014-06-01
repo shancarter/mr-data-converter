@@ -5,13 +5,15 @@
      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
      <title>Mr. CSV Transformer</title>
      <meta name="author" content="David Young">
-     <!-- Date: 2010-08-26 -->
+     <!-- Date: 2014-05-31 -->
      <link rel="stylesheet" href="css/converter.css" type="text/css" media="screen" title="no title" charset="utf-8">
      <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
      <script src="js/applyMap.js" type="text/javascript" charset="utf-8"></script>
      <script src="js/getUrlVars.js" type="text/javascript" charset="utf-8"></script>
+     <script src="js/jsonToCsv.js" type="text/javascript" charset="utf-8"></script>
      <script src="js/CSVParser.js" type="text/javascript" charset="utf-8"></script>
      <script src="js/DataGridRenderer.js" type="text/javascript" charset="utf-8"></script>
+     <script src="js/addTextInputs.js" type="text/javascript" charset="utf-8"></script>
      <script src="js/converter.js" type="text/javascript" charset="utf-8"></script>
      <script src="js/Controller.js" type="text/javascript" charset="utf-8"></script>
    </head>
@@ -21,9 +23,7 @@
          <div id="description">
            <h1>Mr. CSV Transformer</h1>
            <!-- <p>I will convert your Excel data into one of several web-friendly formats, including HTML, JSON and XML.</p> --><p></p>
-           <p>Fork me on <a href="http://github.com/deepinthecode/Mr-CSV-Transformer">GitHub</a>.</p>
-           <p><br /><br /></p>
-           <p>Forked from: <a href="http://github.com/shancarter/Mr-Data-Converter" target="_blank">Mr. Data Converter by Shan Carter</a></p>
+           <p>Fork me on <a href="http://github.com/deepinthecode/Mr-CSV-Transformer" target="_blank">GitHub</a>.</p>
          </div>
          <div id='settings'>
            <h3>Settings</h3>
@@ -47,28 +47,14 @@
              <div class="settingsGroup">
                <p>Indent with: <label><input class="settingsElement" type="radio" name="indentType" value="tabs" id='includeWhiteSpaceTabs'/> tabs</label> <label><input class="settingsElement" type="radio" name="indentType" value="spaces" id='includeWhiteSpaceSpaces' checked/> spaces</label></p>
              </div>
-             <p><label><input class="settingsElement" type="checkbox" name="transformCB" value="" id="transformCB" checked /> Enter transform mappings?</label></p>
              <div>
-               <p>
-                  <input class="settingsElement" type="text" name="map1" value="" id='map1' />
-                  <input class="settingsElement" type="text" name="value1" value="" id='value1' />
-               </p>
-               <p>
-                  <input class="settingsElement" type="text" name="map2" value="" id='map2' />
-                  <input class="settingsElement" type="text" name="value2" value="" id='value2' />
-               </p>
-               <p>
-                  <input class="settingsElement" type="text" name="map3" value="" id='map3' />
-                  <input class="settingsElement" type="text" name="value3" value="" id='value3' />
-               </p>
-               <p>
-                  <input class="settingsElement" type="text" name="map4" value="" id='map4' />
-                  <input class="settingsElement" type="text" name="value4" value="" id='value4' />
-               </p>
-               <p>
-                  <input class="settingsElement" type="text" name="map5" value="" id='map5' />
-                  <input class="settingsElement" type="text" name="value5" value="" id='value5' />
-               </p>
+                <br /><br />
+             </div>
+             <div class="settingsGroup" id="InputsWrapper">
+             </div>
+             <div>
+                <p><br /><br /></p>
+                <p>Forked from: <a href="http://github.com/shancarter/Mr-Data-Converter" target="_blank">Mr. Data Converter by Shan Carter</a></p>
              </div>
            </form>
          </div>

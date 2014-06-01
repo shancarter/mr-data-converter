@@ -1,5 +1,9 @@
 function applyMap(targets,mapping,input){
     var rtn= [];
+<<<<<<< HEAD
+=======
+    //Create a hashmap of all of the column mappings
+>>>>>>> 346578dd7dc7eb748ea63b0492764102748fdcda
     var hash = {};
     var mappedColumn;
     //Create a Hashmap of the mappings

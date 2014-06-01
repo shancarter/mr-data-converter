@@ -18,21 +18,22 @@ function DataConverter(nodeId) {
   this.node                   = $("#"+nodeId);
 
   this.outputDataTypes        = [
-                                /*{"text":"Actionscript",           "id":"as",               "notes":""},
-                                {"text":"ASP/VBScript",           "id":"asp",              "notes":""},
-                                {"text":"HTML",                   "id":"html",             "notes":""},*/
-                                {"text":"JSON - Properties",      "id":"json",             "notes":""}//,
-                                /*{"text":"JSON - Column Arrays",   "id":"jsonArrayCols",    "notes":""},
-                                {"text":"JSON - Row Arrays",      "id":"jsonArrayRows",    "notes":""},
-                                {"text":"MySQL",                  "id":"mysql",            "notes":""},
-                                {"text":"PHP",                    "id":"php",              "notes":""},
-                                {"text":"Python - Dict",          "id":"python",           "notes":""},
-                                {"text":"Ruby",                   "id":"ruby",             "notes":""},
-                                {"text":"XML - Properties",       "id":"xmlProperties",    "notes":""},
-                                {"text":"XML - Nodes",            "id":"xml",              "notes":""},
-                                {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":""}*/
+                                  {"text":"ActionScript",           "id":"as",               "notes":""},
+                                  {"text":"ASP/VBScript",           "id":"asp",              "notes":""},
+                                  {"text":"CSV",                    "id":"csv",              "notes":""},
+                                  {"text":"HTML",                   "id":"html",             "notes":""},
+                                  {"text":"JSON - Properties",      "id":"json",             "notes":""},
+                                  {"text":"JSON - Column Arrays",   "id":"jsonArrayCols",    "notes":""},
+                                  {"text":"JSON - Row Arrays",      "id":"jsonArrayRows",    "notes":""},
+                                  {"text":"MySQL",                  "id":"mysql",            "notes":""},
+                                  {"text":"PHP",                    "id":"php",              "notes":""},
+                                  {"text":"Python - Dict",          "id":"python",           "notes":""},
+                                  {"text":"Ruby",                   "id":"ruby",             "notes":""},
+                                  {"text":"XML - Properties",       "id":"xmlProperties",    "notes":""},
+                                  {"text":"XML - Nodes",            "id":"xml",              "notes":""},
+                                  {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":""}
                                 ];
-  this.outputDataType         = "json";
+  this.outputDataType         = "csv";
 
   this.columnDelimiter        = "\t";
   this.rowDelimiter           = "\n";
@@ -162,12 +163,32 @@ DataConverter.prototype.convert = function() {
     var headerTypes = parseOutput.headerTypes;
     var errors = parseOutput.errors;
 
-    var intermediateText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
+    var intermediateText = DataGridRenderer["json"](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
+    
     var mapping = [];
     var targets = decodeURIComponent(getUrlVars()["targets"]).split(',');
-    var transformedText = JSON.stringify(applyMap(targets,mapping,intermediateText));
+    addTextInputs(targets,headerNames);
+    var transformedText = JSON.stringify(applyMap(targets,mapping,JSON.parse(intermediateText)));
+    
+    if (this.outputDataType == "json") {
+      //Do nothing
+    } 
+    else 
+    {
+      transformedText = ConvertToCSV(transformedText);
+      if (this.outputDataType != "csv") {
+        CSVParser.resetLog();
+        parseOutput = CSVParser.parse(transformedText, this.headersProvided, this.delimiter, this.downcaseHeaders, this.upcaseHeaders);
+    
+        dataGrid = parseOutput.dataGrid;
+        headerNames = parseOutput.headerNames;
+        headerTypes = parseOutput.headerTypes;
+        errors = parseOutput.errors;
+    
+        transformedText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
+      }
+    }
     this.outputText = transformedText;
-
     this.outputTextArea.val(errors + this.outputText);
     this.headerNames = headerNames;
   }; //end test for existence of input text
