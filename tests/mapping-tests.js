@@ -1,9 +1,9 @@
-describe('applymap',function(){
+describe('applyMap',function(){
     it('reverses columns correctly',function(){
         var targets = ['A','B','C'];
         var mapping = [{'A':'C'}, {'C':'A'}];
         var input = [{'A':1,'B':2,'C':3}];
-        var output = applymap(targets, mapping,input);
+        var output = applyMap(targets, mapping,input);
         var expected = [{'A':3,'B':2,'C':1}];
         expect(output).toEqual(expected);
     });
@@ -12,7 +12,7 @@ describe('applymap',function(){
         var targets = ['A','C'];
         var mapping = [{'A':'C'}, {'C':'A'}];
         var input = [{'A':1,'B':2,'C':3}];
-        var output = applymap(targets, mapping,input);
+        var output = applyMap(targets, mapping,input);
         var expected = [{'A':3,'C':1}];
         expect(output).toEqual(expected);
     });
@@ -21,7 +21,7 @@ describe('applymap',function(){
         var targets = ['A','B','C'];
         var mapping = [{'A':'C'}];
         var input = [{'A':1,'B':2,'C':3}];
-        var output = applymap(targets, mapping,input);
+        var output = applyMap(targets, mapping,input);
         var expected = [{'A':3,'B':2,'C':3}];
         expect(output).toEqual(expected);
     });
