@@ -1,20 +1,15 @@
-// adapted from http://stackoverflow.com/questions/8430336/get-keys-of-json-object-in-javascript
-function GetHeaders(obj) {
-    if (typeof Object.keys !== "function") {
-        (function() {
-            Object.keys = Object_keys;
-            function Object_keys(obj) {
-                var keys = [], name;
-                for (name in obj) {
-                    if (obj.hasOwnProperty(name)) {
-                        keys.push(name);
-                    }
-                }
-                return keys;
-            }
-        })();
+// adapted from http://stackoverflow.com/questions/9767133/javascript-getting-all-existing-keys-in-a-json-array
+function GetHeaders(jsonArray) {
+    var L = jsonArray.length;
+    for (var i = 0; i < L; i++) {
+        var obj = jsonArray[i];
+        var line = '';
+        for (var j in obj) {
+            if (line != '') line += ','
+            line += j;
+            //alert(j);
+        }
     }
-    return Object.keys(obj);
 }
 
 // JSON to CSV Converter
