@@ -76,7 +76,8 @@ $(document).ready(function(){
     return headerNames;
   };
 
-  updateSettings();
+  var headerNames = updateSettings();
+  
   
 })
 

@@ -18,11 +18,11 @@ function DataConverter(nodeId) {
   this.node                   = $("#"+nodeId);
 
   this.outputDataTypes        = [
-                                {"text":"Actionscript",           "id":"as",               "notes":""},
+                                /*{"text":"Actionscript",           "id":"as",               "notes":""},
                                 {"text":"ASP/VBScript",           "id":"asp",              "notes":""},
-                                {"text":"HTML",                   "id":"html",             "notes":""},
-                                {"text":"JSON - Properties",      "id":"json",             "notes":""},
-                                {"text":"JSON - Column Arrays",   "id":"jsonArrayCols",    "notes":""},
+                                {"text":"HTML",                   "id":"html",             "notes":""},*/
+                                {"text":"JSON - Properties",      "id":"json",             "notes":""}//,
+                                /*{"text":"JSON - Column Arrays",   "id":"jsonArrayCols",    "notes":""},
                                 {"text":"JSON - Row Arrays",      "id":"jsonArrayRows",    "notes":""},
                                 {"text":"MySQL",                  "id":"mysql",            "notes":""},
                                 {"text":"PHP",                    "id":"php",              "notes":""},
@@ -30,7 +30,8 @@ function DataConverter(nodeId) {
                                 {"text":"Ruby",                   "id":"ruby",             "notes":""},
                                 {"text":"XML - Properties",       "id":"xmlProperties",    "notes":""},
                                 {"text":"XML - Nodes",            "id":"xml",              "notes":""},
-                                {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":""}];
+                                {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":""}*/
+                                ];
   this.outputDataType         = "json";
 
   this.columnDelimiter        = "\t";
@@ -161,8 +162,11 @@ DataConverter.prototype.convert = function() {
     var headerTypes = parseOutput.headerTypes;
     var errors = parseOutput.errors;
 
-    this.outputText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
-
+    var intermediateText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
+    var mapping = [];
+    var targets = decodeURIComponent(getUrlVars()["targets"]).split(',');
+    var transformedText = JSON.stringify(applyMap(targets,mapping,intermediateText));
+    this.outputText = transformedText;
 
     this.outputTextArea.val(errors + this.outputText);
     this.headerNames = headerNames;

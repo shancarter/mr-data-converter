@@ -1,4 +1,4 @@
-function applymap(targets,mapping,input){
+function applyMap(targets,mapping,input){
     var rtn= [];
 
     //Create a hashmap of all of the column mappings
