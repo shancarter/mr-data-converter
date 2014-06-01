@@ -6,7 +6,7 @@ function addTextInputs(targets){
   
   $(InputsWrapper).html("");
   for (i = 0; i < targets.length; i++) {
-    $(InputsWrapper).append('<input type="text" id="target_' + i.toString() + '" value="' + targets[i] + '" /><select id="mapping_' + i.toString() + '"></select>');
+    $(InputsWrapper).append('<input style="width: 50%" type="text" id="target_' + i.toString() + '" value="' + targets[i] + '" /><select style="width: 50%" id="mapping_' + i.toString() + '"></select>');
   };
   return false;
   
