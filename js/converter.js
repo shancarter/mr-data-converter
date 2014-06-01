@@ -165,8 +165,8 @@ DataConverter.prototype.convert = function() {
     var intermediateText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
     var mapping = [];
     var targets = decodeURIComponent(getUrlVars()["targets"]);
-    var transformedText = applyMap(targets,mapping,intermediateText);
-    this.outputText = intermediateText; //transformedText;
+    var transformedText = JSON.stringify(applyMap(targets,mapping,intermediateText));
+    this.outputText = transformedText;
 
     this.outputTextArea.val(errors + this.outputText);
     this.headerNames = headerNames;
