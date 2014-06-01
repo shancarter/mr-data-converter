@@ -71,7 +71,9 @@ $(document).ready(function(){
     
     d.useUnderscores = true;
     
-    d.convert();
+    var convertObj = d.convert();
+    var headerNames = convertObj.headerNames;
+    return headerNames;
   };
 
   updateSettings();
