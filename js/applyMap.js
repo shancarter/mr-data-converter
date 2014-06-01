@@ -1,6 +1,5 @@
 function applyMap(targets,mapping,input){
     var rtn= [];
-    console.log(">>>input:\n" + input +"\n<<<<")
     //Create a hashmap of all of the column mappings
     var hash = {};
     var mappedColumn;
@@ -17,7 +16,6 @@ function applyMap(targets,mapping,input){
         var mappedLine = {};
         for (var inputColumn in line)
         {
-            console.log("line " + l +": inputColumn:" +inputColumn);
             if (targets.indexOf(inputColumn) >=0){
                 mappedColumn = (hash[inputColumn] !== undefined) ? hash[inputColumn] : inputColumn;
                 mappedLine[inputColumn] = line[mappedColumn];
@@ -27,6 +25,5 @@ function applyMap(targets,mapping,input){
 
 
     }
-    console.log("rtn:" + rtn);
     return rtn;
 }
