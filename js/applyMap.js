@@ -1,5 +1,7 @@
 function applymap(targets,mapping,input){
     var rtn= [];
+
+    //Create a hashmap of all of the column mappings
     var hash = {};
     var mappedColumn;
     for (var i= 0; i < mapping.length; i++){
@@ -9,6 +11,7 @@ function applymap(targets,mapping,input){
         hash[column] = mappedColumn;
     }
 
+    //Within each line of the input, verify that it within the target, then apply the mapping
     for (var l=0; l< input.length; l++){
         var line = input[l];
         var mappedLine = {};
