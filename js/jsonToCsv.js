@@ -1,8 +1,7 @@
 // adapted from http://stackoverflow.com/questions/1876485/get-property-names-in-json-objects
 function GetHeaders(obj) {
     var cols = new Array();
-    var p = obj[0];
-    for (var key in p) {
+    for (var key in obj[0]) {
         //alert(' name=' + key + ' value=' + p[key]);
         cols.push(key);
     }
