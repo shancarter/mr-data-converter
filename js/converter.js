@@ -185,7 +185,6 @@ DataConverter.prototype.convert = function() {
         errors = parseOutput.errors;
     
         transformedText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
-        //this.outputText = transformedText;
       }
     }
     this.outputText = transformedText;
