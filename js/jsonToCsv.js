@@ -18,7 +18,7 @@ function ConvertToCSV(objArray) {
     var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
     var str = '';
     
-    var headers = GetHeaders(array);
+    var headers = GetHeaders(objArray);
     str += headers + '\r\n';
     
     for (var i = 0; i < array.length; i++) {
