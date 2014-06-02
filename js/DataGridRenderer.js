@@ -20,7 +20,7 @@ var DataGridRenderer = {
     var outputText = "[";
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
-    alert('numRows = ' + numRows + ', numColumns = ' = numColumns);
+    alert('numRows = ' + numRows + ', numColumns = ' + numColumns);
     
     var firstRowIndex = 0;
     //begin render loops
