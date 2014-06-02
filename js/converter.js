@@ -193,7 +193,13 @@ DataConverter.prototype.convert = function(targets) {
     }
     else
     {
-      var transformedText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
+      if (this.outputDataType != "csv") {
+        var transformedText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
+      }
+      else
+      {
+        var transformedText = this.inputText;
+      }
     }
 
     this.outputText = transformedText;
