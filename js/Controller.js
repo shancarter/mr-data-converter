@@ -72,12 +72,19 @@ $(document).ready(function(){
     d.useUnderscores = true;
     
     var convertObj = d.convert();
-    var headerNames = ""; //convertObj.headerNames;
-    return headerNames;
+    //var headerNames = ""; //convertObj.headerNames;
+    
+    //return headerNames;
+    return false;
   };
 
-  var headerNames = updateSettings();
-  
+  //var headerNames = updateSettings();
+  updateSettings();
+  var targets = decodeURIComponent(getUrlVars()["targets"]).split(',');
+  if (targets.length > 0) {
+    var headerNames = "";
+    addTextInputs(targets,headerNames);  
+  }
   
 })
 
