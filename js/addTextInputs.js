@@ -3,7 +3,7 @@ function addTextInputs(targets,headerNames){
     var InputsWrapper   = $("#InputsWrapper"); //Input boxes wrapper ID
     
     $(InputsWrapper).html("");
-    var headerOptions = "";
+    var headerOptions = "<option></option>\r\n";
     for (j = 0; j < headerNames.length; j++) {
         headerOptions += "  <option>" + headerNames[j].toString() + "</option>\r\n";
     }
