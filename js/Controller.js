@@ -82,7 +82,7 @@ $(document).ready(function(){
   updateSettings();
   var targets_encoded = getUrlVars()["targets"];
   var targets = decodeURIComponent(targets_encoded).split(',');
-  alert(targets_encoded);
+  //alert(targets_encoded);
   if (targets_encoded.length > 0) {
     var headerNames = "";
     addTextInputs(targets,headerNames);  
