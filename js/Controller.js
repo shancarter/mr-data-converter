@@ -14,7 +14,7 @@ $(document).ready(function(){
   
   var targets_encoded = getUrlVars()["targets"];
   
-  if ((typeof(targets_encoded) !== undefined) && (targets_encoded.length > 0)) {
+  if ((typeof(targets_encoded) !== "undefined") && (targets_encoded.length > 0)) {
     var headerNames = "";
     var targets = decodeURIComponent(targets_encoded).split(',');
     addTextInputs(targets,headerNames);  
