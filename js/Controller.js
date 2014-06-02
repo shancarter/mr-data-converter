@@ -26,7 +26,7 @@ $(document).ready(function(){
     });
 
 
-  function updateSettings (evt,targets) {
+  function updateSettings (targets,evt) {
     
     if (evt) {
       _gaq.push(['_trackEvent', 'Settings',evt.currentTarget.id ]);
