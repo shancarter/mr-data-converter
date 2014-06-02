@@ -137,7 +137,7 @@ DataConverter.prototype.resize = function(w,h) {
 
 }
 
-DataConverter.prototype.convert = function() {
+DataConverter.prototype.convert = function(targets) {
 
   this.inputText = this.inputTextArea.val();
   this.outputText = "";
@@ -166,7 +166,7 @@ DataConverter.prototype.convert = function() {
     var intermediateText = DataGridRenderer["json"](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
     
     var mapping = [];
-    var targets = decodeURIComponent(getUrlVars()["targets"]).split(',');
+    //var targets = decodeURIComponent(getUrlVars()["targets"]).split(',');
     addTextInputs(targets,headerNames);
     var transformedText = JSON.stringify(applyMap(targets,mapping,JSON.parse(intermediateText)));
     
