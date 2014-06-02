@@ -11,8 +11,14 @@ $(document).ready(function(){
   var win = $(window);
   var w = win.width() - widthOffset;
   var h = win.height() - heightOffset;
-
-  d.create(w,h);
+  var targets_encoded = getUrlVars()["targets"];
+  var targets = decodeURIComponent(targets_encoded).split(',');
+  //alert(targets_encoded);
+  if (targets_encoded.length > 0) {
+    var headerNames = "";
+    addTextInputs(targets,headerNames);  
+  }
+  d.create(w,h,targets);
 
   $(".settingsElement").change(updateSettings);
 
@@ -79,13 +85,6 @@ $(document).ready(function(){
   };
 
   //var headerNames = updateSettings();
-  var targets_encoded = getUrlVars()["targets"];
-  var targets = decodeURIComponent(targets_encoded).split(',');
-  //alert(targets_encoded);
-  if (targets_encoded.length > 0) {
-    var headerNames = "";
-    addTextInputs(targets,headerNames);  
-  }
   updateSettings(targets);
   
 })
