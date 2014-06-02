@@ -33,7 +33,7 @@ function ConvertToCSV(objArray) {
             line += array[i][index];
         }
 
-        str += line + '\r\n';
+        str += line + '\r\n' + 'test';
     }
 
     return str;
