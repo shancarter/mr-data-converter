@@ -15,7 +15,7 @@ Mr. Data Converter styles
 
 html {
 	font-family: Helvetica, Arial;
-	background: #00304A url('../images/background.png') no-repeat;
+	background: #00304A /*url('../images/background.png') no-repeat*/;
 }
 
 body {
