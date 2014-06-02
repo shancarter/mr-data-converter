@@ -34,7 +34,7 @@ function ConvertToCSV(objArray) {
         }
 
         str += line;
-        if (i < array.length - 1) str += '\r\n' + 'test';
+        if (i < array.length - 1) str += '\r\n';
     }
 
     return str;
