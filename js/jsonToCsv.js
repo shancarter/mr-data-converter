@@ -4,6 +4,7 @@ function GetHeaders(jsonArray) {
     var line = '';
     for (var i = 0; i < L; i++) {
         var obj = jsonArray[i];
+        alert(obj);
         for (var j in obj) {
             if (line != '') line += ','
             line += j;
