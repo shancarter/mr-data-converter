@@ -116,7 +116,7 @@ p.dataHeaders{
   
   background-color: #B0E0E6;
   border: none;
-  color: #664D63;
+  color: #00304A;
   font-family: monospace;
   font-size: 12px;
   height: 300px;
@@ -146,7 +146,7 @@ p.groupHeadline {
 }
 
 .groupHeader a {
-  color: #FF66FF;
+  color: #6699CC;
 }
 
 
