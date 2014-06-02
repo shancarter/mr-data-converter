@@ -157,7 +157,7 @@ DataConverter.prototype.convert = function(targets) {
 
     CSVParser.resetLog();
     var parseOutput = CSVParser.parse(this.inputText, this.headersProvided, this.delimiter, this.downcaseHeaders, this.upcaseHeaders);
-    alert(typeof this.inputText);
+    //alert(typeof this.inputText);
     var dataGrid = parseOutput.dataGrid;
     var headerNames = parseOutput.headerNames;
     var headerTypes = parseOutput.headerTypes;
@@ -176,7 +176,7 @@ DataConverter.prototype.convert = function(targets) {
     else 
     {
       transformedText = ConvertToCSV(transformedText);
-      alert(typeof transformedText);
+      //alert(typeof transformedText);
       if (this.outputDataType != "csv") {
         parseOutput = CSVParser.parse(transformedText, this.headersProvided, this.delimiter, this.downcaseHeaders, this.upcaseHeaders);
     
