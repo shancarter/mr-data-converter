@@ -2,9 +2,10 @@
 //  DataGridRenderer.js
 //  Part of Mr-Data-Converter
 //  
-//  Created by Shan Carter on 2010-10-18.
-// 
-
+//  Created by Shan Carter as part of Mr-Data-Converter on 2010-10-18.
+//
+//  Modified by David Young as part of Mr-CSV-Transformer on 2010-10-18.
+//
 
 var DataGridRenderer = {
   
@@ -55,6 +56,7 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
     
+    numRows = numRows - 1;
     //begin render loop
     for (var i=0; i < numRows; i++) {
       var row = dataGrid[i];
@@ -85,6 +87,7 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
     
+    numRows = numRows - 1;
     //begin render loop
     outputText += "<table>"+newLine;
     outputText += indent+"<thead>"+newLine;
@@ -167,6 +170,7 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
     
+    numRows = numRows - 1;
     //begin render loop
     outputText += "{"+newLine;
     for (var i=0; i < numColumns; i++) {
@@ -200,6 +204,7 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
     
+    numRows = numRows - 1;
     //begin render loop
     outputText += "["+newLine;
     for (var i=0; i < numRows; i++) {
@@ -234,6 +239,7 @@ var DataGridRenderer = {
     var numColumns = headerNames.length;
     var tableName = "MrDataConverter"
     
+    numRows = numRows - 1;
     //begin render loop
     outputText += 'CREATE TABLE '+tableName+' (' + newLine;
     outputText += indent+"id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"+newLine;
@@ -285,6 +291,7 @@ var DataGridRenderer = {
     var numColumns = headerNames.length;
     var tableName = "MrDataConverter"
     
+    numRows = numRows - 1;
     //begin render loop
     outputText += "array(" + newLine;
     for (var i=0; i < numRows; i++) {
@@ -319,6 +326,7 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
     
+    numRows = numRows - 1;
     //begin render loop
     for (var i=0; i < numRows; i++) {
       var row = dataGrid[i];
@@ -355,6 +363,7 @@ var DataGridRenderer = {
     var numColumns = headerNames.length;
     var tableName = "MrDataConverter"
     
+    numRows = numRows - 1;
     //begin render loop
     outputText += "[";
     for (var i=0; i < numRows; i++) {
@@ -389,6 +398,7 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
     
+    numRows = numRows - 1;
     //begin render loop
     outputText = '<?xml version="1.0" encoding="UTF-8"?>' + newLine;
     outputText += "<rows>"+newLine;
@@ -421,6 +431,7 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
   
+    numRows = numRows - 1;
     //begin render loop
     outputText = '<?xml version="1.0" encoding="UTF-8"?>' + newLine;
     outputText += "<rows>"+newLine;
@@ -450,6 +461,7 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
     
+    numRows = numRows - 1;
     //begin render loop
     outputText = '<?xml version="1.0" encoding="utf-8"?>' + newLine;
     outputText += '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20001102//EN"    "http://www.w3.org/TR/2000/CR-SVG-20001102/DTD/svg-20001102.dtd" [' + newLine;
