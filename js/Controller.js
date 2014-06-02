@@ -81,6 +81,7 @@ $(document).ready(function(){
   //var headerNames = updateSettings();
   updateSettings();
   var targets = decodeURIComponent(getUrlVars()["targets"]).split(',');
+  alert(targets);
   if (targets.length > 0) {
     var headerNames = "";
     addTextInputs(targets,headerNames);  
