@@ -21,8 +21,9 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
     
+    var firstRowIndex = 1;
     //begin render loops
-    for (var i=0; i < numRows; i++) {
+    for (var i=firstRowIndex; i < numRows; i++) {
       var row = dataGrid[i];
       outputText += "{";
       for (var j=0; j < numColumns; j++) {
@@ -56,9 +57,9 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
     
-    numRows = numRows - 1;
-    //begin render loop
-    for (var i=0; i < numRows; i++) {
+    var firstRowIndex = 1;
+    //begin render loops
+    for (var i=firstRowIndex; i < numRows; i++) {
       var row = dataGrid[i];
       for (var j=0; j < numColumns; j++) {
         if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
@@ -87,7 +88,7 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
     
-    numRows = numRows - 1;
+    var firstRowIndex = 1;
     //begin render loop
     outputText += "<table>"+newLine;
     outputText += indent+"<thead>"+newLine;
@@ -101,7 +102,7 @@ var DataGridRenderer = {
     outputText += indent+indent+"</tr>"+newLine;
     outputText += indent+"</thead>"+newLine;
     outputText += indent+"<tbody>"+newLine;
-    for (var i=0; i < numRows; i++) {
+    for (var i=firstRowIndex; i < numRows; i++) {
       var row = dataGrid[i];
       var rowClassName = ""
       if (i === numRows-1) {
@@ -170,12 +171,12 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
     
-    numRows = numRows - 1;
+    var firstRowIndex = 1;
     //begin render loop
     outputText += "{"+newLine;
     for (var i=0; i < numColumns; i++) {
       outputText += indent+'"'+headerNames[i]+'":[';
-      for (var j=0; j < numRows; j++) {
+      for (var j=firstRowIndex; j < numRows; j++) {
         if ((headerTypes[i] == "int")||(headerTypes[i] == "float")) {
           outputText += dataGrid[j][i] || 0;
         } else {
@@ -204,10 +205,10 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
     
-    numRows = numRows - 1;
+    var firstRowIndex = 1;
     //begin render loop
     outputText += "["+newLine;
-    for (var i=0; i < numRows; i++) {
+    for (var i=firstRowIndex; i < numRows; i++) {
       outputText += indent+"[";
       for (var j=0; j < numColumns; j++) {
         if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
@@ -239,7 +240,7 @@ var DataGridRenderer = {
     var numColumns = headerNames.length;
     var tableName = "MrDataConverter"
     
-    numRows = numRows - 1;
+    var firstRowIndex = 1;
     //begin render loop
     outputText += 'CREATE TABLE '+tableName+' (' + newLine;
     outputText += indent+"id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"+newLine;
@@ -259,7 +260,7 @@ var DataGridRenderer = {
       if (j < numColumns - 1) {outputText += ","};
     };
     outputText += ") "+newLine+"VALUES "+newLine;
-    for (var i=0; i < numRows; i++) {
+    for (var i=firstRowIndex; i < numRows; i++) {
       outputText += indent+"(";
       for (var j=0; j < numColumns; j++) {
         if ((headerTypes[j] == "int")||(headerTypes[j] == "float"))  {
@@ -291,10 +292,10 @@ var DataGridRenderer = {
     var numColumns = headerNames.length;
     var tableName = "MrDataConverter"
     
-    numRows = numRows - 1;
+    var firstRowIndex = 1;
     //begin render loop
     outputText += "array(" + newLine;
-    for (var i=0; i < numRows; i++) {
+    for (var i=firstRowIndex; i < numRows; i++) {
       var row = dataGrid[i];
       outputText += indent + "array(";
       for (var j=0; j < numColumns; j++) {
@@ -326,9 +327,9 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
     
-    numRows = numRows - 1;
+    var firstRowIndex = 1;
     //begin render loop
-    for (var i=0; i < numRows; i++) {
+    for (var i=firstRowIndex; i < numRows; i++) {
       var row = dataGrid[i];
       outputText += "{";
       for (var j=0; j < numColumns; j++) {
@@ -363,10 +364,10 @@ var DataGridRenderer = {
     var numColumns = headerNames.length;
     var tableName = "MrDataConverter"
     
-    numRows = numRows - 1;
+    var firstRowIndex = 1;
     //begin render loop
     outputText += "[";
-    for (var i=0; i < numRows; i++) {
+    for (var i=firstRowIndex; i < numRows; i++) {
       var row = dataGrid[i];
       outputText += "{";
       for (var j=0; j < numColumns; j++) {
@@ -398,11 +399,11 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
     
-    numRows = numRows - 1;
+    var firstRowIndex = 1;
     //begin render loop
     outputText = '<?xml version="1.0" encoding="UTF-8"?>' + newLine;
     outputText += "<rows>"+newLine;
-    for (var i=0; i < numRows; i++) {
+    for (var i=firstRowIndex; i < numRows; i++) {
       var row = dataGrid[i];
       outputText += indent+"<row>"+newLine;
       for (var j=0; j < numColumns; j++) {
@@ -431,11 +432,11 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
   
-    numRows = numRows - 1;
+    var firstRowIndex = 1;
     //begin render loop
     outputText = '<?xml version="1.0" encoding="UTF-8"?>' + newLine;
     outputText += "<rows>"+newLine;
-    for (var i=0; i < numRows; i++) {
+    for (var i=firstRowIndex; i < numRows; i++) {
       var row = dataGrid[i];
       outputText += indent+"<row ";
       for (var j=0; j < numColumns; j++) {
@@ -461,7 +462,7 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
     
-    numRows = numRows - 1;
+    var firstRowIndex = 1;
     //begin render loop
     outputText = '<?xml version="1.0" encoding="utf-8"?>' + newLine;
     outputText += '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20001102//EN"    "http://www.w3.org/TR/2000/CR-SVG-20001102/DTD/svg-20001102.dtd" [' + newLine;
@@ -482,7 +483,7 @@ var DataGridRenderer = {
     outputText += indent+indent+'</variables>' + newLine;
     outputText += indent+indent+'<v:sampleDataSets  xmlns:v="http://ns.adobe.com/Variables/1.0/" xmlns="http://ns.adobe.com/GenericCustomNamespace/1.0/">' + newLine;
     
-    for (var i=0; i < numRows; i++) {
+    for (var i=firstRowIndex; i < numRows; i++) {
       var row = dataGrid[i];
       outputText += indent+indent+indent+'<v:sampleDataSet dataSetName="' + row[0] + '">'+newLine;
       for (var j=0; j < numColumns; j++) {
