@@ -43,6 +43,6 @@ function applyMap(targets,mapping,input){
 
 
     }
-    alert(rtn);
+    alert(JSON.stringify(rtn));
     return rtn;
 }
