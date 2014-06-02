@@ -1,18 +1,19 @@
 // adapted from http://stackoverflow.com/questions/9767133/javascript-getting-all-existing-keys-in-a-json-array
 function GetHeaders(jsonArray) {
     var L = jsonArray.length;
+    if (L > 0) L = 1;
     for (var i = 0; i < L; i++) {
         var line = '';
         var obj = jsonArray[i];
-        alert('obj= ' + obj);
+        //alert('obj= ' + obj);
         for (var j in obj) {
             if (line != '') line += ','
-            alert('j= '+j);
+            //alert('j= '+j);
             line += j;
-            alert('line(part)='+line);
+            //alert('line(part)='+line);
         }
     }
-    alert('line='+line);
+    //alert('line='+line);
     return line;
 }
 
