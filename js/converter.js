@@ -1,10 +1,10 @@
 //
 //  converter.js
-//  Mr-Data-Converter
+//  Mr-CSV-Transformer
 //
-//  Created by Shan Carter on 2010-09-01.
+//  Created by Shan Carter as Mr-Data-Converter on 2010-09-01.
 //
-// Modified by David Young on 2014-05-31.
+//  Modified by David Young on 2014-05-31.
 //
 
 
