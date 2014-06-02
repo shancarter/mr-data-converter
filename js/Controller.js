@@ -13,12 +13,16 @@ $(document).ready(function(){
   var h = win.height() - heightOffset;
   
   var targets_encoded = getUrlVars()["targets"];
-  var targets = decodeURIComponent(targets_encoded).split(',');
   
   if (targets_encoded.length > 0) {
     var headerNames = "";
+    var targets = decodeURIComponent(targets_encoded).split(',');
     addTextInputs(targets,headerNames);  
   }
+  else {
+    var targets = [];
+  }
+  
   d.create(w,h,targets);
 
   $(".settingsElement").change(updateSettings);
