@@ -4,13 +4,15 @@ function GetHeaders(jsonArray) {
     var line = '';
     for (var i = 0; i < L; i++) {
         var obj = jsonArray[i];
-        alert(obj);
+        alert('obj= ' + obj);
         for (var j in obj) {
             if (line != '') line += ','
+            alert('j= '+j);
             line += j;
+            alert('line(part)='+line);
         }
     }
-    alert(line);
+    alert('line='+line);
     return line;
 }
 
