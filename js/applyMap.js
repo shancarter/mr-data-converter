@@ -19,8 +19,9 @@ function applyMap(targets,mapping,input){
         {
             //Find the mapping, and only apply it  in the correct order if it is part of the target
             mappedColumn = (hash[inputColumn] !== undefined) ? hash[inputColumn] : inputColumn;
+            
             //allow no targets
-            if (target.length != 0) {
+            if (targets.length != 0) {
                 var targetIdx = targets.indexOf(mappedColumn);
     
                 if (targetIdx >=0){
