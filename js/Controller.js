@@ -26,7 +26,7 @@ $(document).ready(function(){
     });
 
 
-  function updateSettings (evt) {
+  function updateSettings (targets, evt) {
     
     if (evt) {
       _gaq.push(['_trackEvent', 'Settings',evt.currentTarget.id ]);
@@ -71,7 +71,7 @@ $(document).ready(function(){
     
     d.useUnderscores = true;
     
-    var convertObj = d.convert();
+    var convertObj = d.convert(targets);
     //var headerNames = ""; //convertObj.headerNames;
     
     //return headerNames;
@@ -79,7 +79,6 @@ $(document).ready(function(){
   };
 
   //var headerNames = updateSettings();
-  updateSettings();
   var targets_encoded = getUrlVars()["targets"];
   var targets = decodeURIComponent(targets_encoded).split(',');
   //alert(targets_encoded);
@@ -87,6 +86,7 @@ $(document).ready(function(){
     var headerNames = "";
     addTextInputs(targets,headerNames);  
   }
+  updateSettings(targets);
   
 })
 
