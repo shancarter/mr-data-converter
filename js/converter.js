@@ -69,7 +69,7 @@ function DataConverter(nodeId) {
 // PUBLIC METHODS
 //---------------------------------------
 
-DataConverter.prototype.create = function(w,h) {
+DataConverter.prototype.create = function(w,h,targets) {
   var self = this;
 
   //build HTML for converter
@@ -108,19 +108,19 @@ DataConverter.prototype.create = function(w,h) {
   $("#insertSample").bind('click',function(evt){
     evt.preventDefault();
     self.insertSampleData();
-    self.convert();
+    self.convert(targets);
     _gaq.push(['_trackEvent', 'SampleData','InsertGeneric']);
   });
 
-  $("#dataInput").keyup(function() {self.convert()});
+  $("#dataInput").keyup(function() {self.convert(targets)});
   $("#dataInput").change(function() {
-    self.convert();
+    self.convert(targets);
     _gaq.push(['_trackEvent', 'DataType',self.outputDataType]);
   });
 
   $("#dataSelector").bind('change',function(evt){
        self.outputDataType = $(this).val();
-       self.convert();
+       self.convert(targets);
      });
 
   this.resize(w,h);
