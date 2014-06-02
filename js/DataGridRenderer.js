@@ -21,7 +21,7 @@ var DataGridRenderer = {
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
     
-    var firstRowIndex = 1;
+    var firstRowIndex = 0;
     //begin render loops
     for (var i=firstRowIndex; i < numRows; i++) {
       var row = dataGrid[i];
