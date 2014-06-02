@@ -15,7 +15,7 @@ Mr. Data Converter styles
 
 html {
 	font-family: Helvetica, Arial;
-	background: #141414 url('../images/background.png') no-repeat;
+	background: #00304A url('../images/background.png') no-repeat;
 }
 
 body {
@@ -114,7 +114,7 @@ p.dataHeaders{
 
 .textInputs {
   
-  background-color: #C9B7C7;
+  background-color: #B0E0E6;
   border: none;
   color: #664D63;
   font-family: monospace;
@@ -130,7 +130,7 @@ p.dataHeaders{
 
 .groupHeader{
   width: 100%;
-  color: #FFF;
+  color: #B0E0E6;
   height: 45px;
   background-color:#5F255C;
   background-image: url('../images/header_gradient.png');
