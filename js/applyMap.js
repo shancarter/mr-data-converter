@@ -19,9 +19,15 @@ function applyMap(targets,mapping,input){
         {
             //Find the mapping, and only apply it  in the correct order if it is part of the target
             mappedColumn = (hash[inputColumn] !== undefined) ? hash[inputColumn] : inputColumn;
-            var targetIdx = targets.indexOf(mappedColumn);
-
-            if (targetIdx >=0){
+            //allow no targets
+            if (target.length != 0) {
+                var targetIdx = targets.indexOf(mappedColumn);
+    
+                if (targetIdx >=0){
+                    mappedLine[targetIdx] = {'mappedColumn': mappedColumn, 'value' :line[inputColumn]};
+                }
+            }
+            else {
                 mappedLine[targetIdx] = {'mappedColumn': mappedColumn, 'value' :line[inputColumn]};
             }
         }
