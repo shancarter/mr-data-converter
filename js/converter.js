@@ -4,7 +4,7 @@
 //
 //  Created by Shan Carter as Mr-Data-Converter on 2010-09-01.
 //
-//  Modified by David Young on 2014-05-31.
+//  Forked by David Young as Mr-CSV-Transformer on 2014-05-31.
 //
 
 
@@ -177,7 +177,6 @@ DataConverter.prototype.convert = function(targets) {
     {
       transformedText = ConvertToCSV(transformedText);
       if (this.outputDataType != "csv") {
-        CSVParser.resetLog();
         parseOutput = CSVParser.parse(transformedText, this.headersProvided, this.delimiter, this.downcaseHeaders, this.upcaseHeaders);
     
         dataGrid = parseOutput.dataGrid;
