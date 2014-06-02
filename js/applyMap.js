@@ -43,5 +43,6 @@ function applyMap(targets,mapping,input){
 
 
     }
+    alert(rtn);
     return rtn;
 }
