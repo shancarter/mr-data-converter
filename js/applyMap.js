@@ -29,7 +29,7 @@ function applyMap(targets,mapping,input){
                 }
             }
             else {
-                mappedLine[targetIdx] = {'mappedColumn': mappedColumn, 'value' :line[inputColumn]};
+                mappedLine[inputColumn] = {'mappedColumn': mappedColumn, 'value' :line[inputColumn]};
             }
         }
 
