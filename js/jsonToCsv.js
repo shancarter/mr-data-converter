@@ -9,6 +9,7 @@ function GetHeaders(jsonArray) {
             line += j;
         }
     }
+    alert(line);
     return line;
 }
 
