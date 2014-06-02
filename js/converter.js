@@ -163,37 +163,39 @@ DataConverter.prototype.convert = function(targets) {
     var headerTypes = parseOutput.headerTypes;
     var errors = parseOutput.errors;
 
-    var intermediateText = DataGridRenderer["json"](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
+    //var intermediateText = DataGridRenderer["json"](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
     
     if (targets.length != 0) {
-    var mapping = [];
-    
-    addTextInputs(targets,headerNames);
-    var transformedText = JSON.stringify(applyMap(targets,mapping,JSON.parse(intermediateText)));
+      var intermediateText = DataGridRenderer["json"](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
+      var mapping = [];
+      
+      addTextInputs(targets,headerNames);
+      var transformedText = JSON.stringify(applyMap(targets,mapping,JSON.parse(intermediateText)));
+      
+      if (this.outputDataType == "json") {
+        //Do nothing
+      } 
+      else 
+      {
+        transformedText = ConvertToCSV(transformedText);
+        //alert(typeof transformedText);
+        if (this.outputDataType != "csv") {
+          parseOutput = CSVParser.parse(transformedText, this.headersProvided, this.delimiter, this.downcaseHeaders, this.upcaseHeaders);
+      
+          dataGrid = parseOutput.dataGrid;
+          headerNames = parseOutput.headerNames;
+          headerTypes = parseOutput.headerTypes;
+          errors = parseOutput.errors;
+      
+          transformedText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
+        }
+      }
     }
     else
     {
-      var transformedText = intermediateText;
+      var transformedText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
     }
-    
-    if (this.outputDataType == "json") {
-      //Do nothing
-    } 
-    else 
-    {
-      transformedText = ConvertToCSV(transformedText);
-      //alert(typeof transformedText);
-      if (this.outputDataType != "csv") {
-        parseOutput = CSVParser.parse(transformedText, this.headersProvided, this.delimiter, this.downcaseHeaders, this.upcaseHeaders);
-    
-        dataGrid = parseOutput.dataGrid;
-        headerNames = parseOutput.headerNames;
-        headerTypes = parseOutput.headerTypes;
-        errors = parseOutput.errors;
-    
-        transformedText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
-      }
-    }
+
     this.outputText = transformedText;
     this.outputTextArea.val(errors + this.outputText);
     this.headerNames = headerNames;
