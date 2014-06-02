@@ -11,9 +11,10 @@ $(document).ready(function(){
   var win = $(window);
   var w = win.width() - widthOffset;
   var h = win.height() - heightOffset;
+  
   var targets_encoded = getUrlVars()["targets"];
   var targets = decodeURIComponent(targets_encoded).split(',');
-  //alert(targets_encoded);
+  
   if (targets_encoded.length > 0) {
     var headerNames = "";
     addTextInputs(targets,headerNames);  
@@ -76,15 +77,11 @@ $(document).ready(function(){
     d.decimal = $('input[name=decimal]:checked').val();
     
     d.useUnderscores = true;
-    alert('updateSettings: targets = ' + targets);
-    var convertObj = d.convert(targets);
-    //var headerNames = ""; //convertObj.headerNames;
+    d.convert(targets);
     
-    //return headerNames;
     return false;
   };
 
-  //var headerNames = updateSettings();
   updateSettings(targets);
   
 })
