@@ -54,7 +54,7 @@ function DataConverter(nodeId) {
 
   this.commentLine            = "//";
   this.commentLineEnd         = "";
-  this.tableName              = "MrDataConverter"
+  this.tableName              = "MrCSVTransformer"
 
   this.useUnderscores         = true;
   this.headersProvided        = true;
