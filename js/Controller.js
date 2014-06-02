@@ -70,7 +70,7 @@ $(document).ready(function(){
     d.decimal = $('input[name=decimal]:checked').val();
     
     d.useUnderscores = true;
-    
+    alert('updateSettings: targets = ' + targets);
     var convertObj = d.convert(targets);
     //var headerNames = ""; //convertObj.headerNames;
     
