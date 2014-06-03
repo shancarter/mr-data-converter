@@ -6,7 +6,9 @@ function addTextInputs(targets,headerNames){
     for (k = 0; k < targets.length; k++) {
       if ($("select[id='mapping_" + k.toString() + "']").length != 0 & $("select[id='mapping_" + k.toString() + "'] option:selected").index() != 0) {
         boolSelected = true;
-        //mapping.push({$("select[id='mapping_" + k.toString() + "']").val() : $("input[id='target_" + k.toString() + "']").text() });
+        var val = $("select[id='mapping_" + k.toString() + "']").val();
+        var name = $("input[id='target_" + k.toString() + "']").text();
+        mapping[name] = val;
       }
     }
     
