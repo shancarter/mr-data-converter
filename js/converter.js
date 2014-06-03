@@ -170,6 +170,7 @@ DataConverter.prototype.convert = function(targets) {
       var mapping = [];
       
       mapping = addTextInputs(targets,headerNames);
+      alert(mapping);
       var transformedText = JSON.stringify(applyMap(targets,mapping,JSON.parse(intermediateText)));
       
       if (this.outputDataType == "json") {
