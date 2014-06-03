@@ -119,9 +119,13 @@ DataConverter.prototype.create = function(w,h,targets) {
   });
 
   $("#dataSelector").bind('change',function(evt){
-       self.outputDataType = $(this).val();
-       self.convert(targets);
-     });
+     self.outputDataType = $(this).val();
+     self.convert(targets);
+  });
+     
+  $("#InputsWrapper").bind('change',function(evt){
+     self.convert(targets);
+  });
 
   this.resize(w,h);
 }
