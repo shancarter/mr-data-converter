@@ -1,8 +1,8 @@
 function addTextInputs(targets,headerNames){
+  var mapping = [];
   $(document).ready(function() {
     var InputsWrapper   = $("#InputsWrapper"); //Input boxes wrapper ID
     var boolSelected = false;
-    var mapping = [];
     for (k = 0; k < targets.length; k++) {
       if ($("select[id='mapping_" + k.toString() + "']").length != 0 & $("select[id='mapping_" + k.toString() + "'] option:selected").index() != 0) {
         boolSelected = true;
@@ -28,6 +28,6 @@ function addTextInputs(targets,headerNames){
       strInputs += '</table>';
       $(InputsWrapper).append(strInputs);
     };
-    return mapping;
   });
+  return mapping;
 }
