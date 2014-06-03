@@ -23,10 +23,6 @@ function addTextInputs(targets,headerNames){
       };
       strInputs += '</table>';
       $(InputsWrapper).append(strInputs);
-      $(InputsWrapper).change(function(evt){
-        var d = new DataConverter('converter');
-        d.convert(targets);
-      });
     };
     return false;
   });
