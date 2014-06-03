@@ -16,14 +16,16 @@ function addTextInputs(targets,headerNames){
       for (j = 0; j < headerNames.length; j++) {
           headerOptions += "  <option value='" + headerNames[j].toString().replace(/</g, '&lt;').replace(/>/g, '&gt;')  + "'>" + headerNames[j].toString().replace(/</g, '&lt;').replace(/>/g, '&gt;') + "</option>\r\n";
       }
+      var strInputs = "<table><tr><td>Targets</td><td>Mapping</td></tr>";
       for (i = 0; i < targets.length; i++) {
-        var strInputs = '<p><label>Target ' + (i+1).toString() + ':</label><input style="width: 50%" type="text" id="target_' + i.toString() + '" value="' + targets[i].toString().replace(/</g, '&lt;').replace(/>/g, '&gt;') + '" readonly /></p>' 
-          + '<p><label>Mapping ' + (i+1).toString() + ':</label><select style="width: 50%" id="mapping_' + i.toString() + '">'
+        strInputs += '<tr><td><input type="text" id="target_' + i.toString() + '" value="' + targets[i].toString().replace(/</g, '&lt;').replace(/>/g, '&gt;') + '" readonly /></td>' 
+          + '<td><select id="mapping_' + i.toString() + '">'
           + headerOptions
-          + '</select></p><br />';
-        $(InputsWrapper).append(strInputs);
+          + '</select></td></tr>';
       };
+      strInputs += '</table>';
+      $(InputsWrapper).append(strInputs);
     };
-    return false;
+    return mapping;
   });
 }
