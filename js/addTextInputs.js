@@ -3,7 +3,7 @@ function addTextInputs(targets,headerNames){
     var InputsWrapper   = $("#InputsWrapper"); //Input boxes wrapper ID
     var boolSelected = false;
     var mapping = [];
-    for (k = 0; k < targets.length; i++) {
+    for (k = 0; k < targets.length; k++) {
       if ($("select[id='mapping_" + k.toString() + "'] option:selected").index() != 0) {
         boolSelected = true;
         //mapping += 
