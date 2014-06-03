@@ -7,7 +7,9 @@ function addTextInputs(targets,headerNames){
       if ($("select[id='mapping_" + k.toString() + "']").length != 0 & $("select[id='mapping_" + k.toString() + "'] option:selected").index() != 0) {
         boolSelected = true;
         var val = $("select[id='mapping_" + k.toString() + "']").val();
+        alert('val='+val);
         var name = $("input[id='target_" + k.toString() + "']").text();
+        alert('map='+name);
         mapping[name] = val;
       }
     }
