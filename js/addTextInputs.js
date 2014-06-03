@@ -23,9 +23,9 @@ function addTextInputs(targets,headerNames){
       };
       strInputs += '</table>';
       $(InputsWrapper).append(strInputs);
-      $(InputsWrapper).bind('change',function(evt){
-        self.outputDataType = $(this).val();
-        self.convert(targets);
+      $(InputsWrapper).bind('select',function(evt){
+        var d = new DataConverter('converter');
+        d.convert(targets);
       });
     };
     return false;
