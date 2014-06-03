@@ -4,7 +4,7 @@ function addTextInputs(targets,headerNames){
     var boolSelected = false;
     var mapping = [];
     for (k = 0; k < targets.length; k++) {
-      if ($("select[id='mapping_" + k.toString() + "']").length() > 0 & $("select[id='mapping_" + k.toString() + "'] option:selected").index() != 0) {
+      if ($("select[id='mapping_" + k.toString() + "']").length() & $("select[id='mapping_" + k.toString() + "'] option:selected").index() != 0) {
         boolSelected = true;
         //mapping += 
       }
