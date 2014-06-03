@@ -16,8 +16,8 @@ function addTextInputs(targets,headerNames){
       }
       var strInputs = "<table><tr><td>Targets</td><td>Mapping</td></tr>";
       for (i = 0; i < targets.length; i++) {
-        strInputs += '<tr><td><input style="width:60%" type="text" id="target_' + i.toString() + '" value="' + targets[i].toString().replace(/</g, '&lt;').replace(/>/g, '&gt;') + '" readonly /></td>' 
-          + '<td><select style="width:60%" id="mapping_' + i.toString() + '">'
+        strInputs += '<tr><td><input style="width:90%" type="text" id="target_' + i.toString() + '" value="' + targets[i].toString().replace(/</g, '&lt;').replace(/>/g, '&gt;') + '" readonly /></td>' 
+          + '<td><select style="width:90%" id="mapping_' + i.toString() + '">'
           + headerOptions
           + '</select></td></tr>';
       };
