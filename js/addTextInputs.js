@@ -10,14 +10,14 @@ function addTextInputs(targets,headerNames){
     
     if (boolSelected == false) {
       $(InputsWrapper).html("");
-      var headerOptions = "<option value=''>-- No mapping --</option>\r\n";
+      var headerOptions = "<option value=''>-- none --</option>\r\n";
       for (j = 0; j < headerNames.length; j++) {
           headerOptions += "  <option value='" + headerNames[j].toString().replace(/</g, '&lt;').replace(/>/g, '&gt;')  + "'>" + headerNames[j].toString().replace(/</g, '&lt;').replace(/>/g, '&gt;') + "</option>\r\n";
       }
       var strInputs = "<table><tr><td>Targets</td><td>Mapping</td></tr>";
       for (i = 0; i < targets.length; i++) {
-        strInputs += '<tr><td><input style="width:90%" type="text" id="target_' + i.toString() + '" value="' + targets[i].toString().replace(/</g, '&lt;').replace(/>/g, '&gt;') + '" readonly /></td>' 
-          + '<td><select style="width:90%" id="mapping_' + i.toString() + '">'
+        strInputs += '<tr><td><input style="width:70%" type="text" id="target_' + i.toString() + '" value="' + targets[i].toString().replace(/</g, '&lt;').replace(/>/g, '&gt;') + '" readonly /></td>' 
+          + '<td><select style="width:95%" id="mapping_' + i.toString() + '">'
           + headerOptions
           + '</select></td></tr>';
       };
