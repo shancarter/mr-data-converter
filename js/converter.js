@@ -169,7 +169,7 @@ DataConverter.prototype.convert = function(targets) {
       var intermediateText = DataGridRenderer["json"](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
       var mapping = [];
       
-      addTextInputs(targets,headerNames);
+      mapping = addTextInputs(targets,headerNames);
       var transformedText = JSON.stringify(applyMap(targets,mapping,JSON.parse(intermediateText)));
       
       if (this.outputDataType == "json") {
