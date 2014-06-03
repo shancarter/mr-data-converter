@@ -34,7 +34,9 @@ function addTextInputs(targets,headerNames){
       //alert('val='+val);
       var name = $("input[id='target_" + k.toString() + "']").val();
       //alert('map='+name);
-      mapping[name] = val;
+      var obj = {};
+      obj[name] = val;
+      mapping.push(obj);
     }
   }
   return mapping;
