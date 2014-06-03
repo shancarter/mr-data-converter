@@ -8,7 +8,7 @@ function addTextInputs(targets,headerNames){
         boolSelected = true;
         var val = $("select[id='mapping_" + k.toString() + "']").val();
         alert('val='+val);
-        var name = $("input[id='target_" + k.toString() + "']").text();
+        var name = $("input[id='target_" + k.toString() + "']").val();
         alert('map='+name);
         mapping[name] = val;
       }
