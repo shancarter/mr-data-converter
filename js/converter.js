@@ -166,16 +166,16 @@ DataConverter.prototype.convert = function(targets) {
     var headerNames = parseOutput.headerNames;
     var headerTypes = parseOutput.headerTypes;
     var errors = parseOutput.errors;
-
-    //var intermediateText = DataGridRenderer["json"](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
+    var intermediateText = DataGridRenderer["json"](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
+    var transformedText = '';
     
     if (targets.length != 0) {
-      var intermediateText = DataGridRenderer["json"](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
+      //var intermediateText = DataGridRenderer["json"](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
       var mapping = [];
       
       mapping = addTextInputs(targets,headerNames);
       //alert('mapping='+mapping);
-      var transformedText = JSON.stringify(applyMap(targets,mapping,JSON.parse(intermediateText)));
+      transformedText = JSON.stringify(applyMap(targets,mapping,JSON.parse(intermediateText)));
       
       if (this.outputDataType == "json") {
         //Do nothing
@@ -199,11 +199,11 @@ DataConverter.prototype.convert = function(targets) {
     else
     {
       if (this.outputDataType != "csv") {
-        var transformedText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
+        transformedText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
       }
       else
       {
-        var transformedText = this.inputText;
+        transformedText = ConvertToCSV(intermediateText);
       }
     }
 
