@@ -123,7 +123,7 @@ DataConverter.prototype.create = function(w,h,targets) {
      self.convert(targets);
   });
      
-  $("#InputsWrapper").bind('change',function(evt){
+  $("#settings").bind('change',function(evt){
      self.convert(targets);
   });
 
