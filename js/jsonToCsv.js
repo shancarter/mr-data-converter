@@ -33,10 +33,10 @@ function ConvertToCSV(objArray) {
         var line = '';
         for (var index in array[i]) {
             if (line != '') line += ',';
-            if (array[i][index].indexOf(',') > -1) {
-                array[i][index] = '"' + array[i][index] + '"';
+            if (array[i][index].toString().indexOf(',') > -1) {
+                array[i][index] = '"' + array[i][index].toString() + '"';
             };
-            line += array[i][index];
+            line += array[i][index].toString();
         }
 
         str += line;
