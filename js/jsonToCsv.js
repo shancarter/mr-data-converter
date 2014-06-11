@@ -7,8 +7,11 @@ function GetHeaders(jsonArray) {
         var obj = jsonArray[i];
         //alert('obj= ' + obj);
         for (var j in obj) {
-            if (line != '') line += ','
+            if (line != '') line += ',';
             //alert('j= '+j);
+            if (j.indexOf(',') > -1) {
+                j = '"' + j + '"';
+            };
             line += j;
             //alert('line(part)='+line);
         }
@@ -29,7 +32,10 @@ function ConvertToCSV(objArray) {
     for (var i = 0; i < array.length; i++) {
         var line = '';
         for (var index in array[i]) {
-            if (line != '') line += ','
+            if (line != '') line += ',';
+            if (array[i][index].indexOf(',') > -1) {
+                array[i][index] = '"' + array[i][index] + '"';
+            };
             line += array[i][index];
         }
 
