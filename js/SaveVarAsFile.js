@@ -4,6 +4,6 @@ function SaveVarAsFile(someVar,extension){
   SaveFrame.open("text/html","replace");
   SaveFrame.write(someVar);
   SaveFrame.close();
-  SaveFrame.focus();
-  SaveFrame.execCommand('SaveAs',true,'MrCSVTransformer-output.'+extension);
+  SaveFrame.contentWindow.focus();
+  SaveFrame.contentWindow.document.execCommand('SaveAs',true,'MrCSVTransformer-output.'+extension);
 }
