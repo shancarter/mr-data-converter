@@ -18,20 +18,20 @@ function DataConverter(nodeId) {
   this.node                   = $("#"+nodeId);
 
   this.outputDataTypes        = [
-                                  {"text":"ActionScript",           "id":"as",               "notes":"",    "extension":"as"},
-                                  {"text":"ASP/VBScript",           "id":"asp",              "notes":"",    "extension":"asp"},
-                                  {"text":"CSV",                    "id":"csv",              "notes":"",    "extension":"csv"},
-                                  {"text":"HTML",                   "id":"html",             "notes":"",    "extension":"html"},
-                                  {"text":"JSON - Properties",      "id":"json",             "notes":"",    "extension":"json"},
-                                  {"text":"JSON - Column Arrays",   "id":"jsonArrayCols",    "notes":"",    "extension":"json"},
-                                  {"text":"JSON - Row Arrays",      "id":"jsonArrayRows",    "notes":"",    "extension":"json"},
-                                  {"text":"MySQL",                  "id":"mysql",            "notes":"",    "extension":"sql"},
-                                  {"text":"PHP",                    "id":"php",              "notes":"",    "extension":"php"},
-                                  {"text":"Python - Dict",          "id":"python",           "notes":"",    "extension":"py"},
-                                  {"text":"Ruby",                   "id":"ruby",             "notes":"",    "extension":"rb"},
-                                  {"text":"XML - Properties",       "id":"xmlProperties",    "notes":"",    "extension":"xml"},
-                                  {"text":"XML - Nodes",            "id":"xml",              "notes":"",    "extension":"xml"},
-                                  {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":"",    "extension":"xml"}
+                                  {"text":"ActionScript",           "id":"as",               "notes":""},
+                                  {"text":"ASP/VBScript",           "id":"asp",              "notes":""},
+                                  {"text":"CSV",                    "id":"csv",              "notes":""},
+                                  {"text":"HTML",                   "id":"html",             "notes":""},
+                                  {"text":"JSON - Properties",      "id":"json",             "notes":""},
+                                  {"text":"JSON - Column Arrays",   "id":"jsonArrayCols",    "notes":""},
+                                  {"text":"JSON - Row Arrays",      "id":"jsonArrayRows",    "notes":""},
+                                  {"text":"MySQL",                  "id":"mysql",            "notes":""},
+                                  {"text":"PHP",                    "id":"php",              "notes":""},
+                                  {"text":"Python - Dict",          "id":"python",           "notes":""},
+                                  {"text":"Ruby",                   "id":"ruby",             "notes":""},
+                                  {"text":"XML - Properties",       "id":"xmlProperties",    "notes":""},
+                                  {"text":"XML - Nodes",            "id":"xml",              "notes":""},
+                                  {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":""}
                                 ];
   this.outputDataType         = "csv";
   this.outputFileExtension    = "csv";
@@ -153,7 +153,22 @@ DataConverter.prototype.convert = function(targets) {
 
   this.inputText = this.inputTextArea.val();
   this.outputText = "";
-
+  this.outputDataTypes = [
+                          {"id":"as",               "extension":"as"},
+                          {"id":"asp",              "extension":"asp"},
+                          {"id":"csv",              "extension":"csv"},
+                          {"id":"html",             "extension":"html"},
+                          {"id":"json",             "extension":"json"},
+                          {"id":"jsonArrayCols",    "extension":"json"},
+                          {"id":"jsonArrayRows",    "extension":"json"},
+                          {"id":"mysql",            "extension":"sql"},
+                          {"id":"php",              "extension":"php"},
+                          {"id":"python",           "extension":"py"},
+                          {"id":"ruby",             "extension":"rb"},
+                          {"id":"xmlProperties",    "extension":"xml"},
+                          {"id":"xml",              "extension":"xml"},
+                          {"id":"xmlIllustrator",   "extension":"xml"}
+                        ];
 
   //make sure there is input data before converting...
   if (this.inputText.length > 0) {
