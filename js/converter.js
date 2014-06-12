@@ -184,6 +184,8 @@ DataConverter.prototype.convert = function(targets) {
     var errors = parseOutput.errors;
     var intermediateText = DataGridRenderer["json"](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
     var transformedText = '';
+    var output = '';
+    var outputFileExtension = '';
     
     if (targets.length != 0) {
       //var intermediateText = DataGridRenderer["json"](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
@@ -224,16 +226,17 @@ DataConverter.prototype.convert = function(targets) {
     }
 
     this.outputText = transformedText;
-    this.outputTextArea.val(errors + this.outputText);
+    output = errors + this.outputText
+    this.outputTextArea.val(output);
     this.headerNames = headerNames;
     for (var i=0; i < this.outputDataTypes.length; i++) {
        if (this.outputDataTypes[i]["id"] == this.outputDataType) {
-         this.outputFileExtension = this.outputDataTypes[i]["extension"];
+         outputFileExtension = this.outputDataTypes[i]["extension"];
          break;
        };
     };
     $("#btnSaveAs").prop('disabled',false);
-    $("#btnSaveAs").click(function() {SaveVarAsFile(this.outputTextArea.val(),this.outputFileExtension)});
+    $("#btnSaveAs").click(function() {SaveVarAsFile(output,outputFileExtension)});
   }; //end test for existence of input text
 }
 
