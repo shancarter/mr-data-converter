@@ -5,7 +5,7 @@ function SaveVarAsFile(someVar){
 	}
 	if("\v"=="v"){
 	    var d= document.open("text/html");
-	    d.write(s);
+	    d.write(someVar);
 	    d.execCommand( "saveAs", true, location.href.split("/").reverse()[0]);
 	    d.close();
 	    return;
