@@ -1,9 +1,9 @@
 //adapted from function on http://www.htmlforums.com/archive/index.php/t-10688.html
 function SaveVarAsFile(someVar,extension){
-  var SaveFrame = document.getElementById("SaveFrame");
-  SaveFrame.document.open("text/html","replace");
-  SaveFrame.document.write(someVar);
-  SaveFrame.document.close();
+  var SaveFrame = frames['SaveFrame'].document;
+  SaveFrame.open("text/html","replace");
+  SaveFrame.write(someVar);
+  SaveFrame.close();
   SaveFrame.focus();
-  SaveFrame.document.execCommand('SaveAs',true,'MrCSVTransformer-output.'+extension);
+  SaveFrame.execCommand('SaveAs',true,'MrCSVTransformer-output.'+extension);
 }
