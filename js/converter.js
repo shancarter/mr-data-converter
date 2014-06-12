@@ -77,8 +77,7 @@ DataConverter.prototype.create = function(w,h,targets) {
   this.inputHeader = $('<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Input CSV or tab-delimited data. <span class="subhead"> Using Excel? Simply copy and paste. No data on hand? <a href="#" id="insertSample">Use sample</a></span></p></div>');
   this.inputTextArea = $('<textarea class="textInputs" id="dataInput"></textarea>');
   var outputHeaderText = '<div class="groupHeader" id="inputHeader">';
-  outputHeaderText += '<input id="btnSaveAs" type="button" value="Save Output" />';
-  outputHeaderText += '<p class="groupHeadline">Output as <select name="Data Types" id="dataSelector" >';
+  outputHeaderText += '<p class="groupHeadline"><input id="btnSaveAs" type="button" value="Save Output" /> Output as <select name="Data Types" id="dataSelector" >';
   for (var i=0; i < this.outputDataTypes.length; i++) {
     outputHeaderText += '<option value="'+this.outputDataTypes[i]["id"]+'" '
             + (this.outputDataTypes[i]["id"] == this.outputDataType ? 'selected="selected"' : '')
@@ -122,12 +121,6 @@ DataConverter.prototype.create = function(w,h,targets) {
 
   $("#dataSelector").bind('change',function(evt){
      self.outputDataType = $(this).val();
-     for (var i=0; i < this.outputDataTypes.length; i++) {
-       if (thisoutputDataTypes[i]["id"] == self.outputDataType) {
-         self.outputFileExtension = thisoutputDataTypes[i]["extension"];
-         break;
-       }
-     };
      self.convert(targets);
   });
      
@@ -233,7 +226,12 @@ DataConverter.prototype.convert = function(targets) {
     this.outputText = transformedText;
     this.outputTextArea.val(errors + this.outputText);
     this.headerNames = headerNames;
-    
+    for (var i=0; i < this.outputDataTypes.length; i++) {
+       if (this.outputDataTypes[i]["id"] == this.outputDataType) {
+         this.outputFileExtension = this.outputDataTypes[i]["extension"];
+         break;
+       };
+    };
     $("#btnSaveAs").click(SaveVarAsFile(this.outputTextArea.val(),this.outputFileExtension));
   }; //end test for existence of input text
 }
