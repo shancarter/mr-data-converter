@@ -77,7 +77,7 @@ DataConverter.prototype.create = function(w,h,targets) {
   this.inputHeader = $('<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Input CSV or tab-delimited data. <span class="subhead"> Using Excel? Simply copy and paste. No data on hand? <a href="#" id="insertSample">Use sample</a></span></p></div>');
   this.inputTextArea = $('<textarea class="textInputs" id="dataInput"></textarea>');
   var outputHeaderText = '<div class="groupHeader" id="inputHeader">';
-  outputHeaderText += '<p class="groupHeadline"><input id="btnSaveAs" type="button" value="Save Output" /> Output as <select name="Data Types" id="dataSelector" >';
+  outputHeaderText += '<p class="groupHeadline">Output as <select name="Data Types" id="dataSelector" > <input id="btnSaveAs" type="button" value="Save Output" disabled />';
   for (var i=0; i < this.outputDataTypes.length; i++) {
     outputHeaderText += '<option value="'+this.outputDataTypes[i]["id"]+'" '
             + (this.outputDataTypes[i]["id"] == this.outputDataType ? 'selected="selected"' : '')
@@ -232,6 +232,7 @@ DataConverter.prototype.convert = function(targets) {
          break;
        };
     };
+    $("#btnSaveAs").prop('disabled',false);
     $("#btnSaveAs").click(SaveVarAsFile(this.outputTextArea.val(),this.outputFileExtension));
   }; //end test for existence of input text
 }
