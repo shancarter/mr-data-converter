@@ -233,7 +233,7 @@ DataConverter.prototype.convert = function(targets) {
        };
     };
     $("#btnSaveAs").prop('disabled',false);
-    $("#btnSaveAs").click(SaveVarAsFile(this.outputTextArea.val(),this.outputFileExtension));
+    $("#btnSaveAs").click(function() {SaveVarAsFile(this.outputTextArea.val(),this.outputFileExtension)});
   }; //end test for existence of input text
 }
 
