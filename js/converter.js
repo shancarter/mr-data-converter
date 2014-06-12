@@ -18,22 +18,23 @@ function DataConverter(nodeId) {
   this.node                   = $("#"+nodeId);
 
   this.outputDataTypes        = [
-                                  {"text":"ActionScript",           "id":"as",               "notes":""},
-                                  {"text":"ASP/VBScript",           "id":"asp",              "notes":""},
-                                  {"text":"CSV",                    "id":"csv",              "notes":""},
-                                  {"text":"HTML",                   "id":"html",             "notes":""},
-                                  {"text":"JSON - Properties",      "id":"json",             "notes":""},
-                                  {"text":"JSON - Column Arrays",   "id":"jsonArrayCols",    "notes":""},
-                                  {"text":"JSON - Row Arrays",      "id":"jsonArrayRows",    "notes":""},
-                                  {"text":"MySQL",                  "id":"mysql",            "notes":""},
-                                  {"text":"PHP",                    "id":"php",              "notes":""},
-                                  {"text":"Python - Dict",          "id":"python",           "notes":""},
-                                  {"text":"Ruby",                   "id":"ruby",             "notes":""},
-                                  {"text":"XML - Properties",       "id":"xmlProperties",    "notes":""},
-                                  {"text":"XML - Nodes",            "id":"xml",              "notes":""},
-                                  {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":""}
+                                  {"text":"ActionScript",           "id":"as",               "notes":"",    "extension":"as"},
+                                  {"text":"ASP/VBScript",           "id":"asp",              "notes":"",    "extension":"asp"},
+                                  {"text":"CSV",                    "id":"csv",              "notes":"",    "extension":"csv"},
+                                  {"text":"HTML",                   "id":"html",             "notes":"",    "extension":"html"},
+                                  {"text":"JSON - Properties",      "id":"json",             "notes":"",    "extension":"json"},
+                                  {"text":"JSON - Column Arrays",   "id":"jsonArrayCols",    "notes":"",    "extension":"json"},
+                                  {"text":"JSON - Row Arrays",      "id":"jsonArrayRows",    "notes":"",    "extension":"json"},
+                                  {"text":"MySQL",                  "id":"mysql",            "notes":"",    "extension":"sql"},
+                                  {"text":"PHP",                    "id":"php",              "notes":"",    "extension":"php"},
+                                  {"text":"Python - Dict",          "id":"python",           "notes":"",    "extension":"py"},
+                                  {"text":"Ruby",                   "id":"ruby",             "notes":"",    "extension":"rb"},
+                                  {"text":"XML - Properties",       "id":"xmlProperties",    "notes":"",    "extension":"xml"},
+                                  {"text":"XML - Nodes",            "id":"xml",              "notes":"",    "extension":"xml"},
+                                  {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":"",    "extension":"xml"}
                                 ];
   this.outputDataType         = "csv";
+  this.outputFileExtension    = "csv";
 
   this.columnDelimiter        = "\t";
   this.rowDelimiter           = "\n";
@@ -75,15 +76,16 @@ DataConverter.prototype.create = function(w,h,targets) {
   //build HTML for converter
   this.inputHeader = $('<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Input CSV or tab-delimited data. <span class="subhead"> Using Excel? Simply copy and paste. No data on hand? <a href="#" id="insertSample">Use sample</a></span></p></div>');
   this.inputTextArea = $('<textarea class="textInputs" id="dataInput"></textarea>');
-  var outputHeaderText = '<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Output as <select name="Data Types" id="dataSelector" >';
-    for (var i=0; i < this.outputDataTypes.length; i++) {
-
-      outputHeaderText += '<option value="'+this.outputDataTypes[i]["id"]+'" '
-              + (this.outputDataTypes[i]["id"] == this.outputDataType ? 'selected="selected"' : '')
-              + '>'
-              + this.outputDataTypes[i]["text"]+'</option>';
-    };
-    outputHeaderText += '</select><span class="subhead" id="outputNotes"></span></p></div>';
+  var outputHeaderText = '<div class="groupHeader" id="inputHeader">';
+  outputHeaderText += '<input id="btnSaveAs" type="button" value="Save Output" />';
+  outputHeaderText += '<p class="groupHeadline">Output as <select name="Data Types" id="dataSelector" >';
+  for (var i=0; i < this.outputDataTypes.length; i++) {
+    outputHeaderText += '<option value="'+this.outputDataTypes[i]["id"]+'" '
+            + (this.outputDataTypes[i]["id"] == this.outputDataType ? 'selected="selected"' : '')
+            + '>'
+            + this.outputDataTypes[i]["text"]+'</option>';
+  };
+  outputHeaderText += '</select><span class="subhead" id="outputNotes"></span></p></div>';
   this.outputHeader = $(outputHeaderText);
   this.outputTextArea = $('<textarea class="textInputs" id="dataOutput"></textarea>');
 
@@ -120,6 +122,12 @@ DataConverter.prototype.create = function(w,h,targets) {
 
   $("#dataSelector").bind('change',function(evt){
      self.outputDataType = $(this).val();
+     for (var i=0; i < this.outputDataTypes.length; i++) {
+       if (thisoutputDataTypes[i]["id"] == self.outputDataType) {
+         self.outputFileExtension = thisoutputDataTypes[i]["extension"];
+         break;
+       }
+     };
      self.convert(targets);
   });
      
@@ -210,6 +218,8 @@ DataConverter.prototype.convert = function(targets) {
     this.outputText = transformedText;
     this.outputTextArea.val(errors + this.outputText);
     this.headerNames = headerNames;
+    
+    $("#btnSaveAs").click(SaveVarAsFile(this.outputTextArea.val(),this.outputFileExtension);
   }; //end test for existence of input text
 }
 
