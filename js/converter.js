@@ -146,6 +146,7 @@ DataConverter.prototype.convert = function(targets) {
 
   this.inputText = this.inputTextArea.val();
   this.outputText = "";
+  /*
   this.outputDataTypes = [
                           {"id":"as",               "extension":"as"},
                           {"id":"asp",              "extension":"asp"},
@@ -162,7 +163,7 @@ DataConverter.prototype.convert = function(targets) {
                           {"id":"xml",              "extension":"xml"},
                           {"id":"xmlIllustrator",   "extension":"xml"}
                         ];
-
+  */
   //make sure there is input data before converting...
   if (this.inputText.length > 0) {
 
@@ -185,7 +186,7 @@ DataConverter.prototype.convert = function(targets) {
     var intermediateText = DataGridRenderer["json"](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
     var transformedText = '';
     var output = '';
-    var outputFileExtension = '';
+    //var outputFileExtension = '';
     
     if (targets.length != 0) {
       //var intermediateText = DataGridRenderer["json"](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
@@ -229,14 +230,16 @@ DataConverter.prototype.convert = function(targets) {
     output = errors + this.outputText
     this.outputTextArea.val(output);
     this.headerNames = headerNames;
+    /*
     for (var i=0; i < this.outputDataTypes.length; i++) {
        if (this.outputDataTypes[i]["id"] == this.outputDataType) {
          outputFileExtension = this.outputDataTypes[i]["extension"];
          break;
        };
     };
+    */
     $("#btnSaveAs").prop('disabled',false);
-    $("#btnSaveAs").click(function() {SaveVarAsFile(output,outputFileExtension)});
+    $("#btnSaveAs").click(function() {SaveVarAsFile(output)});
   }; //end test for existence of input text
 }
 
