@@ -219,7 +219,7 @@ DataConverter.prototype.convert = function(targets) {
     this.outputTextArea.val(errors + this.outputText);
     this.headerNames = headerNames;
     
-    $("#btnSaveAs").click(SaveVarAsFile(this.outputTextArea.val(),this.outputFileExtension);
+    $("#btnSaveAs").click(SaveVarAsFile(this.outputTextArea.val(),this.outputFileExtension));
   }; //end test for existence of input text
 }
 
