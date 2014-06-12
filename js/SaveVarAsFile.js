@@ -1,5 +1,6 @@
 //adapted from function on http://www.htmlforums.com/archive/index.php/t-10688.html
 function SaveVarAsFile(someVar,extension){
+  var SaveFrame = document.getElementById("SaveFrame");
   SaveFrame.document.open("text/html","replace");
   SaveFrame.document.write(someVar);
   SaveFrame.document.close();
