@@ -6,10 +6,9 @@ function SaveVarAsFile(someVar,extension){
       ifrm = (ifrm.contentWindow) ? ifrm.contentWindow : (ifrm.contentDocument.document) ? ifrm.contentDocument.document : ifrm.contentDocument;
       ifrm.document.open();
       ifrm.document.write(someVar);
-      //ifrm.document.close();
-      ifrm.contentWindow.focus();
-      ifrm.contentWindow.document.execCommand('SaveAs',true,'MrCSVTransformer-output.'+extension);
       ifrm.document.close();
+      ifrm.focus();
+      ifrm.document.execCommand('SaveAs',true,'MrCSVTransformer-output.'+extension);
     });
     
     /*var SaveFrame = frames['SaveFrame'].document;
