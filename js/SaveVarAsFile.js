@@ -7,8 +7,9 @@ function SaveVarAsFile(someVar,extension){
       ifrm.contentWindow.document.open();
       ifrm.contentWindow.document.write(someVar);
       //ifrm.contentWindow.document.focus();
-      ifrm.contentWindow.document.close();
+      //ifrm.contentWindow.document.close();
       ifrm.contentWindow.document.execCommand('SaveAs',true,'MrCSVTransformer-output.txt');
+      ifrm.contentWindow.document.close();
     });
     
     /*var SaveFrame = frames['SaveFrame'].document;
