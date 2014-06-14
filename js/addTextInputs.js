@@ -24,7 +24,7 @@ function addTextInputs(targets,headerNames){
         };
         strInputs += '</table>';
         $(InputsWrapper).append(strInputs);
-        $(window).resize();
+        //$(window).resize();
       };
       return false;
     });
