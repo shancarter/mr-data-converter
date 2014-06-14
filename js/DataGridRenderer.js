@@ -1,6 +1,6 @@
 // 
 //  DataGridRenderer.js
-//  Part of Mr-Data-Converter
+//  Part of Mr-CSV-Transformer
 //  
 //  Created by Shan Carter as part of Mr-Data-Converter on 2010-10-18.
 //
@@ -253,7 +253,10 @@ var DataGridRenderer = {
           var rowOutput = '"' + ( row[j] || "" ) + '"';
         };
   
-        if (rowOutput != "null" & rowOutput != '""') {
+        if ((rowOutput == "null")||(rowOutput == '""')) {
+          //do nothing
+        }
+        else {
           outputText += ('"'+headerNames[j] +'"' + ":" + rowOutput );
           if (j < (numColumns-1)) {outputText+=","};
         }
