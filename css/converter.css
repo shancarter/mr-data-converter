@@ -5,7 +5,66 @@ http://developer.yahoo.com/yui/license.html
 version: 3.1.2
 build: 56
 */
-html{color:#000;background:#00304A;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{font-size:100%;}legend{color:#000};
+html{
+	color:#000;
+	background:#00304A;
+}
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{
+	margin:0;
+	padding:0;
+}
+
+table{
+	border-collapse:collapse;border-spacing:0;
+}
+
+fieldset,img{
+	border:0;
+}
+address,caption,cite,code,dfn,em,strong,th,var{
+	font-style:normal;
+	font-weight:normal;
+}
+
+li{
+	list-style:none;
+}
+
+caption,th{
+	text-align:left;
+}
+
+h1,h2,h3,h4,h5,h6{
+	font-size:100%;
+	font-weight:normal;
+}
+
+q:before,q:after{
+	content:'';
+}
+
+abbr,acronym{
+	border:0;font-variant:normal;
+}
+
+sup{
+	vertical-align:text-top;
+}
+
+sub{
+	vertical-align:text-bottom;
+}
+
+input,textarea,select{
+	font-family:inherit;
+	font-size:100%;
+	font-weight:inherit;
+}
+
+legend{
+	color:#000;
+}
 
 
 /*
@@ -19,12 +78,12 @@ html {
 }
 
 body {
-  overflow: hidden;
+	overflow: hidden;
 }
 
 #base {
-  padding: 15px;
-  position: relative;
+	padding: 15px;
+	position: relative;
 }
 
 
@@ -33,14 +92,13 @@ body {
 /*header*/
 
 #header {
-	
 	color: #FFF;
 	width: 300px;
 	overflow: auto;
 }
 #header a {
 	color: #99FFFF;
-/*  opacity: 0.7;*/
+	/*  opacity: 0.7;*/
 }
 
 #header p {
@@ -52,16 +110,16 @@ body {
 }
 
 #header h3 {
-  font-size: 12px;
-  margin: 15px 0 10px 0;
-  padding: 15px 0 0 0;
-  border-top: solid 1px #CCC;
-  text-transform: uppercase;
+	font-size: 12px;
+	margin: 15px 0 10px 0;
+	padding: 15px 0 0 0;
+	border-top: solid 1px #CCC;
+	text-transform: uppercase;
 }
 
 h1 {
-  color: #DEDEDE;
-  font-family: palatino, Georgia;
+	color: #DEDEDE;
+	font-family: palatino, Georgia;
 	font-size: 40px;
 	line-height: 40px;
 	font-weight: bold;
@@ -79,20 +137,19 @@ p {
 
 }
 
-
 #settings h5 {
-  font-size: 13px;
-  line-height: 24px;
+	font-size: 13px;
+	line-height: 24px;
 }
 
 #settings p {
-  font-size: 13px;
-  line-height: 24px;
+	font-size: 13px;
+	line-height: 24px;
 }
 
 
 #settings .settingsGroup p {
-  padding-left: 20px;
+	padding-left: 20px;
 }
 
 /*converter*/
@@ -102,8 +159,8 @@ p {
 	top: 15px;
 	left: 330px;
 	border-color:#000000 #666666 #666666 #000000;
-  border-style:solid;
-  border-width:2px;
+  	border-style:solid;
+  	border-width:2px;
 }
 
 
@@ -113,40 +170,39 @@ p.dataHeaders{
 }
 
 .textInputs {
-  
-  background-color: #B0E0E6;
-  border: none;
-  color: #00304A;
-  font-family: monospace;
-  font-size: 12px;
-  height: 300px;
-  line-height: 18px;
-  padding: 10px;
-  text-shadow: #DED4DD 0px 1px 0px;
-  -webkit-box-shadow: #333 1px 1px 10px inset;
-  -moz-box-shadow: #333 1px 1px 10px inset;
+	background-color: #B0E0E6;
+	border: none;
+	color: #00304A;
+	font-family: monospace;
+	font-size: 12px;
+	height: 300px;
+	line-height: 18px;
+	padding: 10px;
+	text-shadow: #DED4DD 0px 1px 0px;
+	/*-webkit-box-shadow: #333 1px 1px 10px inset;
+	-moz-box-shadow: #333 1px 1px 10px inset;*/
 }
 
 
 .groupHeader{
-  width: 100%;
-  color: #B0E0E6;
-  height: 45px;
-  background-color:#0047AB;
-  /*background-image: url('../images/header_gradient.png');*/
+	width: 100%;
+	color: #B0E0E6;
+	height: 45px;
+	background-color:#0047AB;
+	/*background-image: url('../images/header_gradient.png');*/
 }
 
 
 p.groupHeadline {
-  padding: 10px;
+  	padding: 10px;
 }
 .groupHeader span.subhead {
-  opacity: 0.7;
-  font-size: 12px;
+  	opacity: 0.7;
+  	font-size: 12px;
 }
 
 .groupHeader a {
-  color: #6699CC;
+  	color: #6699CC;
 }
 
 
