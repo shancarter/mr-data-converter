@@ -253,7 +253,7 @@ var DataGridRenderer = {
           var rowOutput = '"' + ( row[j] || "" ) + '"';
         };
   
-        if (rowOutput.length > 0) {
+        if (rowOutput != "null" & rowOutput != '""') {
           outputText += ('"'+headerNames[j] +'"' + ":" + rowOutput );
           if (j < (numColumns-1)) {outputText+=","};
         }
