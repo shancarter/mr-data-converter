@@ -233,3 +233,7 @@ p.groupHeadline {
 #dataSelector option {
 
 }
+
+#InputWrapper {
+	height: auto;
+}
