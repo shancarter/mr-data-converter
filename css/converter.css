@@ -105,6 +105,10 @@ body {
 	color: #CCC;
 }
 
+#header img {
+	vertical-align: middle;
+}
+
 #description p {
 	margin-bottom: 18px;
 }
