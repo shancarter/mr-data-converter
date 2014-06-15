@@ -36,6 +36,7 @@ $(document).ready(function(){
 
     });
 
+  enableTab('dataInput');
 
   function updateSettings (targets,evt) {
     
