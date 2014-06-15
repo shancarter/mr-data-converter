@@ -1,10 +1,11 @@
 //
 //  converter.js
-//  Mr-Data-Converter
+//  Mr-CSV-Transformer
 //
-//  Created by Shan Carter on 2010-09-01.
+//  Created by Shan Carter as Mr-Data-Converter on 2010-09-01.
 //
-
+//  Forked by David Young as Mr-CSV-Transformer on 2014-05-31.
+//
 
 
 function DataConverter(nodeId) {
@@ -17,20 +18,24 @@ function DataConverter(nodeId) {
   this.node                   = $("#"+nodeId);
 
   this.outputDataTypes        = [
-                                {"text":"Actionscript",           "id":"as",               "notes":""},
-                                {"text":"ASP/VBScript",           "id":"asp",              "notes":""},
-                                {"text":"HTML",                   "id":"html",             "notes":""},
-                                {"text":"JSON - Properties",      "id":"json",             "notes":""},
-                                {"text":"JSON - Column Arrays",   "id":"jsonArrayCols",    "notes":""},
-                                {"text":"JSON - Row Arrays",      "id":"jsonArrayRows",    "notes":""},
-                                {"text":"MySQL",                  "id":"mysql",            "notes":""},
-                                {"text":"PHP",                    "id":"php",              "notes":""},
-                                {"text":"Python - Dict",          "id":"python",           "notes":""},
-                                {"text":"Ruby",                   "id":"ruby",             "notes":""},
-                                {"text":"XML - Properties",       "id":"xmlProperties",    "notes":""},
-                                {"text":"XML - Nodes",            "id":"xml",              "notes":""},
-                                {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":""}];
-  this.outputDataType         = "json";
+                                  {"text":"ActionScript",           "id":"as",               "notes":""},
+                                  {"text":"ASP/VBScript",           "id":"asp",              "notes":""},
+                                  {"text":"CSV",                    "id":"csv",              "notes":""},
+                                  {"text":"HTML",                   "id":"html",             "notes":""},
+                                  {"text":"JSON - Properties",      "id":"json",             "notes":""},
+                                  {"text":"JSON - Column Arrays",   "id":"jsonArrayCols",    "notes":""},
+                                  {"text":"JSON - Row Arrays",      "id":"jsonArrayRows",    "notes":""},
+                                  {"text":"mongoDB",                "id":"mongodb",          "notes":""},            
+                                  {"text":"MySQL",                  "id":"mysql",            "notes":""},
+                                  {"text":"PHP",                    "id":"php",              "notes":""},
+                                  {"text":"Python - Dict",          "id":"python",           "notes":""},
+                                  {"text":"Ruby",                   "id":"ruby",             "notes":""},
+                                  {"text":"XML - Properties",       "id":"xmlProperties",    "notes":""},
+                                  {"text":"XML - Nodes",            "id":"xml",              "notes":""},
+                                  {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":""}
+                                ];
+  this.outputDataType         = "csv";
+  this.outputFileExtension    = "csv";
 
   this.columnDelimiter        = "\t";
   this.rowDelimiter           = "\n";
@@ -44,13 +49,14 @@ function DataConverter(nodeId) {
 
   this.inputText              = "";
   this.outputText             = "";
+  this.headerNames            = "";
 
   this.newLine                = "\n";
   this.indent                 = "  ";
 
   this.commentLine            = "//";
   this.commentLineEnd         = "";
-  this.tableName              = "MrDataConverter"
+  this.tableName              = "MrCSVTransformer"
 
   this.useUnderscores         = true;
   this.headersProvided        = true;
@@ -65,21 +71,21 @@ function DataConverter(nodeId) {
 // PUBLIC METHODS
 //---------------------------------------
 
-DataConverter.prototype.create = function(w,h) {
+DataConverter.prototype.create = function(w,h,targets) {
   var self = this;
 
   //build HTML for converter
   this.inputHeader = $('<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Input CSV or tab-delimited data. <span class="subhead"> Using Excel? Simply copy and paste. No data on hand? <a href="#" id="insertSample">Use sample</a></span></p></div>');
   this.inputTextArea = $('<textarea class="textInputs" id="dataInput"></textarea>');
-  var outputHeaderText = '<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Output as <select name="Data Types" id="dataSelector" >';
-    for (var i=0; i < this.outputDataTypes.length; i++) {
-
-      outputHeaderText += '<option value="'+this.outputDataTypes[i]["id"]+'" '
-              + (this.outputDataTypes[i]["id"] == this.outputDataType ? 'selected="selected"' : '')
-              + '>'
-              + this.outputDataTypes[i]["text"]+'</option>';
-    };
-    outputHeaderText += '</select><span class="subhead" id="outputNotes"></span></p></div>';
+  var outputHeaderText = '<div class="groupHeader" id="inputHeader">';
+  outputHeaderText += '<p class="groupHeadline">Output as <select name="Data Types" id="dataSelector" >';
+  for (var i=0; i < this.outputDataTypes.length; i++) {
+    outputHeaderText += '<option value="'+this.outputDataTypes[i]["id"]+'" '
+            + (this.outputDataTypes[i]["id"] == this.outputDataType ? 'selected="selected"' : '')
+            + '>'
+            + this.outputDataTypes[i]["text"]+'</option>';
+  };
+  outputHeaderText += '</select> <input id="btnSaveAs" type="button" value="Save Output" disabled /><span class="subhead" id="outputNotes"></span></p></div>';
   this.outputHeader = $(outputHeaderText);
   this.outputTextArea = $('<textarea class="textInputs" id="dataOutput"></textarea>');
 
@@ -104,20 +110,24 @@ DataConverter.prototype.create = function(w,h) {
   $("#insertSample").bind('click',function(evt){
     evt.preventDefault();
     self.insertSampleData();
-    self.convert();
+    self.convert(targets);
     _gaq.push(['_trackEvent', 'SampleData','InsertGeneric']);
   });
 
-  $("#dataInput").keyup(function() {self.convert()});
+  $("#dataInput").keyup(function() {self.convert(targets)});
   $("#dataInput").change(function() {
-    self.convert();
+    self.convert(targets);
     _gaq.push(['_trackEvent', 'DataType',self.outputDataType]);
   });
 
   $("#dataSelector").bind('change',function(evt){
-       self.outputDataType = $(this).val();
-       self.convert();
-     });
+     self.outputDataType = $(this).val();
+     self.convert(targets);
+  });
+     
+  $("#settings").bind('change',function(evt){
+     self.convert(targets);
+  });
 
   this.resize(w,h);
 }
@@ -133,12 +143,28 @@ DataConverter.prototype.resize = function(w,h) {
 
 }
 
-DataConverter.prototype.convert = function() {
+DataConverter.prototype.convert = function(targets) {
 
   this.inputText = this.inputTextArea.val();
   this.outputText = "";
-
-
+  /*
+  this.outputDataTypes = [
+                          {"id":"as",               "extension":"as"},
+                          {"id":"asp",              "extension":"asp"},
+                          {"id":"csv",              "extension":"csv"},
+                          {"id":"html",             "extension":"html"},
+                          {"id":"json",             "extension":"json"},
+                          {"id":"jsonArrayCols",    "extension":"json"},
+                          {"id":"jsonArrayRows",    "extension":"json"},
+                          {"id":"mysql",            "extension":"sql"},
+                          {"id":"php",              "extension":"php"},
+                          {"id":"python",           "extension":"py"},
+                          {"id":"ruby",             "extension":"rb"},
+                          {"id":"xmlProperties",    "extension":"xml"},
+                          {"id":"xml",              "extension":"xml"},
+                          {"id":"xmlIllustrator",   "extension":"xml"}
+                        ];
+  */
   //make sure there is input data before converting...
   if (this.inputText.length > 0) {
 
@@ -153,17 +179,68 @@ DataConverter.prototype.convert = function() {
 
     CSVParser.resetLog();
     var parseOutput = CSVParser.parse(this.inputText, this.headersProvided, this.delimiter, this.downcaseHeaders, this.upcaseHeaders);
-
+    //alert(typeof this.inputText);
     var dataGrid = parseOutput.dataGrid;
     var headerNames = parseOutput.headerNames;
     var headerTypes = parseOutput.headerTypes;
     var errors = parseOutput.errors;
+    var intermediateText = DataGridRenderer["json"](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
+    var transformedText = '';
+    var output = '';
+    //var outputFileExtension = '';
+    
+    if (targets.length != 0) {
+      //var intermediateText = DataGridRenderer["json"](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
+      var mapping = [];
+      
+      mapping = addTextInputs(targets,headerNames);
+      //alert('mapping='+mapping);
+      transformedText = JSON.stringify(applyMap(targets,mapping,JSON.parse(intermediateText)));
+      
+      if (this.outputDataType == "json") {
+        //Do nothing
+      } 
+      else 
+      {
+        transformedText = ConvertToCSV(transformedText);
+        //alert(typeof transformedText);
+        if (this.outputDataType != "csv") {
+          parseOutput = CSVParser.parse(transformedText, this.headersProvided, this.delimiter, this.downcaseHeaders, this.upcaseHeaders);
+      
+          dataGrid = parseOutput.dataGrid;
+          headerNames = parseOutput.headerNames;
+          headerTypes = parseOutput.headerTypes;
+          errors = parseOutput.errors;
+      
+          transformedText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
+        }
+      }
+    }
+    else
+    {
+      if (this.outputDataType != "csv") {
+        transformedText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
+      }
+      else
+      {
+        transformedText = ConvertToCSV(intermediateText);
+      }
+    }
 
-    this.outputText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
-
-
-    this.outputTextArea.val(errors + this.outputText);
-
+    this.outputText = transformedText;
+    output = errors + this.outputText
+    this.outputTextArea.val(output);
+    this.headerNames = headerNames;
+    /*
+    for (var i=0; i < this.outputDataTypes.length; i++) {
+       if (this.outputDataTypes[i]["id"] == this.outputDataType) {
+         outputFileExtension = this.outputDataTypes[i]["extension"];
+         break;
+       };
+    };
+    */
+    $("#btnSaveAs").prop('disabled',false);
+    $("#btnSaveAs").click(function() {SaveVarAsFile(output)});
   }; //end test for existence of input text
 }
 

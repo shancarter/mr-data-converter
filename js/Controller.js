@@ -11,8 +11,19 @@ $(document).ready(function(){
   var win = $(window);
   var w = win.width() - widthOffset;
   var h = win.height() - heightOffset;
-
-  d.create(w,h);
+  
+  var targets_encoded = getUrlVars()["targets"];
+  
+  if ((typeof(targets_encoded) !== "undefined") && (targets_encoded.length > 0)) {
+    var headerNames = "";
+    var targets = decodeURIComponent(targets_encoded).split(',');
+    addTextInputs(targets,headerNames);  
+  }
+  else {
+    var targets = [];
+  }
+  
+  d.create(w,h,targets);
 
   $(".settingsElement").change(updateSettings);
 
@@ -25,8 +36,9 @@ $(document).ready(function(){
 
     });
 
+  enableTab('dataInput');
 
-  function updateSettings (evt) {
+  function updateSettings (targets,evt) {
     
     if (evt) {
       _gaq.push(['_trackEvent', 'Settings',evt.currentTarget.id ]);
@@ -70,11 +82,12 @@ $(document).ready(function(){
     d.decimal = $('input[name=decimal]:checked').val();
     
     d.useUnderscores = true;
+    d.convert(targets);
     
-    d.convert();
+    return false;
   };
 
-  updateSettings();
+  updateSettings(targets);
   
 })
 
