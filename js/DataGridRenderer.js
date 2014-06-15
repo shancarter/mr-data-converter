@@ -266,6 +266,7 @@ var DataGridRenderer = {
     };
     outputText += newLine+indent+"]"+newLine;
     outputText += ")";
+    outputText = outputText.replace(",}","}");
     
     return outputText;
   },
