@@ -260,7 +260,7 @@ var CSVParser = {
           // this value, unescape any double quotes.
           var strMatchedValue = arrMatches[ 2 ].replace(
             new RegExp( "\"\"", "g" ),
-            "\""
+            "\\\""
             );
 
         } else {
