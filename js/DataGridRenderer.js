@@ -222,6 +222,50 @@ var DataGridRenderer = {
   },
   
   
+
+  //---------------------------------------
+  // JSON Dictionary
+  //---------------------------------------
+  jsonDict: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+    //inits...
+    var commentLine = "//";
+    var commentLineEnd = "";
+    var outputText = "";
+    var numRows = dataGrid.length;
+    var numColumns = headerNames.length;
+
+    //begin render loop
+    outputText += "{" + newLine;
+    for (var i = 0; i < numRows; i++) {
+      outputText += indent + '"' + dataGrid[i][0] + '": ';
+      if (numColumns == 2) {
+        outputText += _fmtVal(i, 1, dataGrid);
+      } else {
+        outputText += '{ ';
+        for (var j = 1; j < numColumns; j++) {
+          if (j > 1) outputText += ', ';
+          outputText += '"' + headerNames[j] + '"' + ":" + _fmtVal(i, j, dataGrid);
+        }
+        outputText += '}';
+      }
+      if (i < (numRows - 1)) {
+        outputText += "," + newLine;
+      }
+    }
+    outputText += newLine + "}";
+
+    function _fmtVal(i, j) {
+      if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
+        return dataGrid[i][j] || 0;
+      } else {
+        return '"'+(dataGrid[i][j] || "")+'"' ;
+      }
+    }
+
+    return outputText;
+  },
+
+
   //---------------------------------------
   // MYSQL
   //---------------------------------------
