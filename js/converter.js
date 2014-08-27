@@ -20,6 +20,7 @@ function DataConverter(nodeId) {
                                 {"text":"Actionscript",           "id":"as",               "notes":""},
                                 {"text":"ASP/VBScript",           "id":"asp",              "notes":""},
                                 {"text":"HTML",                   "id":"html",             "notes":""},
+                                {"text":"GEOJSON (POIs)",         "id":"geojson",          "notes":"Fields others than lat long go to properties. {lat} or {latitude} and {long} or {longitude} are the geocoordinates of the POI."},
                                 {"text":"JSON - Properties",      "id":"json",             "notes":""},
                                 {"text":"JSON - Column Arrays",   "id":"jsonArrayCols",    "notes":""},
                                 {"text":"JSON - Row Arrays",      "id":"jsonArrayRows",    "notes":""},
