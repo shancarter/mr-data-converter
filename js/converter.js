@@ -24,6 +24,7 @@ function DataConverter(nodeId) {
                                 {"text":"JSON - Column Arrays",   "id":"jsonArrayCols",    "notes":""},
                                 {"text":"JSON - Row Arrays",      "id":"jsonArrayRows",    "notes":""},
                                 {"text":"JSON - Dictionary",      "id":"jsonDict",         "notes":""},
+                                {"text":"JSON - GeoJSON",         "id":"jsonGeo",          "notes":"Requires a latitude (or lat) or longitude (or lng, lon) column in the input CSV."},
                                 {"text":"MySQL",                  "id":"mysql",            "notes":""},
                                 {"text":"PHP",                    "id":"php",              "notes":""},
                                 {"text":"Python - Dict",          "id":"python",           "notes":""},
