@@ -33,30 +33,37 @@ var CSVParser = {
     var dataArray = [];
 
     var errors = [];
-
-    //test for delimiter
-    //count the number of commas
-    var RE = new RegExp("[^,]", "gi");
-    var numCommas = input.replace(RE, "").length;
-
-    //count the number of tabs
-    RE = new RegExp("[^\t]", "gi");
-    var numTabs = input.replace(RE, "").length;
-
     var rowDelimiter = "\n";
-    //set delimiter
-    var columnDelimiter = ",";
-    if (numTabs > numCommas) {
-      columnDelimiter = "\t"
-    };
 
     if (delimiterType === "comma") {
       columnDelimiter = ","
     } else if (delimiterType === "tab") {
       columnDelimiter = "\t"
+    } else if (delimiterType === "semicolon") {
+      columnDelimiter = ";"
+    } else {
+      //test for delimiter in case of Auto
+      //count the number of commas
+      var RE = new RegExp("[^,]", "gi");
+      var numCommas = input.replace(RE, "").length;
+
+      //count the number of tabs
+      RE = new RegExp("[^\t]", "gi");
+      var numTabs = input.replace(RE, "").length;
+
+      //count the number of semi-colons
+      RE = new RegExp("[^;]", "gi");
+      var numSemicolons = input.replace(RE, "").length;
+
+      //set delimiter
+      var columnDelimiter = ",";
+      if (numTabs > numCommas && numTabs > numSemicolons) {
+        columnDelimiter = "\t"
+      } else if (numSemicolons > numCommas && numSemicolons > numTabs) {
+        columnDelimiter = ";"
+      };
+;
     }
-
-
     // kill extra empty lines
     RE = new RegExp("^" + rowDelimiter + "+", "gi");
     input = input.replace(RE, "");
