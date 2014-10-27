@@ -4,8 +4,6 @@
 //  
 //  Created by Shan Carter on 2010-10-18.
 // 
-
-
 var DataGridRenderer = {
   
   //---------------------------------------
@@ -120,8 +118,7 @@ var DataGridRenderer = {
     return outputText;
   },
   
-  
-  //---------------------------------------
+    //---------------------------------------
   // JSON properties
   //---------------------------------------
   
@@ -152,6 +149,69 @@ var DataGridRenderer = {
       if (i < (numRows-1)) {outputText += ","+newLine};
     };
     outputText += "]";
+    
+    return outputText;
+  },
+
+  //---------------------------------------
+  // GeoJSON properties
+  //---------------------------------------
+  
+  jsonGeo: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+    //inits...
+    var commentLine = "//";
+    var commentLineEnd = "";
+    var outputText = '{"type":"FeatureCollection","features":[';
+    var numRows = dataGrid.length;
+    var numColumns = headerNames.length;
+    var latIndex = -1;
+    var lngIndex = -1;
+    for (var i=0; i<numColumns; i++) {
+      var headerName = headerNames[i].toLowerCase();
+      if (headerName === 'lat' || headerName === 'latitude' || headerName === 'y')
+        latIndex = i;
+      else if (headerName === 'lon' || headerName === 'long' || headerName === 'lng' || headerName === 'longitude' || headerName === 'x')
+        lngIndex = i;
+    };
+
+    if (latIndex < 0 || lngIndex < 0)
+      return 'Missing latitude (header = lat or latitude) or longitude (header = lon, lng, or longitude) column in input CSV.';
+
+    var isFirstRow = true;
+
+    //begin render loop
+    for (var i=0; i < numRows; i++) {
+      var row = dataGrid[i];
+      if (row[lngIndex] && row[latIndex]) {
+        if (isFirstRow) {
+          isFirstRow = false;
+        } else {
+          // Only add a comma in case we have something to write, e.g. avoid empty rows.
+          outputText += "," + newLine;
+        }
+        outputText += '{"type":"Feature","geometry":{"type":"Point","coordinates":[';
+        outputText += row[lngIndex] + ','; 
+        outputText += row[latIndex];
+        outputText += ']},"properties":{';
+        for (var j=0; j < numColumns; j++) {
+          if (!(j === latIndex || j === lngIndex)) {
+            if (headerTypes[j] === "int" || headerTypes[j] === "float") {
+              var rowOutput = row[j] || "null";
+            } else if (headerTypes[j] === 'boolean') {
+              var rowOutput = row[j] || false;
+            } else {
+              var rowOutput = '"' + ( row[j] || "" ) + '"';
+            };
+      
+            outputText += ('"'+headerNames[j] +'"' + ":" + rowOutput );
+      
+            if (j < (numColumns-1)) {outputText+=","};
+          }
+        };
+        outputText += "}}";
+      }
+    };
+    outputText += "]}";
     
     return outputText;
   },
