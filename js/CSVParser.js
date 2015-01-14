@@ -16,7 +16,7 @@ var CSVParser = {
   //---------------------------------------
 
   isNumber: function(string) {
-    if( (string == null) || isNaN( new Number(string) ) ) {
+    if( (string == null) || (string == "") || isNaN( new Number(string) ) ) {
       return false;
     }
     return true;
@@ -48,7 +48,7 @@ var CSVParser = {
     var columnDelimiter = ",";
     if (numTabs > numCommas) {
       columnDelimiter = "\t"
-    };
+    }
 
     if (delimiterType === "comma") {
       columnDelimiter = ","
@@ -79,8 +79,8 @@ var CSVParser = {
         dataArray[i][j] = dataArray[i][j].replace("\t", "\\t");
         dataArray[i][j] = dataArray[i][j].replace("\n", "\\n");
         dataArray[i][j] = dataArray[i][j].replace("\r", "\\r");
-      };
-    };
+      }
+    }
 
 
     var headerNames = [];
@@ -99,7 +99,7 @@ var CSVParser = {
       for (var i=0; i < numColumns; i++) {
         headerNames.push("val"+String(i));
         headerTypes.push("");
-      };
+      }
 
     }
 
@@ -107,19 +107,19 @@ var CSVParser = {
     if (upcaseHeaders) {
       for (var i = headerNames.length - 1; i >= 0; i--){
         headerNames[i] = headerNames[i].toUpperCase();
-      };
-    };
+      }
+    }
     if (downcaseHeaders) {
       for (var i = headerNames.length - 1; i >= 0; i--){
         headerNames[i] = headerNames[i].toLowerCase();
-      };
-    };
+      }
+    }
 
     //test all the rows for proper number of columns.
     for (var i=0; i < dataArray.length; i++) {
       var numValues = dataArray[i].length;
-      if (numValues != numColumns) {this.log("Error parsing row "+String(i)+". Wrong number of columns.")};
-    };
+      if (numValues != numColumns) {this.log("Error parsing row "+String(i)+". Wrong number of columns.")}
+    }
 
     //test columns for number data type
     var numRowsToTest = dataArray.length;
@@ -138,10 +138,10 @@ var CSVParser = {
             if (String(dataArray[r][i]).indexOf(".") > 0) {
               numFloats++
             }
-          };
-        };
+          }
+        }
 
-      };
+      }
 
       if ((numInts / numRowsToTest) > threshold){
         if (numFloats > 0) {
@@ -154,12 +154,7 @@ var CSVParser = {
       }
     }
 
-
-
-
-
     return {'dataGrid':dataArray, 'headerNames':headerNames, 'headerTypes':headerTypes, 'errors':this.getLog()}
-
   },
 
 
@@ -181,9 +176,9 @@ var CSVParser = {
     if (this.errorLog.length > 0) {
       for (var i=0; i < this.errorLog.length; i++) {
         out += ("!!"+this.errorLog[i] + "!!\n");
-      };
+      }
       out += "\n"
-    };
+    }
 
     return out;
   },
@@ -256,12 +251,12 @@ var CSVParser = {
         // captured (quoted or unquoted).
         if (arrMatches[ 2 ]){
 
+			
           // We found a quoted value. When we capture
           // this value, unescape any double quotes.
           var strMatchedValue = arrMatches[ 2 ].replace(
-            new RegExp( "\"\"", "g" ),
-            "\""
-            );
+            new RegExp( "\"\"", "g" ), 
+			"\\\"");
 
         } else {
 
@@ -273,7 +268,7 @@ var CSVParser = {
 
         // Now that we have our value string, let's add
         // it to the data array.
-        arrData[ arrData.length - 1 ].push( strMatchedValue );
+        arrData[ arrData.length - 1 ].push( strMatchedValue.trim() );
       }
 
       // Return the parsed data.
