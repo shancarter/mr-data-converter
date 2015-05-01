@@ -91,7 +91,7 @@ var DataGridRenderer = {
     outputText += indent+indent+"<tr>"+newLine;
     
     for (var j=0; j < numColumns; j++) {
-      outputText += indent+indent+indent+'<th class="'+headerNames[j]+'-cell">';          
+      outputText += indent+indent+indent+'<th class="'+headerNames[j].split(' ').join('-')+'-cell">';          
       outputText += headerNames[j];
       outputText += '</th>'+newLine;
     };
@@ -108,7 +108,7 @@ var DataGridRenderer = {
       }
       outputText += indent+indent+"<tr"+rowClassName+">"+newLine;
       for (var j=0; j < numColumns; j++) {
-        outputText += indent+indent+indent+'<td class="'+headerNames[j]+'-cell">';          
+        outputText += indent+indent+indent+'<td class="'+headerNames[j].split(' ').join('-')+'-cell">';          
         outputText += row[j]
         outputText += '</td>'+newLine
       };
