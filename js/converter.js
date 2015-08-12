@@ -23,6 +23,7 @@ function DataConverter(nodeId) {
                                 {"text":"JSON - Properties",      "id":"json",             "notes":""},
                                 {"text":"JSON - Column Arrays",   "id":"jsonArrayCols",    "notes":""},
                                 {"text":"JSON - Row Arrays",      "id":"jsonArrayRows",    "notes":""},
+                                {"text":"JSON - Row Arrays, Text",      "id":"jsonArrayRowsText",    "notes":""},
                                 {"text":"JSON - Dictionary",      "id":"jsonDict",         "notes":""},
                                 {"text":"MySQL",                  "id":"mysql",            "notes":""},
                                 {"text":"PHP",                    "id":"php",              "notes":""},

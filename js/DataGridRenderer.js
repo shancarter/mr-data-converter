@@ -188,6 +188,37 @@ var DataGridRenderer = {
     return outputText;
   },
   
+
+  //---------------------------------------
+  // JSON - Text Row Array
+  //---------------------------------------
+  jsonArrayRowsText: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+    //inits...
+    var commentLine = "//";
+    var commentLineEnd = "";
+    var outputText = "";
+    var numRows = dataGrid.length;
+    var numColumns = headerNames.length;
+    
+    //begin render loop
+    outputText += "["+newLine;
+    for (var i=0; i < numRows; i++) {
+      outputText += indent+"[";
+      var build = [];
+      for (var j=0; j < numColumns; j++) {
+      	if (dataGrid[i][j].length > 0) {
+          build.push('"'+ (dataGrid[i][j] || "")+'"');
+      	}
+      };
+      outputText += build.join(",");
+      outputText += "]";
+      if (i < (numRows-1)) {outputText += ","+ newLine};
+    };
+    outputText += newLine+"]";
+    
+    
+    return outputText;
+  },
   
   //---------------------------------------
   // JSON Array of Rows
