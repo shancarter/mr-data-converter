@@ -206,8 +206,10 @@ var DataGridRenderer = {
       outputText += indent+"[";
       var build = [];
       for (var j=0; j < numColumns; j++) {
-      	if (dataGrid[i][j].length > 0) {
-          build.push('"'+ (dataGrid[i][j] || "")+'"');
+      	if (dataGrid[i][j]) {
+		    	if (dataGrid[i][j].length > 0) {
+		        build.push('"'+ (dataGrid[i][j] || "")+'"');
+		    	}
       	}
       };
       outputText += build.join(",");
