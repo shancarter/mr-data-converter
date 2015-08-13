@@ -202,8 +202,13 @@ var DataGridRenderer = {
     
     //begin render loop
     outputText += "["+newLine;
+
     for (var i=0; i < numRows; i++) {
-      outputText += indent+"[";
+
+    	var thisRow = "";
+    
+      thisRow += indent+"[";
+    
       var build = [];
       for (var j=0; j < numColumns; j++) {
       	if (dataGrid[i][j]) {
@@ -212,10 +217,19 @@ var DataGridRenderer = {
 		    	}
       	}
       };
-      outputText += build.join(",");
-      outputText += "]";
-      if (i < (numRows-1)) {outputText += ","+ newLine};
+      thisRow += build.join(",");
+      thisRow += "]";
+    
+      if (i < (numRows-1)) {thisRow += ","+ newLine};
+
+      if (thisRow == indent + "[]") {
+      	outputText = outputText.substring(0,(outputText.length-2));
+      } else if (thisRow !== indent + "[]," + newLine) {
+      	outputText += thisRow;
+      }
+    
     };
+    
     outputText += newLine+"]";
     
     
