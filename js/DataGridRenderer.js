@@ -8,6 +8,7 @@
 
 var DataGridRenderer = {
   
+  
   //---------------------------------------
   // Actionscript
   //---------------------------------------
@@ -28,7 +29,7 @@ var DataGridRenderer = {
         if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
           var rowOutput = row[j] || "null";
         } else {
-          var rowOutput = '"'+( row[j] || "" )+'"';
+          var rowOutput = '"'+(row[j] || "")+'"';
         };      
         outputText += (headerNames[j] + ":" + rowOutput)
         if (j < (numColumns-1)) {outputText+=","};
@@ -141,7 +142,7 @@ var DataGridRenderer = {
         if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
           var rowOutput = row[j] || "null";
         } else {
-          var rowOutput = '"' + ( row[j] || "" ) + '"';
+          var rowOutput = '"' + (row[j] || "").split('"').join("\\\"") + '"';
         };
   
       outputText += ('"'+headerNames[j] +'"' + ":" + rowOutput );
@@ -175,7 +176,7 @@ var DataGridRenderer = {
         if ((headerTypes[i] == "int")||(headerTypes[i] == "float")) {
           outputText += dataGrid[j][i] || 0;
         } else {
-          outputText += '"'+(dataGrid[j][i] || "")+'"' ;
+          outputText += '"'+(dataGrid[j][i] || "").split('"').join("\\\"")+'"' ;
         }
         if (j < (numRows-1)) {outputText+=","};
       };
@@ -208,7 +209,7 @@ var DataGridRenderer = {
         if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
           outputText += dataGrid[i][j] || 0;
         } else {
-          outputText += '"'+(dataGrid[i][j] || "")+'"' ;
+          outputText += '"'+(dataGrid[i][j] || "").split('"').join("\\\"")+'"' ;
         }
         if (j < (numColumns-1)) {outputText+=","};
       };
@@ -258,7 +259,7 @@ var DataGridRenderer = {
       if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
         return dataGrid[i][j] || 0;
       } else {
-        return '"'+(dataGrid[i][j] || "")+'"' ;
+        return '"'+(dataGrid[i][j] || "").split('"').join("\\\"")+'"' ;
       }
     }
 
