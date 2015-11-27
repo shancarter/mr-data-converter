@@ -2,6 +2,8 @@
 
 This is a fork of https://github.com/shancarter/Mr-Data-Converter
 
+You can try it out right now at http://cr3ative.github.io/mr-data-converter/
+
 Takes CSV or tab-delimited data from Excel and converts it into several web-friendly formats, include JSON and XML.
 
 Features of Captain Javascript over Mr Data Converter:
