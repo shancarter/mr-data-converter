@@ -32,7 +32,7 @@ function DataConverter(nodeId) {
                                 {"text":"XML - Properties",       "id":"xmlProperties",    "notes":""},
                                 {"text":"XML - Nodes",            "id":"xml",              "notes":""},
                                 {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":""}];
-  this.outputDataType         = "json";
+  this.outputDataType         = "jsonArrayRowsText";
 
   this.columnDelimiter        = "\t";
   this.rowDelimiter           = "\n";
