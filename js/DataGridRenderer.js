@@ -534,5 +534,81 @@ var DataGridRenderer = {
     return outputText;
     
   },
+
+   //---------------------------------------
+  // Python LIST
+  //---------------------------------------
+  
+  pythonlist: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+    //inits...
+    // appending headers into datagrid as its not a Dictioary
+    dataGrid.splice(0,0,headerNames)
+    var commentLine = "//";
+    var commentLineEnd = "";
+    var outputText = "[";
+    var numRows = dataGrid.length;
+    var numColumns = headerNames.length;
+    //begin render loop
+    for (var i=0; i < numRows; i++) {
+      var row = dataGrid[i];
+      
+      for (var j=0; j < numColumns; j++) {
+        if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
+          var rowOutput = row[j] || "None";
+        } else {
+          var rowOutput = '"'+(row[j] || "")+'"';
+        };
+  
+      outputText += (rowOutput );
+  
+        if (j < (numColumns-1)) {outputText+=","};
+      };
+      
+      if (i < (numRows-1)) {outputText += ","};
+    };
+    outputText += "]";
+    
+    return outputText;
+  },
+
+   //---------------------------------------
+  // Python SET LIST
+  //---------------------------------------
+  
+  pythonsetlist: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+    // appending headers into datagrid as its not a Dictioary
+    dataGrid.splice(0,0,headerNames)
+    //inits...
+    var commentLine = "//";
+    var commentLineEnd = "";
+    var outputText = "[";
+    var numRows = dataGrid.length;
+    var numColumns = headerNames.length;
+
+    //begin render loop
+    for (var i=0; i < numRows; i++) {
+      var row = dataGrid[i];
+      outputText += "(";
+      for (var j=0; j < numColumns; j++) {
+        if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
+          var rowOutput = row[j] || "None";
+        } else {
+          var rowOutput = '"'+(row[j] || "")+'"';
+        };
+  
+      outputText += (rowOutput);
+  
+        if (j < (numColumns-1)) {outputText+=","};
+      };
+      outputText += ")";
+      if (i < (numRows-1)) {outputText += ","+newLine};
+    };
+    outputText += "]";
+    
+    return outputText;
+  },
+  
+  
+
   
 }
