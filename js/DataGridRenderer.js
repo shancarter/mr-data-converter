@@ -226,13 +226,17 @@ var DataGridRenderer = {
   //---------------------------------------
   // JSON Dictionary
   //---------------------------------------
-  jsonDict: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+  jsonDict: function(dataGrid, headerNames, headerTypes, indent, newLine, includeKeyInDictionary) {
     //inits...
     var commentLine = "//";
     var commentLineEnd = "";
     var outputText = "";
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
+    var initialJ = 1;
+    if (includeKeyInDictionary) {
+        initialJ = 0;
+    }
 
     //begin render loop
     outputText += "{" + newLine;
@@ -242,8 +246,8 @@ var DataGridRenderer = {
         outputText += _fmtVal(i, 1, dataGrid);
       } else {
         outputText += '{ ';
-        for (var j = 1; j < numColumns; j++) {
-          if (j > 1) outputText += ', ';
+        for (var j = initialJ; j < numColumns; j++) {
+          if (j > initialJ) outputText += ', ';
           outputText += '"' + headerNames[j] + '"' + ":" + _fmtVal(i, j, dataGrid);
         }
         outputText += '}';
