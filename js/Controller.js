@@ -32,6 +32,8 @@ $(document).ready(function(){
       _gaq.push(['_trackEvent', 'Settings',evt.currentTarget.id ]);
     };
 
+    d.includeKeyInDictionary = $('#includeKeyInDictionary').attr('checked');
+
     d.includeWhiteSpace = $('#includeWhiteSpaceCB').attr('checked');
     
     if (d.includeWhiteSpace) {

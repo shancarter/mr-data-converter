@@ -60,6 +60,8 @@ function DataConverter(nodeId) {
   this.includeWhiteSpace      = true;
   this.useTabsForIndent       = false;
 
+  this.includeKeyInDictionary = false;
+
 }
 
 //---------------------------------------
@@ -160,7 +162,7 @@ DataConverter.prototype.convert = function() {
     var headerTypes = parseOutput.headerTypes;
     var errors = parseOutput.errors;
 
-    this.outputText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine);
+    this.outputText = DataGridRenderer[this.outputDataType](dataGrid, headerNames, headerTypes, this.indent, this.newLine, this.includeKeyInDictionary);
 
 
     this.outputTextArea.val(errors + this.outputText);
