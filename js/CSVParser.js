@@ -127,6 +127,7 @@ var CSVParser = {
     for (var i=0; i < headerNames.length; i++) {
       var numFloats = 0;
       var numInts = 0;
+      var isBoolean=[];
       for (var r=0; r < numRowsToTest; r++) {
         if (dataArray[r]) {
           //replace comma with dot if comma is decimal separator
@@ -138,7 +139,10 @@ var CSVParser = {
             if (String(dataArray[r][i]).indexOf(".") > 0) {
               numFloats++
             }
-          };
+          }
+          if (dataArray[r][i] === "true" || dataArray[r][i] === "false") {
+            isBoolean.push(true);
+          }
         };
 
       };
@@ -150,7 +154,7 @@ var CSVParser = {
           headerTypes[i] = "int"
         }
       } else {
-        headerTypes[i] = "string"
+        headerTypes[i] = isBoolean.length === numRowsToTest ? "boolean" : "string"
       }
     }
 
