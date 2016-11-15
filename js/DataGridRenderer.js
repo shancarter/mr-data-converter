@@ -156,6 +156,39 @@ var DataGridRenderer = {
     return outputText;
   },
   
+  
+    //---------------------------------------
+    // JSON Schema 
+    //---------------------------------------
+
+
+    jsonSchema: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+        //inits...
+        var commentLine = "//";
+        var commentLineEnd = "";
+        var outputSchema = {
+            "$schema": "http://json-schema.org/draft-04/schema#"
+        };
+        var numRows = dataGrid.length;
+        var numColumns = headerNames.length;
+
+        var baseType = numRows > 1 ? ["array", "items"] : ["object", "properties"];
+        outputSchema["type"] = baseType[0];
+
+
+        var tempOutput = {};
+        //begin render loop
+        headerNames.map(function (header, index) {
+            tempOutput[header] = {
+                "type": headerTypes[index]
+            };
+        });
+
+        outputSchema[baseType[1]] = tempOutput;
+        var outputText = JSON.stringify(outputSchema, null, indent);
+        return outputText;
+    },
+  
   //---------------------------------------
   // JSON Array of Columns
   //---------------------------------------
