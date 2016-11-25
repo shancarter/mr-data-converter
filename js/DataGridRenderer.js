@@ -124,7 +124,7 @@ var DataGridRenderer = {
   // Javascript Object
   //---------------------------------------
   
-  json: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+  javascript: function (dataGrid, headerNames, headerTypes, indent, newLine) {
     //inits...
     var commentLine = "//";
     var commentLineEnd = "";
