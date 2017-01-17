@@ -74,9 +74,11 @@ var CSVParser = {
     //escape out any tabs or returns or new lines
     for (var i = dataArray.length - 1; i >= 0; i--){
       for (var j = dataArray[i].length - 1; j >= 0; j--){
-        dataArray[i][j] = dataArray[i][j].replace("\t", "\\t");
-        dataArray[i][j] = dataArray[i][j].replace("\n", "\\n");
-        dataArray[i][j] = dataArray[i][j].replace("\r", "\\r");
+      	if (typeof dataArray[i][j] !== "undefined") {
+	        dataArray[i][j] = dataArray[i][j].replace("\t", "\\t");
+	        dataArray[i][j] = dataArray[i][j].replace("\n", "\\n");
+	        dataArray[i][j] = dataArray[i][j].replace("\r", "\\r");
+        }
       };
     };
 
@@ -115,7 +117,7 @@ var CSVParser = {
     //test all the rows for proper number of columns.
     for (var i=0; i < dataArray.length; i++) {
       var numValues = dataArray[i].length;
-      if (numValues != numColumns) {this.log("Error parsing row "+String(i)+". Wrong number of columns.")};
+      if (numValues != numColumns) {this.log("Error parsing row "+String(i)+". Wrong number of columns. " + dataArray[i])};
     };
 
     //test columns for number data type
