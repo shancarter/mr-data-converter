@@ -141,10 +141,10 @@ var DataGridRenderer = {
         if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
           var rowOutput = row[j] || "null";
         } else {
-          var rowOutput = '"' + ( row[j] || "" ) + '"';
+          var rowOutput = '"' + ( row[j].trim() || "" ) + '"';
         };
   
-      outputText += ('"'+headerNames[j] +'"' + ":" + rowOutput );
+      outputText += ('"'+headerNames[j].trim() +'"' + ":" + rowOutput );
   
         if (j < (numColumns-1)) {outputText+=","};
       };
@@ -213,7 +213,7 @@ var DataGridRenderer = {
       for (var j=0; j < numColumns; j++) {
       	if (dataGrid[i][j]) {
 		    	if (dataGrid[i][j].length > 0) {
-		        build.push('"'+ (dataGrid[i][j] || "")+'"');
+		        build.push('"'+ (dataGrid[i][j].trim() || "")+'"');
 		    	}
       	}
       };
