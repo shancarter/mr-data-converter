@@ -56,7 +56,6 @@ var CSVParser = {
       columnDelimiter = "\t"
     }
 
-
     // kill extra empty lines
     RE = new RegExp("^" + rowDelimiter + "+", "gi");
     input = input.replace(RE, "");
@@ -69,19 +68,19 @@ var CSVParser = {
     //   dataArray.push(arr[i].split(columnDelimiter));
     // };
 
-
     // dataArray = jQuery.csv(columnDelimiter)(input);
     dataArray = this.CSVToArray(input, columnDelimiter);
 
     //escape out any tabs or returns or new lines
     for (var i = dataArray.length - 1; i >= 0; i--){
       for (var j = dataArray[i].length - 1; j >= 0; j--){
-        dataArray[i][j] = dataArray[i][j].replace("\t", "\\t");
-        dataArray[i][j] = dataArray[i][j].replace("\n", "\\n");
-        dataArray[i][j] = dataArray[i][j].replace("\r", "\\r");
+      	if (typeof dataArray[i][j] !== "undefined") {
+	        dataArray[i][j] = dataArray[i][j].replace("\t", "\\t");
+	        dataArray[i][j] = dataArray[i][j].replace("\n", "\\n");
+	        dataArray[i][j] = dataArray[i][j].replace("\r", "\\r");
+        }
       };
     };
-
 
     var headerNames = [];
     var headerTypes = [];
@@ -118,7 +117,7 @@ var CSVParser = {
     //test all the rows for proper number of columns.
     for (var i=0; i < dataArray.length; i++) {
       var numValues = dataArray[i].length;
-      if (numValues != numColumns) {this.log("Error parsing row "+String(i)+". Wrong number of columns.")};
+      if (numValues != numColumns) {this.log("Error parsing row "+String(i)+". Wrong number of columns. " + dataArray[i])};
     };
 
     //test columns for number data type
@@ -209,15 +208,11 @@ var CSVParser = {
           // Delimiters.
           "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
 
-          // Quoted fields.
-          "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
-
           // Standard fields.
-          "([^\"\\" + strDelimiter + "\\r\\n]*))"
+          "([^\\" + strDelimiter + "\\r\\n]*)"
         ),
         "gi"
         );
-
 
       // Create an array to hold our data. Give the array
       // a default empty first row.
@@ -226,7 +221,6 @@ var CSVParser = {
       // Create an array to hold our individual pattern
       // matching groups.
       var arrMatches = null;
-
 
       // Keep looping over the regular expression matches
       // until we can no longer find a match.
@@ -250,15 +244,17 @@ var CSVParser = {
 
         }
 
-
         // Now that we have our delimiter out of the way,
         // let's check to see which kind of value we
         // captured (quoted or unquoted).
         if (arrMatches[ 2 ]){
 
+        	// Uh, escape quotes
+        	var strMatchedValue = arrMatches[ 2 ].replace(/"/g, '\\"');
+
           // We found a quoted value. When we capture
           // this value, unescape any double quotes.
-          var strMatchedValue = arrMatches[ 2 ].replace(
+          strMatchedValue = strMatchedValue.replace(
             new RegExp( "\"\"", "g" ),
             "\""
             );
@@ -270,10 +266,10 @@ var CSVParser = {
 
         }
 
-
         // Now that we have our value string, let's add
         // it to the data array.
         arrData[ arrData.length - 1 ].push( strMatchedValue );
+
       }
 
       // Return the parsed data.

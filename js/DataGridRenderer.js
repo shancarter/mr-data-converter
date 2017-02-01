@@ -141,10 +141,11 @@ var DataGridRenderer = {
         if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
           var rowOutput = row[j] || "null";
         } else {
+          if (row[j]) { row[j] = row[j].trim(); }
           var rowOutput = '"' + ( row[j] || "" ) + '"';
         };
   
-      outputText += ('"'+headerNames[j] +'"' + ":" + rowOutput );
+      outputText += ('"'+headerNames[j].trim() +'"' + ":" + rowOutput );
   
         if (j < (numColumns-1)) {outputText+=","};
       };
@@ -188,6 +189,53 @@ var DataGridRenderer = {
     return outputText;
   },
   
+
+  //---------------------------------------
+  // JSON - Text Row Array
+  //---------------------------------------
+  jsonArrayRowsText: function (dataGrid, headerNames, headerTypes, indent, newLine) {
+    //inits...
+    var commentLine = "//";
+    var commentLineEnd = "";
+    var outputText = "";
+    var numRows = dataGrid.length;
+    var numColumns = headerNames.length;
+    
+    //begin render loop
+    outputText += "["+newLine;
+
+    for (var i=0; i < numRows; i++) {
+
+    	var thisRow = "";
+    
+      thisRow += indent+"[";
+    
+      var build = [];
+      for (var j=0; j < numColumns; j++) {
+      	if (dataGrid[i][j]) {
+		    	if (dataGrid[i][j].length > 0) {
+		        build.push('"'+ (dataGrid[i][j].trim() || "")+'"');
+		    	}
+      	}
+      };
+      thisRow += build.join(",");
+      thisRow += "]";
+    
+      if (i < (numRows-1)) {thisRow += ","+ newLine};
+
+      if (thisRow == indent + "[]") {
+      	outputText = outputText.substring(0,(outputText.length-2));
+      } else if (thisRow !== indent + "[]," + newLine) {
+      	outputText += thisRow;
+      }
+    
+    };
+    
+    outputText += newLine+"]";
+    
+    
+    return outputText;
+  },
   
   //---------------------------------------
   // JSON Array of Rows
