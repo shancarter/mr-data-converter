@@ -14,6 +14,7 @@ body {
 <p>Go on <a href="mr-data-converter.html" target="_blank">mr-data-converter</a> , paste your table there and get output in JSON-Dictionary mode.</p>
 <p>Copy and paste the output here:</p>
 <textarea id="paste" rows="10" style="width:80%" placeholder="Copy-paste your JSON dictionary data here."></textarea>
+<br><input type=button onclick="clearInput()" value="clear">
 <p>Join character : <input type="text" id="joiner" value="."> default: period (.)</p>
 <input type=button onclick="unPivot()" value="Click to UnPivot">
 <br><br>
@@ -51,6 +52,10 @@ function unPivot() {
 		}
 	}
 
+}
+
+function clearInput() {
+	document.getElementById('paste').value = "";
 }
 
 </script>
