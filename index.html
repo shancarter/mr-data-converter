@@ -4,10 +4,9 @@
 <html lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Mr. Data Converter</title>
-  <meta name="author" content="Shan Carter">
-  <!-- Date: 2010-08-26 -->
-  <link rel="stylesheet" href="css/converter.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <title>CSV Converter</title>
+  <meta name="author" content="Matt Delhey (original: Shan Carter)">
+  <link rel="stylesheet" href="css/main.css" type="text/css" media="screen" title="no title" charset="utf-8">
 
   <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/CSVParser.js" type="text/javascript" charset="utf-8"></script>
@@ -15,56 +14,50 @@
   <script src="js/converter.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/Controller.js" type="text/javascript" charset="utf-8"></script>
 
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+  <script src="js/bootstrap.js"></script>
+
+  <script src="js/button-switch.js" type="text/javascript"></script>
+
 </head>
 <body>
-  <div id='base'>
-    <div id='header'>
-      <div id="description">
-        <h1>Mr. Data Converter</h1>
-        <p>I will convert your Excel data into one of several web-friendly formats, including HTML, JSON and XML.</p>
-        <p>Fork me on <a href="http://github.com/shancarter/Mr-Data-Converter">github</a>.</p>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+	</button>
+	<a class="navbar-brand" href="#">Brand</a>
       </div>
-      <div id='settings'>
-        <h3>Settings</h3>
-        <form id='settingsForm'>
-           <p>Delimiter:
-
-             <label><input class="settingsElement" type="radio" name="delimiter" id='delimiterAuto'   value="auto" checked/> Auto</label>
-             <label><input class="settingsElement" type="radio" name="delimiter" id='delimiterComma'  value="comma" /> Comma</label>
-             <label><input class="settingsElement" type="radio" name="delimiter" id='delimiterTab'    value="tab" /> Tab</label>
-            </p>
-          <p>Decimal Sign:
-
-             <label><input class="settingsElement" type="radio" name="decimal" id='decimalDot'   value="dot" checked/> Dot</label>
-             <label><input class="settingsElement" type="radio" name="decimal" id='decimalComma'  value="comma" /> Comma</label>
-            </p>
-          <p><label><input class="settingsElement" type="checkbox" name="" value="" id="headersProvidedCB" checked /> First row is the header</label></p>
-          <div class="settingsGroup">
-            <p>Transform: <label><input class="settingsElement" type="radio" name="headerModifications" value="downcase" id='headersDowncase' /> downcase</label>
-            <label><input class="settingsElement" type="radio" name="headerModifications" id='headersUpcase' value="upcase" /> upcase</label>
-            <label><input class="settingsElement" type="radio" name="headerModifications" id='headersNoTransform' value="none" checked /> none</label></p>
-          </div>
-
-          <p><label><input class="settingsElement" type="checkbox" name="some_name" value="" id="includeWhiteSpaceCB" checked /> Include white space in output</label></p>
-          <div class="settingsGroup">
-            <p>Indent with: <label><input class="settingsElement" type="radio" name="indentType" value="tabs" id='includeWhiteSpaceTabs'/> tabs</label> <label><input class="settingsElement" type="radio" name="indentType" value="spaces" id='includeWhiteSpaceSpaces' checked/> spaces</label></p>
-          </div>
-
-
-        </form>
-
-
-      </div>
+      <div class="collapse navbar-collapse">
+	<ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+	</ul>
+      </div><!--/.nav-collapse -->
     </div>
-
-
-
-    <div id='converter' class=''>
-
-    </div>
-
   </div>
 
+<div class="container">
+  <div class="text-center">
 
+    <h1>Data Converter</h1>
+    <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+
+      <div class="btn-group btn-toggle"> 
+        <button class="btn btn-sm btn-primary active">Upload</button>
+    	<button class="btn btn-sm btn-default">Paste</button>
+      </div>
+    <hr>
+
+
+  </div>
+  
+</div><!-- /.container -->
 </body>
 </html>

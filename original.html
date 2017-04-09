@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>CSV Converter</title>
+  <meta name="author" content="Matt Delhey (original: Shan Carter)">
+  <link rel="stylesheet" href="css/converter.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+  <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/CSVParser.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/DataGridRenderer.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/converter.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/Controller.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body>
+  <div id='base'>
+  <div>
+    <div id='header'>
+    <div>
+      <div id="description">
+        <h1>CSV Converter</h1>
+        <p>I will convert your Excel data into one of several web-friendly formats, including HTML, JSON and XML.</p>
+      </div>
+      <div id='settings'>
+        <h3>Settings</h3>
+        <form id='settingsForm'>
+           <p>Delimiter:
+
+             <label><input class="settingsElement" type="radio" name="delimiter" id='delimiterAuto'   value="auto" checked/> Auto</label>
+             <label><input class="settingsElement" type="radio" name="delimiter" id='delimiterComma'  value="comma" /> Comma</label>
+             <label><input class="settingsElement" type="radio" name="delimiter" id='delimiterTab'    value="tab" /> Tab</label>
+            </p>
+          <p>Decimal Sign:
+
+             <label><input class="settingsElement" type="radio" name="decimal" id='decimalDot'   value="dot" checked/> Dot</label>
+             <label><input class="settingsElement" type="radio" name="decimal" id='decimalComma'  value="comma" /> Comma</label>
+            </p>
+          <p><label><input class="settingsElement" type="checkbox" name="" value="" id="headersProvidedCB" checked /> First row is the header</label></p>
+          <div class="settingsGroup">
+            <p>Transform: <label><input class="settingsElement" type="radio" name="headerModifications" value="downcase" id='headersDowncase' /> downcase</label>
+            <label><input class="settingsElement" type="radio" name="headerModifications" id='headersUpcase' value="upcase" /> upcase</label>
+            <label><input class="settingsElement" type="radio" name="headerModifications" id='headersNoTransform' value="none" checked /> none</label></p>
+          </div>
+
+          <p><label><input class="settingsElement" type="checkbox" name="some_name" value="" id="includeWhiteSpaceCB" checked /> Include white space in output</label></p>
+          <div class="settingsGroup">
+            <p>Indent with: <label><input class="settingsElement" type="radio" name="indentType" value="tabs" id='includeWhiteSpaceTabs'/> tabs</label> <label><input class="settingsElement" type="radio" name="indentType" value="spaces" id='includeWhiteSpaceSpaces' checked/> spaces</label></p>
+          </div>
+
+
+        </form>
+
+
+      </div>
+    </div>
+
+
+
+    <div id='converter' class=''></div>
+
+  </div>
+
+
+</body>
+</html>
