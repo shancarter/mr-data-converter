@@ -256,7 +256,7 @@ var DataGridRenderer = {
 
     function _fmtVal(i, j) {
       if ((headerTypes[j] == "int")||(headerTypes[j] == "float")) {
-        return dataGrid[i][j] || 0;
+        return dataGrid[i][j] || "null";
       } else {
         return '"'+(dataGrid[i][j] || "")+'"' ;
       }
