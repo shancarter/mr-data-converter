@@ -31,7 +31,7 @@ function DataConverter(nodeId) {
                                 {"text":"XML - Properties",       "id":"xmlProperties",    "notes":""},
                                 {"text":"XML - Nodes",            "id":"xml",              "notes":""},
                                 {"text":"XML - Illustrator",      "id":"xmlIllustrator",   "notes":""}];
-  this.outputDataType         = "json";
+  this.outputDataType         = "html";
 
   this.columnDelimiter        = "\t";
   this.rowDelimiter           = "\n";
@@ -70,7 +70,7 @@ DataConverter.prototype.create = function(w,h) {
   var self = this;
 
   //build HTML for converter
-  this.inputHeader = $('<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Input CSV or tab-delimited data. <span class="subhead"> Using Excel? Simply copy and paste. No data on hand? <a href="#" id="insertSample">Use sample</a></span></p></div>');
+  this.inputHeader = $('<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Input CSV or tab-delimited data. <span class="subhead"> Using Excel? Simply copy and paste. <a href="#" id="insertSample">Use sample</a></span></p></div>');
   this.inputTextArea = $('<textarea class="textInputs" id="dataInput"></textarea>');
   var outputHeaderText = '<div class="groupHeader" id="inputHeader"><p class="groupHeadline">Output as <select name="Data Types" id="dataSelector" >';
     for (var i=0; i < this.outputDataTypes.length; i++) {

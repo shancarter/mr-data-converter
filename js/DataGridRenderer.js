@@ -103,12 +103,12 @@ var DataGridRenderer = {
 	}
     
     //begin render loop
-    outputText += "<table>"+newLine;
+    outputText += '<table class="">'+newLine;
     outputText += indent+"<thead>"+newLine;
     outputText += indent+indent+"<tr>"+newLine;
     
     for (var j=0; j < numColumns; j++) {
-      outputText += indent+indent+indent+'<th class="'+slug(headerNames[j])+'-cell">';          
+      outputText += indent+indent+indent+'<th class="'+slug(headerNames[j])+'">';          
       outputText += headerNames[j];
       outputText += '</th>'+newLine;
     };
@@ -125,7 +125,7 @@ var DataGridRenderer = {
       }
       outputText += indent+indent+"<tr"+rowClassName+">"+newLine;
       for (var j=0; j < numColumns; j++) {
-        outputText += indent+indent+indent+'<td class="'+slug(headerNames[j])+'-cell">';          
+        outputText += indent+indent+indent+'<td class="'+slug(headerNames[j])+'">';          
         outputText += row[j]
         outputText += '</td>'+newLine
       };
