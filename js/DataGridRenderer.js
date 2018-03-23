@@ -84,14 +84,31 @@ var DataGridRenderer = {
     var outputText = "";
     var numRows = dataGrid.length;
     var numColumns = headerNames.length;
+    var slug = function(str) {
+	  str = str.replace(/^\s+|\s+$/g, ''); // trim
+	  str = str.toLowerCase();
+
+	  // remove accents, swap ñ for n, etc
+	  var from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;";
+	  var to   = "aaaaaeeeeeiiiiooooouuuunc------";
+	  for (var i=0, l=from.length ; i<l ; i++) {
+    	str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+	  }
+
+	  str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+    	.replace(/\s+/g, '-') // collapse whitespace and replace by -
+	    .replace(/-+/g, '-'); // collapse dashes
+
+	  return str;
+	}
     
     //begin render loop
-    outputText += "<table>"+newLine;
+    outputText += '<table class="">'+newLine;
     outputText += indent+"<thead>"+newLine;
     outputText += indent+indent+"<tr>"+newLine;
     
     for (var j=0; j < numColumns; j++) {
-      outputText += indent+indent+indent+'<th class="'+headerNames[j]+'-cell">';          
+      outputText += indent+indent+indent+'<th class="'+slug(headerNames[j])+'">';          
       outputText += headerNames[j];
       outputText += '</th>'+newLine;
     };
@@ -108,7 +125,7 @@ var DataGridRenderer = {
       }
       outputText += indent+indent+"<tr"+rowClassName+">"+newLine;
       for (var j=0; j < numColumns; j++) {
-        outputText += indent+indent+indent+'<td class="'+headerNames[j]+'-cell">';          
+        outputText += indent+indent+indent+'<td class="'+slug(headerNames[j])+'">';          
         outputText += row[j]
         outputText += '</td>'+newLine
       };

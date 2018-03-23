@@ -131,7 +131,7 @@ var CSVParser = {
         if (dataArray[r]) {
           //replace comma with dot if comma is decimal separator
           if(decimalSign='comma' && isDecimal_re.test(dataArray[r][i])){
-            dataArray[r][i] = dataArray[r][i].replace(",", ".");
+            //dataArray[r][i] = dataArray[r][i].replace(",", ".");
           }
           if (CSVParser.isNumber(dataArray[r][i])) {
             numInts++

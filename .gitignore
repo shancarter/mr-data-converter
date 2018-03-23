@@ -1,1 +1,16 @@
+# Vim
+*~
+*.swp
+*.swo
+*.swn
+
+# OS
 .DS_Store
+
+# Eclipse
+.buildpath
+.project
+.settings
+
+# LibreOffice
+.~lock*
