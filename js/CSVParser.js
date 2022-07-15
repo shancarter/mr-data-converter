@@ -43,18 +43,26 @@ var CSVParser = {
     RE = new RegExp("[^\t]", "gi");
     var numTabs = input.replace(RE, "").length;
 
+    //count the number of semicolon
+    RE = new RegExp("[^;]", "gi");
+    var numSemicolon = input.replace(RE, "").length;
+
     var rowDelimiter = "\n";
     //set delimiter
     var columnDelimiter = ",";
-    if (numTabs > numCommas) {
+    if (numTabs > numCommas && numTabs > numSemicolon) {
       columnDelimiter = "\t"
+    }else if (numSemicolon > numCommas && numSemicolon>numTabs) {
+      columnDelimiter = ";"
     };
 
     if (delimiterType === "comma") {
       columnDelimiter = ","
     } else if (delimiterType === "tab") {
       columnDelimiter = "\t"
-    }
+    } else if (delimiterType === "semicolon") {
+      columnDelimiter = ";"
+    };
 
 
     // kill extra empty lines
@@ -76,9 +84,11 @@ var CSVParser = {
     //escape out any tabs or returns or new lines
     for (var i = dataArray.length - 1; i >= 0; i--){
       for (var j = dataArray[i].length - 1; j >= 0; j--){
-        dataArray[i][j] = dataArray[i][j].replace("\t", "\\t");
-        dataArray[i][j] = dataArray[i][j].replace("\n", "\\n");
-        dataArray[i][j] = dataArray[i][j].replace("\r", "\\r");
+        if(dataArray[i][j]){
+          dataArray[i][j] = dataArray[i][j].replace("\t", "\\t");
+          dataArray[i][j] = dataArray[i][j].replace("\n", "\\n");
+          dataArray[i][j] = dataArray[i][j].replace("\r", "\\r");
+        }
       };
     };
 
